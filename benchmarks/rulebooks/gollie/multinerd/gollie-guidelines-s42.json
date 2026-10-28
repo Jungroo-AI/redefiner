@@ -1,0 +1,115 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "Food",
+   "description": "Foods and drinks.",
+   "rules": [
+    "FO1 Examples: \"sugar\", \"salt\", \"beef\", \"fruit\", \"pork\"."
+   ]
+  },
+  {
+   "name": "Time",
+   "description": "Specific and well-defined time intervals, such as eras, historical periods, centuries, years and important days.",
+   "rules": [
+    "TI1 No months and days of the week.",
+    "TI2 Examples: \"Middle Ages\", \"Great Depression\", \"Renaissance\", \"Bronze Age\", \"half-life\"."
+   ]
+  },
+  {
+   "name": "Event",
+   "description": "Sport events, battles, wars and other events.",
+   "rules": [
+    "EV1 Examples: \"World War II\", \"World War I\", \"American Civil War\", \"FA Cup\", \"Vietnam War\"."
+   ]
+  },
+  {
+   "name": "Disease",
+   "description": "Physical, mental, infectious, non-infectious, deficiency, inherited, degenerative, social and self-inflicted diseases.",
+   "rules": [
+    "DI1 Examples: \"cancer\", \"anxiety\", \"schizophrenia\", \"tuberculosis\", \"Alzheimer 's disease\"."
+   ]
+  },
+  {
+   "name": "Vehicle",
+   "description": "Cars, motorcycles and other vehicles.",
+   "rules": [
+    "VE1 Examples: \"Airbus A380\", \"Titanic\", \"Tupolev Tu-144\", \"Mayflower\", \"Dornier Do X\"."
+   ]
+  },
+  {
+   "name": "Mythological",
+   "description": "Mythological and religious entities.",
+   "rules": [
+    "MY1 Examples: \"Thomas Aquinas\", \"Zeus\", \"Satan\", \"Ra\", \"Aphrodite\"."
+   ]
+  },
+  {
+   "name": "Celestial",
+   "description": "Planets, stars, asteroids, comets, nebulae, galaxies and other astronomical objects.",
+   "rules": [
+    "CE1 Examples: \"Earth\", \"Sun\", \"Jupiter\", \"Moon\", \"Milky Way\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Associations, companies, agencies, institutions, nationalities and religious or political groups.",
+   "rules": [
+    "OR1 Examples: \"European Union\", \"BBC\", \"Boston Red Sox\", \"New York Yankees\", \"Pittsburgh Pirates\"."
+   ]
+  },
+  {
+   "name": "Instrument",
+   "description": "Technological instruments, mechanical instruments, musical instruments, and other tools.",
+   "rules": [
+    "IN1 Examples: \"LaserDisc\", \"Android\", \"Voyager 2\", \"Voyager 1\", \"Laserdisc\"."
+   ]
+  },
+  {
+   "name": "Animal",
+   "description": "Breeds of dogs, cats and other animals, including their scientific names.",
+   "rules": [
+    "AN1 Examples: \"moth\", \"sea snail\", \"Erebidae\", \"Noctuidae\", \"mine\"."
+   ]
+  },
+  {
+   "name": "Biological",
+   "description": "Genus of fungus, bacteria and protoctists, families of viruses, and other biological entities.",
+   "rules": [
+    "BI1 Examples: \"Escherichia coli\", \"E. coli\", \"Plasmodium\", \"Aspergillus\", \"HIV\"."
+   ]
+  },
+  {
+   "name": "Plant",
+   "description": "Types of trees, flowers, and other plants, including their scientific names.",
+   "rules": [
+    "PL1 Examples: \"plant\", \"wheat\", \"shrub\", \"rice\", \"deciduous\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "People.",
+   "rules": [
+    "PE1 Examples: \"George Hampson\", \"Edward Meyrick\", \"Breuning\", \"Francis Walker\", \"Aristotle\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Physical locations (e.g. mountains, bodies of water), geopolitical entities (e.g. cities, states), and facilities (e.g. bridges, buildings, airports)",
+   "rules": [
+    "LO1 Examples: \"United States\", \"Australia\", \"Brazil\", \"China\", \"United Kingdom\"."
+   ]
+  },
+  {
+   "name": "Media",
+   "description": "Titles of films, books, magazines, songs and albums, fictional characters and languages.",
+   "rules": [
+    "ME1 Examples: \"Rotten Tomatoes\", \"Oxford English Dictionary\", \"TV Guide\", \"Entertainment Weekly\", \"Rolling Stone\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

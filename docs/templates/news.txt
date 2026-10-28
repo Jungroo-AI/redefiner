@@ -1,0 +1,24 @@
+[RULES]
+G1 Extract every entity of the supplied types. Return exact spans from the text.
+
+[TYPE] PERSON
+[DESCRIPTION] A person's name.
+P1 Label the full name; leave out titles such as "Dr", "Prof", "President" or "Mr".
+
+[TYPE] ORGANIZATION
+[DESCRIPTION] A company, university, agency, team or other institution.
+
+[TYPE] LOCATION
+[DESCRIPTION] A city, country, region or named place.
+
+[TYPE] EVENT
+[DESCRIPTION] A named event, such as a summit, festival, tournament or election.
+
+[TYPE] PRODUCT
+[DESCRIPTION] A named product, model, vehicle or piece of software.
+
+[TYPE] NOT_AN_ENTITY
+NE1 Job titles and honorifics, such as "Chancellor", "CEO" or "Sir".
+
+[RULES]
+G2 An event held in a city is labelled as the event, and the city separately ("Expo 2020 in Dubai"). This overrides everything above.

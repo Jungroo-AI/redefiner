@@ -1,0 +1,78 @@
+{
+  "chosen_on_dev": "filter@0.65",
+  "ner_test": {
+    "CrossNER_AI": {
+      "precision": 50.03,
+      "recall": 50.97,
+      "f1": 50.49
+    },
+    "CrossNER_literature": {
+      "precision": 47.15,
+      "recall": 50.75,
+      "f1": 48.88
+    },
+    "CrossNER_music": {
+      "precision": 62.31,
+      "recall": 64.12,
+      "f1": 63.2
+    },
+    "CrossNER_politics": {
+      "precision": 39.16,
+      "recall": 46.35,
+      "f1": 42.45
+    },
+    "CrossNER_science": {
+      "precision": 48.66,
+      "recall": 50.37,
+      "f1": 49.5
+    },
+    "mit-movie": {
+      "precision": 38.13,
+      "recall": 41.45,
+      "f1": 39.72
+    },
+    "mit-restaurant": {
+      "precision": 40.45,
+      "recall": 50.84,
+      "f1": 45.06
+    }
+  },
+  "ner_mean_f1": 48.47,
+  "buster_slimer": {
+    "precision": 4.48,
+    "recall": 0.1,
+    "f1": 0.19,
+    "TP": 3,
+    "FP": 64,
+    "FN": 3050,
+    "support": 3053
+  },
+  "buster_slimer_redefiner": {
+    "precision": 13.79,
+    "recall": 55.06,
+    "f1": 22.05,
+    "TP": 1681,
+    "FP": 10510,
+    "FN": 1372,
+    "support": 3053
+  },
+  "buster_v5": {
+    "precision": 40.0,
+    "recall": 0.07,
+    "f1": 0.13,
+    "TP": 2,
+    "FP": 3,
+    "FN": 3051,
+    "support": 3053
+  },
+  "buster_v5_redefiner": {
+    "precision": 23.9,
+    "recall": 71.08,
+    "f1": 35.77,
+    "TP": 2170,
+    "FP": 6910,
+    "FN": 883,
+    "support": 3053
+  },
+  "too_long": 0
+}

@@ -1,0 +1,54 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "country",
+   "description": "A sovereign country or nation.",
+   "rules": []
+  },
+  {
+   "name": "election",
+   "description": "A named election or voting process for selecting political candidates.",
+   "rules": []
+  },
+  {
+   "name": "event",
+   "description": "A named war, conference, summit, convention or other non-election event.",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "A geographic place, city, region or landmark other than a country.",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "A named entity outside the other supplied categories.",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "An organization, institution or company other than a political party.",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "A person's name, excluding politicians.",
+   "rules": []
+  },
+  {
+   "name": "politicalparty",
+   "description": "A political party's name or acronym.",
+   "rules": []
+  },
+  {
+   "name": "politician",
+   "description": "The name of a politician, public officeholder or political party figure.",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

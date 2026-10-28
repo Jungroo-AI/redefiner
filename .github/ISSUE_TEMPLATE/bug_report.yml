@@ -1,0 +1,29 @@
+name: Bug report
+description: Installation problems, crashes, wrong offsets or other errors.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Code to reproduce
+      description: The smallest code that shows the problem.
+      render: python
+  - type: textarea
+    id: error
+    attributes:
+      label: Error message
+      render: text
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: redefiner version, Python version, OS, CPU or GPU.
+    validations:
+      required: true

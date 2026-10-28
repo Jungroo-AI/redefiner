@@ -1,0 +1,104 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "MusicalArtist",
+   "description": "Refers to an individual actively involved in the creation, performance, or production of music.",
+   "rules": [
+    "MA1 If a person is a singer, composer, or songwriter, annotate them as a musical artist entity instead of a person entity",
+    "MA2 Examples: \"Elvis Costello\", \"Nas\", \"Madonna\", \"Debbie Gibson\", \"Tiffany\"."
+   ]
+  },
+  {
+   "name": "Country",
+   "description": "Refers to a sovereign nation.",
+   "rules": [
+    "CO1 Examples: \"U.S.\", \"United States\", \"United Kingdom\", \"Australia\", \"Germany\"."
+   ]
+  },
+  {
+   "name": "Event",
+   "description": "Refers to a music-related occurrence or happening, such as a concert, festival, or competition.",
+   "rules": [
+    "EV1 Examples: \"2003 World Championships in Athletics\", \"Vocal Event of the Year\", \"World War II\", \"Saint Patrick 's Day\", \"the first wave of glam metal\"."
+   ]
+  },
+  {
+   "name": "MusicalInstrument",
+   "description": "Refers to a device or tool used to produce musical sounds, such as a piano, guitar, or drum.",
+   "rules": [
+    "MI1 Examples: \"piano accordion\", \"six-string guitar banjo\", \"guitar\", \"keyboard\", \"bass guitar\"."
+   ]
+  },
+  {
+   "name": "MusicGenre",
+   "description": "Refers to a distinct category or style of music, characterized by its unique characteristics, themes, and instrumentation.",
+   "rules": [
+    "MG1 Include regional musics typical of a certain place.",
+    "MG2 Examples: \"Hip hop music\", \"Pop music\", \"reggae\", \"Punk rock\", \"Celtic rock\"."
+   ]
+  },
+  {
+   "name": "Other",
+   "description": "Refers to named entities that are not included in any other category.",
+   "rules": [
+    "OT1 Examples: \"Irish-American\", \"European\", \"Les Troyens à Carthage\", \"Didon\", \"Énée\"."
+   ]
+  },
+  {
+   "name": "Song",
+   "description": "Refers to a distinct category or style of music, characterized by its unique characteristics, themes, and instrumentation.",
+   "rules": [
+    "SO1 Examples: \"Is That Love\", \"Tempted\", \"Clubland\", \"New Lace Sleeves\", \"The Lunatics ( Have Taken Over the Asylum )\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Refers to a structured group, institution, company, or association.",
+   "rules": [
+    "OR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.",
+    "OR2 Examples: \"Recording Industry Association of America\", \"Billboard\", \"BBC News\", \"Academy of Country Music\", \"Country Music Association\"."
+   ]
+  },
+  {
+   "name": "Album",
+   "description": "Refers to a collection of songs or musical compositions released as a single package",
+   "rules": [
+    "AL1 Examples: \"American Idiot\", \"Dookie\", \"Sun Ra Visits Planet Earth\", \"Interstellar Low Ways\", \"Super-Sonic Jazz\"."
+   ]
+  },
+  {
+   "name": "Band",
+   "description": "Refers to a distinct category or style of music, characterized by its unique characteristics, themes, and instrumentation.",
+   "rules": [
+    "BA1 Examples: \"Backstreet Boys\", \"Spice Girls\", \"NSYNC\", \"LFO\", \"O-Town\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to a specific geographical or structural location.",
+   "rules": [
+    "LO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.",
+    "LO2 Examples: \"Europe\", \"Stade de France\", \"Paris\", \"Théâtre de la Ville\", \"Bay Area\"."
+   ]
+  },
+  {
+   "name": "Award",
+   "description": "Refers to a device or tool used to produce musical sounds, such as a piano, guitar, or drum.",
+   "rules": [
+    "AW1 Examples: \"Grammy Award\", \"Brit Awards\", \"MTV Video Music Award\", \"Academy Awards\", \"Grammy Award for Best Alternative Music Album\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "Refers to an individual's name that is not a musical artist.",
+   "rules": [
+    "PE1 Examples: \"Barney Bubbles\", \"Stéphane Lafarge\", \"Bubbles\", \"Wolf-Rüdiger Mühlmann\", \"Glen Campbell\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

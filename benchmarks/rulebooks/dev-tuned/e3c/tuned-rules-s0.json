@@ -1,0 +1,23 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "E1 Label disorders: diseases, injuries, infections, tumours, signs, symptoms and abnormal findings, also when written as an adjective.",
+  "E2 Never label tests, measurements or their results (\"BP\", \"pulse\", \"temperature\", \"haemoglobin 10.9 g / dl\", \"liver enzymes\"), procedures and treatments (\"oesophageo-gastro-duodenoscopy\", \"coronary artery bypass grafting\", \"surgery\", \"antibiotics\", \"prednisolone\"), body parts on their own (\"mucosa\", \"knees\"), or habits (\"alcohol use\").",
+  "E3 Label a disorder also when it is negated or absent, leaving out the negating word.",
+  "E4 A mention is the disorder phrase itself, usually one to three words. Never label a clause, a sentence or a description of an examination or of a procedure."
+ ],
+ "classes": [
+  {
+   "name": "ClinicalEntity",
+   "description": "A definite pathologic process with a characteristic set of signs and symptoms.",
+   "rules": [
+    "CE1 Common disorder words are mentions on their own: \"fever\", \"tumor\", \"cyst\", \"lesions\", \"headache\", \"diabetic\".",
+    "CE2 Leave out a leading word that gives side, size or severity: label \"pitting oedema\", \"hepatomegaly\", \"VI nerve palsy\", \"ovarian cyst\".",
+    "CE3 Keep a following phrase that says where the disorder is: \"tinnitus in the right ear\", \"pain behind both eyes\", \"hyperemia of nasal mucosa\".",
+    "CE4 Examples: \"tumor\", \"tumour\", \"vomiting\", \"swelling\", \"epistaxis\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

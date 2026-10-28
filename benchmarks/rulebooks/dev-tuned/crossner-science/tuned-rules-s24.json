@@ -1,0 +1,145 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "S1 Nationality, people and language adjectives such as \"American\", \"German\", \"British\", \"Swedish\", \"Dutch\" are Other, never Country."
+ ],
+ "classes": [
+  {
+   "name": "ChemicalElement",
+   "description": "Refers to a fundamental substance characterized by its atomic number and unique properties, as found in the periodic table.",
+   "rules": [
+    "CE1 Examples: \"sulfur\", \"copper\", \"hydrogen\", \"helium\", \"Nihonium\"."
+   ]
+  },
+  {
+   "name": "Discipline",
+   "description": "Refers to a specialized field of study or research within the domains of natural science.",
+   "rules": [
+    "DI1 Also label words such as biology, chemistry, astrophysics, mathematics or physics.",
+    "DI2 This also includes specific branches such as quantum chemistry.",
+    "DI3 Examples: \"philosophy\", \"chemistry\", \"medicine\", \"electrodynamics\", \"spectroscopy\"."
+   ]
+  },
+  {
+   "name": "Protein",
+   "description": "Refers to a complex biological molecule composed of amino acids, essential for various biological functions.",
+   "rules": [
+    "PR1 Examples: \"Argonaute\", \"Histone H3\", \"CYP1A1\", \"Green fluorescent protein\", \"glutamate binding protein\"."
+   ]
+  },
+  {
+   "name": "Enzyme",
+   "description": "Refers to a specialized protein that acts as a biological catalyst, facilitating chemical reactions within organisms.",
+   "rules": [
+    "EN1 If a protein is an enzyme, annotate it as an enzyme entity.",
+    "EN2 Examples: \"RNA polymerase\", \"DNA methyltransferase\", \"DNA polymerase\", \"Spermidine synthase\", \"Alkaline phosphatase\"."
+   ]
+  },
+  {
+   "name": "Other",
+   "description": "Refers to named entities that are not included in any other category.",
+   "rules": [
+    "OT1 Examples: \"DNA\", \"Greeks\", \"Aryl hydrocarbon receptor repressor\", \"CRISPR\", \"Japanese\"."
+   ]
+  },
+  {
+   "name": "Scientist",
+   "description": "Refers to a person who is studying or has expert knowledge of one or more of the natural or physical sciences.",
+   "rules": [
+    "SC1 Every person named for scientific or technical work is a Scientist, not a Person: physicists, chemists, biologists, astronomers, mathematicians, geologists, inventors, discoverers, professors, members of academies, research groups or projects.",
+    "SC2 This also holds for bare surnames and for names in lists of researchers or invitees: \"Walther Bothe\", \"Josef Mattauch\", \"Mendel\", \"Sagan\", \"Thomas Edison\".",
+    "SC3 A person described as a member, fellow, president or founder of an academy or scientific society is a Scientist, even by surname alone: \"Libby\", \"Singer\", \"Morley\", \"Herschbach\".",
+    "SC4 Examples: \"Werner Heisenberg\", \"Robert Boyle\", \"Hans Kramers\", \"Isaac Newton\", \"Galileo Galilei\"."
+   ]
+  },
+  {
+   "name": "Award",
+   "description": "Refers to a recognition or distinction presented to individuals or organizations for significant contributions within the natural science domain.",
+   "rules": [
+    "AW1 Fellowships are Award spans that start at \"fellow\": label \"fellow of the Linnean Society of London\", not just \"Linnean Society of London\".",
+    "AW2 An Award span runs to the end of its category or awarding body: \"Grammy Award for Best Music Video\", not just \"Grammy Award\"; \"Rumford Medal of the British Royal Society\", not just \"Rumford Medal\".",
+    "AW3 Examples: \"Nobel Prize in Physics\", \"Nobel Prize in Chemistry\", \"Fellow of the American Physical Society\", \"fellow of the Royal Society\", \"Copley Medal of the Royal Society\"."
+   ]
+  },
+  {
+   "name": "Country",
+   "description": "Refers to a sovereign nation.",
+   "rules": [
+    "CO1 Examples: \"Newfoundland Colony\", \"France\", \"United States\", \"Russia\", \"Japan\"."
+   ]
+  },
+  {
+   "name": "AstronomicalObject",
+   "description": "Refers to a celestial entity such as a star, planet, galaxy, or nebula, present in space.",
+   "rules": [
+    "AO1 A numbered minor planet keeps its catalogue number in the span: \"4 Vesta\", \"19 Fortuna\", \"99942 Apophis\", \"51828 Ilanramon\".",
+    "AO2 Examples: \"Saturn\", \"Jupiter\", \"Venus\", \"Earth\", \"Uranus\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "Refers to an individual's name that is not a scientist.",
+   "rules": [
+    "PE1 Person is only for people with no science role, such as actors, fictional characters, musicians, film directors, politicians, activists and outlaws: \"David Tennant\", \"Rose Tyler\", \"Lil Wayne\", \"Gerald Ford\", \"Billy the Kid\".",
+    "PE2 Examples: \"Shenton\", \"Russell T Davies\", \"Aristotle\", \"Hall\", \"NeNe Leakes\"."
+   ]
+  },
+  {
+   "name": "ChemicalCompound",
+   "description": "Refers to a substance formed by combining two or more elements in fixed proportions, with distinct chemical properties.",
+   "rules": [
+    "CC1 Examples: \"carbon dioxide\", \"Adenosine triphosphate\", \"Nitric oxide\", \"ROS\", \"cytosine\"."
+   ]
+  },
+  {
+   "name": "Event",
+   "description": "Refers to a significant occurrence or happening.",
+   "rules": [
+    "EV1 Such as festivals, sports events, conferences, etc.",
+    "EV2 Examples: \"2017 World Championships in Athletics\", \"Tomorrowland\", \"A State Of Trance\", \"Ultra Music Festival\", \"Electric Daisy Carnival\"."
+   ]
+  },
+  {
+   "name": "Theory",
+   "description": "Refers to a scientifically established principle or explanation that describes natural phenomena within the scope of biology, chemistry, or astrophysics, such as orbital resonance.",
+   "rules": [
+    "TH1 This encompasses laws and theories like the Ptolemaic planetary theories.",
+    "TH2 Examples: \"Protein-DNA interaction\", \"circular dichroism\", \"stem cell niche theory\", \"Nicolaus Copernicus heliocentric theory\", \"metaphysics\"."
+   ]
+  },
+  {
+   "name": "University",
+   "description": "Refers to an educational institution of higher learning.",
+   "rules": [
+    "UN1 Label organizations that are universities as 'university' entities.",
+    "UN2 Examples: \"University of Sydney\", \"Oxford\", \"Uppsala University\", \"University of Calcutta\", \"Odessa University\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Refers to a structured group, institution, company, or association.",
+   "rules": [
+    "OR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.",
+    "OR2 Hospitals, medical centers, air force bases and opera houses are Organization, not Location: \"Royal Victoria Hospital\", \"Edwards Air Force Base\", \"Teatro La Fenice\".",
+    "OR3 Examples: \"Royal Society\", \"American Academy of Arts and Sciences\", \"National Academy of Sciences\", \"International Union of Geodesy and Geophysics\", \"American Philosophical Society\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to a specific geographical or structural location.",
+   "rules": [
+    "LO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.",
+    "LO2 Examples: \"Cape of Good Hope\", \"Mumbai\", \"Heidelberg\", \"Royal Prince Alfred Hospital\", \"Sydney\"."
+   ]
+  },
+  {
+   "name": "AcademicJournal",
+   "description": "Refers to a periodical publication containing scholarly articles and research findings related to natural science disciplines.",
+   "rules": [
+    "AJ1 Examples: \"Angewandte Chemie\", \"The Astrophysical Journal\", \"Nature\", \"Chemical Reviews\", \"Accounts of Chemical Research\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

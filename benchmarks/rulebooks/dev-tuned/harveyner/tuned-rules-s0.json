@@ -1,0 +1,52 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "G1 Label only fine-grained locations that can be pinned to a map: Points, small Areas, Roads and Rivers, mostly in and around Houston.",
+  "G2 Never label \"Houston\", \"Texas\" or \"Harris County\" on their own, a US state, a country, or the storm (\"Harvey\", \"Hurricane Harvey\"), including their hashtags (\"# Houston\", \"# Harvey\"); they are too broad to map.",
+  "G3 In \"RT @name :\" the retweeted account is never a location. Other @accounts of people, reporters, TV stations and agencies are not locations either (\"@HaleyKPRC\", \"@KPRC2\", \"@fbcoem\", \"@ReadyHarris\"); only a building's own account is a Point (\"@GRBCC\", \"@HobbyAirport\"). Of 1,378 @accounts on dev, 25 are locations.",
+  "G4 A Point is the whole location phrase as one span, with its cross street, address, city, state and zip: \"corner of Richey St and W Harris Ave in Pasadena\", \"Mason Rd . and HWY 290\", \"Covenant Church on Wilson Rd\", \"The Buckingham nursing home 8580 Woodway\", \"900 Portway Drive , Houston , TX 77024\", \"45 north just past Dickinson\". Do not also label the roads, towns or buildings inside it.",
+  "G5 In dispatch tweets (\"Fire Event - D078 - Fs078 Memorial Dr - Turkey Creek Dr - 11:08\"), the two streets joined by \" - \" are one Point (\"Memorial Dr - Turkey Creek Dr\", \"Navigation - N Paige St\"). Unit codes such as \"D078\", \"Fs078\", \"E090\" and \"M017\" are not locations.",
+  "G6 Store chains, companies and agencies are not locations (\"@HEB stores\", \"HCSO\")."
+ ],
+ "classes": [
+  {
+   "name": "Road",
+   "description": "Refers to a road/avenue/street or a section of a road/avenue/street when the tweet does not provide an exact location on that road.",
+   "rules": [
+    "RO1 A road or highway named without an intersection, address or exit is a Road (\"I-45\", \"Memorial Drive\", \"US-59 South\"); when it has a cross street or address, the whole phrase is one Point instead.",
+    "RO2 Examples: \"Barker Cypress\", \"I-10\", \"US 290 WB\", \"SH-71\", \"I-45\"."
+   ]
+  },
+  {
+   "name": "Point",
+   "description": "Refers to a location that is a building, a landmark, an intersection of two roads, an intersection of a river with a lake/reservoir/ocean, or a specifc address.",
+   "rules": [
+    "PO1 Ignore generic company/franchise names unless it is accompanied with a precise location, for example, HEB at Kirkwood Drive.",
+    "PO2 However, non-franchised small businesses with only one unique location are considered as a point.",
+    "PO3 Ignore any locations in the Twitter username, unless @ does not refer to a Twitter account name.",
+    "PO4 For example, I am @ XXX High School.",
+    "PO5 A street address is a Point, with its city, state and zip when given (\"5303 S. Mason\", \"5500 Avenue N , Rosenberg , TX 77471\").",
+    "PO6 A specific named building is a Point: a shelter, school, church, stadium, store or airport (\"BF Terry High School\", \"Gallery Furniture\", \"GEORGE R. BROWN\"), also when written as its @account in the tweet text (\"@GRBCC\", \"@HobbyAirport\").",
+    "PO7 Examples: \"GRB\", \"GEORGE R. BROWN\", \"Lakewood Church\", \"Bayou Oaks\", \"Northgate Subdivision S of toll road\"."
+   ]
+  },
+  {
+   "name": "Area",
+   "description": "Refers to all the named entities of cities, neighborhoods, super neighborhoods, geographic divisions etc. The following locations, Lake Houston, Barker Reservoir, and Addick’s Reservoir, are annotated as areas due to their significant size while all other lakes/reservoirs are not considered as areas.",
+   "rules": [
+    "AR1 Label towns, suburbs, neighbourhoods, subdivisions and counties around Houston (\"Katy\", \"Kingwood\", \"Dickinson\", \"Fort Bend County\"), and parts of Houston named with a direction or district (\"NE Houston\", \"Downtown Houston\"); never Houston or Harris County itself.",
+    "AR2 Examples: \"Sienna Plantation\", \"Galveston\", \"Addicks\", \"Barker\", \"Fort Bend\"."
+   ]
+  },
+  {
+   "name": "River",
+   "description": "Refers to a river or a section of a river when the tweet does not imply there is an intersection between the river and other places.",
+   "rules": [
+    "RI1 Bayous, creeks and rivers are Rivers, also as @accounts or hashtags (\"Buffalo Bayou\", \"Cypress Creek\", \"Brazos River\", \"@buffalobayou\").",
+    "RI2 Examples: \"Buffalo Bayou\", \"Brazos River\", \"Brays Bayou\", \"Cypress Creek\", \"Spring Creek\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

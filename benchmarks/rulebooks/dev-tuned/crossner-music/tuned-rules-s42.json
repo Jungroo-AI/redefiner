@@ -1,0 +1,117 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "C1 Words for a nationality, people or language, such as \"American\", \"British\", \"Swedish\" or \"Canadian\", are never Country or Location; label them Other.",
+  "C2 Titles of films, TV series and stage shows are Other, never Album or Song: \"Roman Holiday\", \"Titanic\", \"All About Eve\", \"Four Weddings and a Funeral\".",
+  "C3 An award name runs through its whole category after \"for\" as one Award span: \"Grammy Award for Best Female Pop Vocal Performance\", \"Primetime Emmy Award for Outstanding Lead Actress in a Comedy Series\", \"National Board of Review Award for Best Director\"."
+ ],
+ "classes": [
+  {
+   "name": "Event",
+   "description": "Refers to a music-related occurrence or happening, such as a concert, festival, or competition.",
+   "rules": [
+    "EV1 An event span starts at its year: \"1976 Cannes Film Festival\", \"1978 Commonwealth Games\".",
+    "EV2 Examples: \"2003 World Championships in Athletics\", \"Vocal Event of the Year\", \"World War II\", \"Saint Patrick 's Day\", \"the first wave of glam metal\"."
+   ]
+  },
+  {
+   "name": "Award",
+   "description": "Refers to a device or tool used to produce musical sounds, such as a piano, guitar, or drum.",
+   "rules": [
+    "AW1 An Award is a prize or honour, not an instrument: \"Brit Awards\", \"46th Academy Awards\", \"Country Music Association awards\".",
+    "AW2 Examples: \"Grammy Award\", \"Brit Awards\", \"MTV Video Music Award\", \"Academy Awards\", \"Grammy Award for Best Alternative Music Album\"."
+   ]
+  },
+  {
+   "name": "Band",
+   "description": "Refers to a distinct category or style of music, characterized by its unique characteristics, themes, and instrumentation.",
+   "rules": [
+    "BA1 A Band is a named musical group, duo or act, not a genre: \"Sister Sledge\", \"Autechre\", \"Loverboy\", \"Brooks and Dunn\", \"Pendulum\", \"Grinspoon\", \"Primus\". Label it Band, not MusicalArtist or Person.",
+    "BA2 Examples: \"Backstreet Boys\", \"Spice Girls\", \"NSYNC\", \"LFO\", \"O-Town\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to a specific geographical or structural location.",
+   "rules": [
+    "LO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.",
+    "LO2 Concert halls, theatres, arenas and opera houses are Location, also when the name is that of the opera company playing there: \"Sydney Opera House\", \"Paris Opera\", \"Vienna State Opera\", \"Carnegie Hall\".",
+    "LO3 Examples: \"Europe\", \"Stade de France\", \"Paris\", \"Théâtre de la Ville\", \"Bay Area\"."
+   ]
+  },
+  {
+   "name": "Other",
+   "description": "Refers to named entities that are not included in any other category.",
+   "rules": [
+    "OT1 Examples: \"Irish-American\", \"European\", \"Les Troyens à Carthage\", \"Didon\", \"Énée\"."
+   ]
+  },
+  {
+   "name": "MusicalInstrument",
+   "description": "Refers to a device or tool used to produce musical sounds, such as a piano, guitar, or drum.",
+   "rules": [
+    "MI1 Examples: \"piano accordion\", \"six-string guitar banjo\", \"guitar\", \"keyboard\", \"bass guitar\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "Refers to an individual's name that is not a musical artist.",
+   "rules": [
+    "PE1 Person is only for people outside music, such as actors, film directors and crew, athletes, critics and politicians: \"Gregory Peck\", \"George Lucas\", \"Evan Lysacek\", \"Richie Unterberger\".",
+    "PE2 Examples: \"Barney Bubbles\", \"Stéphane Lafarge\", \"Bubbles\", \"Wolf-Rüdiger Mühlmann\", \"Glen Campbell\"."
+   ]
+  },
+  {
+   "name": "Country",
+   "description": "Refers to a sovereign nation.",
+   "rules": [
+    "CO1 Examples: \"U.S.\", \"United States\", \"United Kingdom\", \"Australia\", \"Germany\"."
+   ]
+  },
+  {
+   "name": "Album",
+   "description": "Refers to a collection of songs or musical compositions released as a single package",
+   "rules": [
+    "AL1 An Album is a whole record release (studio album, EP, live album, soundtrack or compilation). Titles listed with their years among an artist's releases, or called an album, EP or record, are Album: \"Woodface\", \"Doggystyle\", \"Bitches Brew\", \"Our Little Secret\".",
+    "AL2 Examples: \"American Idiot\", \"Dookie\", \"Sun Ra Visits Planet Earth\", \"Interstellar Low Ways\", \"Super-Sonic Jazz\"."
+   ]
+  },
+  {
+   "name": "MusicalArtist",
+   "description": "Refers to an individual actively involved in the creation, performance, or production of music.",
+   "rules": [
+    "MA1 If a person is a singer, composer, or songwriter, annotate them as a musical artist entity instead of a person entity",
+    "MA2 Every individual musician is MusicalArtist: singers, rappers, DJs, composers, producers, instrumentalists and band members, also when named by surname or stage name only: \"Buck Dharma\", \"Ad-Rock\", \"Cobain\", \"Iommi\".",
+    "MA3 Examples: \"Elvis Costello\", \"Nas\", \"Madonna\", \"Debbie Gibson\", \"Tiffany\"."
+   ]
+  },
+  {
+   "name": "MusicGenre",
+   "description": "Refers to a distinct category or style of music, characterized by its unique characteristics, themes, and instrumentation.",
+   "rules": [
+    "MG1 Include regional musics typical of a certain place.",
+    "MG2 A genre span keeps a following word music: \"Soul music\", \"Tejano music\", \"house music\".",
+    "MG3 Examples: \"Hip hop music\", \"Pop music\", \"reggae\", \"Punk rock\", \"Celtic rock\"."
+   ]
+  },
+  {
+   "name": "Song",
+   "description": "Refers to a distinct category or style of music, characterized by its unique characteristics, themes, and instrumentation.",
+   "rules": [
+    "SO1 A Song is one song, single, track or composition, not a genre: \"Hey Jude\", \"Black Hole Sun\", \"Radio Ga Ga\".",
+    "SO2 A title that comes right after the word single, singles, hit or track is a Song: \"Believe in Me\", \"And She Was\".",
+    "SO3 Examples: \"Is That Love\", \"Tempted\", \"Clubland\", \"New Lace Sleeves\", \"The Lunatics ( Have Taken Over the Asylum )\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Refers to a structured group, institution, company, or association.",
+   "rules": [
+    "OR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.",
+    "OR2 Examples: \"Recording Industry Association of America\", \"Billboard\", \"BBC News\", \"Academy of Country Music\", \"Country Music Association\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

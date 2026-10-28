@@ -1,0 +1,112 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "Plot",
+   "description": "A plot element or theme is a recurring concept, event, or motif that plays a significant role in the development of a story, narrative, or work of fiction.",
+   "rules": [
+    "PL1 For example what happens in a movie (murder, love at first sight, cars that fly, horse racing), the type of characters in the movie (vampires, zombies, fugitives, cats), where the movie was recorded (British, American), among others.",
+    "PL2 Examples: \"murder\", \"vampires\", \"ghosts\", \"levitation\", \"love at first sight\"."
+   ]
+  },
+  {
+   "name": "Review",
+   "description": "Refers to an evaluation or assessment of a movie's quality, performance, or other aspects.",
+   "rules": [
+    "RE1 It includes expressions or phrases that indicate personal opinions, critiques, or judgments about a movie's overall merit, such as greatest, excellent, disappointing, and similar evaluative terms.",
+    "RE2 It also includes expressions such as five stars rated, lowest rated or recommended, which provide an indication of the reviewer's assessment of the movie.",
+    "RE3 Examples: \"good\", \"best\", \"must see\", \"classic\", \"funniest\"."
+   ]
+  },
+  {
+   "name": "Song",
+   "description": "Refers to a musical composition or piece of music that is associated with a movie.",
+   "rules": [
+    "SO1 This includes individual songs featured in the movie's soundtrack, as well as musical groups and singers who perform those songs.",
+    "SO2 The Song entity class encompasses both original songs created specifically for the movie and pre-existing songs used in the movie's soundtrack.",
+    "SO3 Examples: \"soundtrack\", \"my heart will go on\", \"theme song\", \"i will always love you\", \"john williams\"."
+   ]
+  },
+  {
+   "name": "Actor",
+   "description": "Refers to an individual who plays a role in a movie, including main cast members, supporting actors, and cameo appearances.",
+   "rules": [
+    "AC1 If an individual is known for their work in television, theater, or other media but also appears in movies, they can be considered an Actor in this context.",
+    "AC2 Examples: \"johnny depp\", \"brad pitt\", \"tom hanks\", \"tom cruise\", \"clint eastwood\"."
+   ]
+  },
+  {
+   "name": "Rating",
+   "description": "Refers to the official classification or content rating assigned to a movie by a recognized film rating organization.",
+   "rules": [
+    "RA1 Ratings provide guidance to audiences and parents about the movie's suitability based on its content, themes, and age-appropriateness.",
+    "RA2 Ratings can include various classifications such as MPAA (Motion Picture Association) ratings like R-Rated, PG-13, PG, or other regional and international rating systems.",
+    "RA3 Examples: \"r\", \"pg 13\", \"pg\", \"g\", \"nc 17\"."
+   ]
+  },
+  {
+   "name": "Trailer",
+   "description": "Refers to a short promotional video or preview of a movie that is designed to generate interest and excitement among the audience before the movie's release.",
+   "rules": [
+    "TR1 This entity also includes mentions to trailers, such as 'trailer','preview', 'teaser' or 'highlights'.",
+    "TR2 Examples: \"trailer\", \"preview\", \"trailers\", \"shortest trailer\", \"star wars\"."
+   ]
+  },
+  {
+   "name": "Character",
+   "description": "Refers to a fictional or real individual portrayed in a movie's narrative or storyline.",
+   "rules": [
+    "CH1 It includes main characters, supporting characters, antagonists, and any other roles that contribute to the plot or development of the movie.",
+    "CH2 Characters can be human or non-human, and they represent the individuals with specific roles and identities within the movie's fictional universe.",
+    "CH3 Examples: \"james bond\", \"indiana jones\", \"jason bourne\", \"harry potter\", \"batman\"."
+   ]
+  },
+  {
+   "name": "Genre",
+   "description": "Refers to a category or classification that characterizes the style, theme, or tone of a movie.",
+   "rules": [
+    "GE1 Genres are used to identify and categorize movies based on their common characteristics and storytelling elements.",
+    "GE2 Genres can be broad categories (e.g., Action, Comedy, Drama) or more specific sub-genres.",
+    "GE3 Examples: \"action\", \"comedy\", \"horror\", \"fantasy\", \"science fiction\"."
+   ]
+  },
+  {
+   "name": "Director",
+   "description": "Refers to an individual who is responsible for overseeing and guiding the artistic vision and creative elements of a movie.",
+   "rules": [
+    "DI1 The director plays a pivotal role in shaping the film's narrative, performances, and overall execution.",
+    "DI2 The Director entity includes the names of both film directors and television directors, as long as they are relevant to the movie context.",
+    "DI3 Examples: \"steven spielberg\", \"james cameron\", \"directed\", \"clint eastwood\", \"alfred hitchcock\"."
+   ]
+  },
+  {
+   "name": "Tittle",
+   "description": "Refers to the name or label that uniquely identifies a specific movie or film production.",
+   "rules": [
+    "TI1 It includes the official title of the movie, which is used for identification, promotion, and reference purposes.",
+    "TI2 The Title entity class encompasses the full names of movies, as well as any abbreviations or alternative titles that are commonly associated with the movie.",
+    "TI3 Examples: \"inception\", \"the shining\", \"wall e\", \"star wars\", \"titanic\"."
+   ]
+  },
+  {
+   "name": "RatingsAverage",
+   "description": "Refers to the collective or average assessment of a movie's quality, popularity, or critical acclaim based on reviews, ratings, or awards from various sources.",
+   "rules": [
+    "RAT1 This entity includes general descriptions of the overall reception of the movie, such as 3-star rating, award-winning, critically heralded, box office hit, or similar expressions that provide an indication of the movie's reception.",
+    "RAT2 Examples: \"average\", \"ok\", \"mediocre\", \"highly rated\", \"critically acclaimed\"."
+   ]
+  },
+  {
+   "name": "Year",
+   "description": "Refers to a numerical representation of the calendar year in which a specific movie was released or produced.",
+   "rules": [
+    "YE1 The Year entity class encompasses four-digit numerical values that indicate the specific year of a movie's release or production.",
+    "YE2 Examples: \"1950 s\", \"1970 s\", \"2010 s\", \"1980 s\", \"1990 s\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

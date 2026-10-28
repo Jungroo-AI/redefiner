@@ -1,0 +1,37 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "B1 An @username is an entity. Its span always starts at the \"@\" and covers the whole name: label \"@ Calum5SOS\", never \"Calum5SOS\" alone. This holds anywhere in the tweet: after RT (\"RT @ BenHannington :\"), at the start (\"@ DMorifeu What is that ?\") and in a list (\"@ Luke5SOS @ Calum5SOS @ Ashton5SOS\").",
+  "B2 A hashtag that is or contains the name of a person, team, brand, game, show, event or place is labelled with its \"#\": \"#EnriqueIglesias\" and \"#RihannaNavy\" are Person, \"#Rangers\", \"#lfc\", \"#Microsoft\", \"#AngryBirdsStarWars\" and \"#iHeartAwards\" are Organization, \"#Russia\" and \"#grandcayman\" are Location. Hashtags of ordinary words (\"#helpme\", \"#matchday\", \"#auction\") are not labelled.",
+  "B3 \"RT\", links, emoticons, zodiac signs (\"Aries\", \"Gemini\", \"Virgo\") and words that are not names are never entities.",
+  "B4 Names written in capitals or lowercase still count (\"SOUTHGATE\", \"king kong\", \"arsenal\", \"liverpool\")."
+ ],
+ "classes": [
+  {
+   "name": "Organization",
+   "description": "Companies (press agencies, studios, banks, stock markets, manufacturers, cooperatives) subdivisions of companies (newsrooms) brands political movements (political parties, terrorist organisations) government bodies (ministries, councils, courts, political unions of countries (e.g. the {\\it U.N.})) publications (magazines, newspapers, journals) musical companies (bands, choirs, opera companies, orchestras public organisations (schools, universities, charities other collections of people (sports clubs, sports teams, associations, theaters companies, religious orders, youth organisations.",
+   "rules": [
+    "OR1 @usernames of companies, brands, publications, broadcasters, leagues and teams are Organizations (\"@ nikesoccer\", \"@ newyorker\", \"@ nflnetwork\", \"@ SkyFootball\", \"@ UEFAcom\", \"@ NATOSource\").",
+    "OR2 Examples: \"@ Independent\", \"Irish News\", \"Malaysia Airlines\", \"Twitter\", \"BBC\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "first, middle and last names of people, animals and fictional characters aliases.",
+   "rules": [
+    "PE1 Most @usernames are Person, including fans, fan accounts, celebrities, nicknames and ordinary users (\"@ DMorifeu\", \"@ pewdiepie\", \"@ BLEEDINGXANAX\", \"@ Real_Liam_Payne\").",
+    "PE2 Examples: \"Obama\", \"President Obama\", \"@ SimoLove\", \"Kate Middleton\", \"Putin\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Roads (streets, motorways) trajectories regions (villages, towns, cities, provinces, countries, continents, dioceses, parishes) structures (bridges, ports, dams) natural locations (mountains, mountain ranges, woods, rivers, wells, fields, valleys, gardens, nature reserves, allotments, beaches, national parks) public places (squares, opera houses, museums, schools, markets, airports, stations, swimming pools, hospitals, sports facilities, youth centers, parks, town halls, theaters, cinemas, galleries, camping grounds, NASA launch pads, club houses, universities, libraries, churches, medical centers, parking lots, playgrounds, cemeteries) commercial places (chemists, pubs, restaurants, depots, hostels, hotels, industrial parks, nightclubs, music venues) assorted buildings (houses, monasteries, creches, mills, army barracks, castles, retirement homes, towers, halls, rooms, vicarages, courtyards) abstract ``places'' (e.g. {\\it the free world})",
+   "rules": [
+    "LO1 @usernames of places are Locations (\"@ SuffolkAONB\").",
+    "LO2 Examples: \"UK\", \"Ukraine\", \"US\", \"U . S .\", \"Iraq\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

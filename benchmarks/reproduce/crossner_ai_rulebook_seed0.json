@@ -1,0 +1,119 @@
+{
+ "auto_ids": false,
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "Task",
+   "description": "Refers to a particular research task or problem within a specific AI research field.",
+   "rules": [
+    "TA1 Annotate the name of the specific task, such as machine translation or object detection.",
+    "TA2 Examples: \"speech synthesis\", \"information retrieval\", \"Feature extraction\", \"dimension reduction\", \"speech recognition\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to a specific geographical or structural location.",
+   "rules": [
+    "LO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.",
+    "LO2 Examples: \"Chi\u0219in\u0103u\", \"Paris\", \"Montreal\", \"Scotiabank Theatre Toronto\", \"TIFF Bell Lightbox\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Refers to a structured group, institution, company, or association.",
+   "rules": [
+    "OR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.",
+    "OR2 Examples: \"Unimation\", \"IAPR\", \"Audio Engineering Society\", \"National Science Foundation\", \"National Aeronautics and Space Administration\"."
+   ]
+  },
+  {
+   "name": "Metric",
+   "description": "Refers to evaluation metrics used to assess the performance of AI models and algorithms.",
+   "rules": [
+    "ME1 Annotate specific metrics like F1-score.",
+    "ME2 Examples: \"mean squared error\", \"DCG\", \"maximum likelihood\", \"Recall-Oriented Understudy for Gisting Evaluation\", \"MSE\"."
+   ]
+  },
+  {
+   "name": "ProgrammingLanguage",
+   "description": "Refers to a programming language used in the development of AI applications and research.",
+   "rules": [
+    "PL1 Annotate the name of the programming language, such as Java and Python.",
+    "PL2 Examples: \"Java\", \"R\", \"CLIPS\", \"Python\", \"C + +\"."
+   ]
+  },
+  {
+   "name": "Product",
+   "description": "Refers to a product, system, or toolkit related to Artificial Intelligence.",
+   "rules": [
+    "PR1 This includes specific AI-enabled products (e.g., robots like Pepper), systems (e.g., facial recognition systems), and toolkits (e.g., Tensorflow and PyTorch).",
+    "PR2 Examples: \"MATLAB\", \"Programmable Universal Machine for Assembly\", \"industrial robot\", \"opinion-based recommender system\", \"Octave\"."
+   ]
+  },
+  {
+   "name": "Algorithm",
+   "description": "Refers to an algorithmic procedure or computational model used in Artificial Intelligence research.",
+   "rules": [
+    "AL1 This category includes algorithms (e.g., decision trees) and models (e.g., CNN and LSTM).",
+    "AL2 Examples: \"principal component analysis\", \"linear discriminant analysis\", \"gradient descent\", \"Support vector machine\", \"recurrent neural network\"."
+   ]
+  },
+  {
+   "name": "Country",
+   "description": "Refers to a sovereign nation.",
+   "rules": [
+    "CO1 Examples: \"Netherlands\", \"Japan\", \"Germany\", \"Canada\", \"Australia\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "Refers to an individual's name that is not a researcher.",
+   "rules": [
+    "PE1 Examples: \"Francis Ford Coppola\", \"Michael Jackson\", \"John Wayne\", \"Rita Hayworth\", \"Dean Martin\"."
+   ]
+  },
+  {
+   "name": "Researcher",
+   "description": "Refers to an individual engaged in research activities within the field of Artificial Intelligence (AI), including professors, Ph.D. students, and researchers in academia, research institutions, and companies.",
+   "rules": [
+    "RE1 If a person is involved in AI research, label them as a researcher entity instead of a person entity.",
+    "RE2 Examples: \"J\u00fcrgen Schmidhuber\", \"Seymour Papert\", \"Victor Scheinman\", \"Scheinman\", \"X.Y. Feng\"."
+   ]
+  },
+  {
+   "name": "Field",
+   "description": "Refers to a specific research area or subfield within Artificial Intelligence.",
+   "rules": [
+    "FI1 Also annotate acronyms such as NLP.",
+    "FI2 Examples: \"deep learning\", \"pattern recognition\", \"image processing\", \"reinforcement learning\", \"natural language processing\"."
+   ]
+  },
+  {
+   "name": "Conference",
+   "description": "Refers to a research conference or journal in the field of Artificial Intelligence.",
+   "rules": [
+    "CON1 This category includes conferences where AI research is presented and published.",
+    "CON2 Examples: \"AAAI\", \"1982 Association for the Advancement of Artificial Intelligence\", \"SIGGRAPH\", \"Symposium on Geometry Processing\", \"International Journal of Computer Vision\"."
+   ]
+  },
+  {
+   "name": "University",
+   "description": "Refers to an educational institution of higher learning.",
+   "rules": [
+    "UN1 Label organizations that are universities as 'university'' entities.",
+    "UN2 Examples: \"University of Toronto\", \"Cambridge\", \"University of Groningen\", \"MIT\", \"Brown University\"."
+   ]
+  },
+  {
+   "name": "Other",
+   "description": "Refers to named entities that are not included in any other category.",
+   "rules": [
+    "OT1 Examples: \"unsupervised methods\", \"topological properties\", \"audio signal\", \"eigenfaces\", \"intelligent agents\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

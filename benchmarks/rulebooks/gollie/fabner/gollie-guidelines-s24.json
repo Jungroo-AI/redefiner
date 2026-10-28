@@ -1,0 +1,97 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "EngineeringFeatures",
+   "description": "Encompass distinct terms or phrases that convey specific information related to the structural, functional, or visual properties of a manufacturing process.",
+   "rules": [
+    "EF1 Examples: \"design\", \"designed\", \"texture\", \"lattice structures\", \"designs\"."
+   ]
+  },
+  {
+   "name": "ProcessParameters",
+   "description": "Process parameters refer to specific quantitative values or attributes that play a significant role in manufacturing processes.",
+   "rules": [
+    "PP1 Examples: \"temperature\", \"layer\", \"build\", \"range\", \"temperatures\"."
+   ]
+  },
+  {
+   "name": "EnablingTechnology",
+   "description": "Specific tools, methods, processes, or technologies that play a pivotal role in facilitating or enhancing various aspects of manufacturing processes.",
+   "rules": [
+    "ET1 Examples: \"laser\", \"simulation\", \"modeling\", \"simulations\", \"CT\"."
+   ]
+  },
+  {
+   "name": "Material",
+   "description": "Refers to any substance or compound used in manufacturing processes that has a significant impact on the process, properties, or characteristics of the end product.",
+   "rules": [
+    "MA1 Materials can include metals, alloys, polymers, ceramics, composites, and more.",
+    "MA2 Examples: \"as\", \"be\", \"material\", \"powder\", \"alloy\"."
+   ]
+  },
+  {
+   "name": "MechanicalProperties",
+   "description": "Refers to specific attributes or characteristics of materials that describe their behavior under mechanical forces and conditions.",
+   "rules": [
+    "MEC1 These properties play a crucial role in manufacturing processes and are often used to evaluate the suitability and performance of materials for different applications.",
+    "MEC2 Examples: \"porosity\", \"strength\", \"density\", \"hardness\", \"residual stress\"."
+   ]
+  },
+  {
+   "name": "ManufacturingStandards",
+   "description": "Refer to specific guidelines, specifications, benchmarks, and terminology used within the manufacturing industry to ensure uniformity, quality, and compatibility of products, processes, and systems.",
+   "rules": [
+    "MS1 Examples: \"ISO\", \"benchmark\", \"ISO 25178-2\", \"file\", \"STL\"."
+   ]
+  },
+  {
+   "name": "ManufacturingProcess",
+   "description": "Refers to a specific technique, method, or procedure used in the production of goods.",
+   "rules": [
+    "MP1 Examples: \"AM\", \"additive manufacturing\", \"SLM\", \"3D printing\", \"fabrication\"."
+   ]
+  },
+  {
+   "name": "Application",
+   "description": "Refers to the specific field or industry in which a manufacturing process is utilized or intended to be utilized.",
+   "rules": [
+    "AP1 It signifies the purpose, domain, or sector where the manufacturing process finds its use.",
+    "AP2 Examples: \"mechanical\", \"imaging\", \"coating\", \"industrial\", \"support\"."
+   ]
+  },
+  {
+   "name": "MachineEquipment",
+   "description": "Any necessary items required for a particular purpose, including assembled parts and set of tools.",
+   "rules": [
+    "ME1 Equipments are required to set up not only the mechanical machines, but also for setting up any relevant operation or task.",
+    "ME2 Examples: \"components\", \"component\", \"nozzle\", \"beam\", \"powder bed\"."
+   ]
+  },
+  {
+   "name": "ConceptPrinciples",
+   "description": "Refers to key concepts, principles, and elements related to manufacturing processes.",
+   "rules": [
+    "CP1 Examples: \"process\", \"model\", \"mechanical properties\", \"samples\", \"materials\"."
+   ]
+  },
+  {
+   "name": "ProcessCharacterization",
+   "description": "Refers to the detailed analysis and measurement of various aspects of manufacturing processes to understand their performance, quality, and characteristics.",
+   "rules": [
+    "PC1 Examples: \"accuracy\", \"optical\", \"measurement\", \"spatter\", \"SEM\"."
+   ]
+  },
+  {
+   "name": "Biomedical",
+   "description": "Refers to any biomedical entity involved in the manufacturing process.",
+   "rules": [
+    "BI1 Examples: \"bone\", \"dendrites\", \"starch\", \"dendrite\", \"bone scaffolds\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

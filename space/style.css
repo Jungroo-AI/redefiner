@@ -1,0 +1,433 @@
+.gradio-container {
+  max-width: 1180px !important;
+  margin: auto;
+}
+
+.hero {
+  padding: 8px 0 4px;
+}
+
+.hero h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -.02em;
+}
+
+.hero p {
+  margin: 6px 0 10px;
+  color: #475569;
+  font-size: 16px;
+}
+
+.hero .tag {
+  font-weight: 600;
+  color: #1d4ed8;
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  border: 1px solid #e0e7ff;
+}
+
+.links a {
+  font-size: 13px;
+  margin-right: 14px;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.chips .wrap {
+  gap: 8px !important;
+}
+
+.chips label {
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+}
+
+.ex-what {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 2px 0;
+}
+
+.ex-stat {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.card.accent {
+  border-color: #bfdbfe;
+  box-shadow: 0 0 0 3px #eff6ff;
+}
+
+.card-h {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #64748b;
+  padding: 8px 14px;
+  border-bottom: 1px solid #eef2f7;
+  background: #f8fafc;
+}
+
+.card.accent .card-h {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-bottom-color: #dbeafe;
+}
+
+.spans {
+  line-height: 2.2;
+  padding: 14px;
+  font-size: 15.5px;
+  color: #0f172a;
+}
+
+.note {
+  font-size: 12.5px;
+  color: #b91c1c;
+  padding: 0 14px 12px;
+}
+
+mark {
+  border-radius: 6px;
+  padding: 3px 6px;
+  white-space: nowrap;
+  color: #0f172a;
+}
+
+mark.long {
+  white-space: normal;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+mark b {
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 6px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  opacity: .85;
+}
+
+mark.c1 {
+  background: #dbeafe;
+}
+
+mark.c1 b {
+  color: #1e40af;
+}
+
+mark.c2 {
+  background: #dcfce7;
+}
+
+mark.c2 b {
+  color: #166534;
+}
+
+mark.c3 {
+  background: #ffedd5;
+}
+
+mark.c3 b {
+  color: #9a3412;
+}
+
+mark.c4 {
+  background: #f3e8ff;
+}
+
+mark.c4 b {
+  color: #6b21a8;
+}
+
+mark.c5 {
+  background: #fef9c3;
+}
+
+mark.c5 b {
+  color: #854d0e;
+}
+
+mark.c6 {
+  background: #cffafe;
+}
+
+mark.c6 b {
+  color: #155e75;
+}
+
+mark.c7 {
+  background: #fce7f3;
+}
+
+mark.c7 b {
+  color: #9d174d;
+}
+
+mark.c8 {
+  background: #e0e7ff;
+}
+
+mark.c8 b {
+  color: #3730a3;
+}
+
+mark.bad {
+  outline: 2px dashed #dc2626;
+  outline-offset: 1px;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+.g2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.g3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width:900px) {
+  .g2,
+  .g3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin: 4px 0 8px;
+}
+
+.stat {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: #64748b;
+  background: #fff;
+}
+
+.stat span {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -.01em;
+}
+
+.stat.accent {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.stat.accent span {
+  color: #1d4ed8;
+}
+
+.stat-cap {
+  align-self: flex-end;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 2px;
+}
+
+.sec {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #fff;
+}
+
+.sec.gen {
+  background: #f8fafc;
+}
+
+.sec-h {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.sec-d {
+  font-size: 13px;
+  color: #475569;
+  margin-top: 2px;
+}
+
+.rules ul {
+  margin: 8px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.rules li {
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 4px 0;
+  color: #1e293b;
+}
+
+.rid {
+  display: inline-block;
+  font: 600 11px ui-monospace,monospace;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 5px;
+  padding: 0 6px;
+  margin-right: 8px;
+}
+
+.rules q {
+  quotes: none;
+  background: #f1f5f9;
+  border-radius: 4px;
+  padding: 0 4px;
+  font-family: ui-monospace,monospace;
+  font-size: 12.5px;
+}
+
+.hint {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.sticky {
+  position: sticky;
+  top: 12px;
+  align-self: flex-start;
+}
+
+.tip {
+  font-size: 13.5px;
+  color: #334155;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.form-h {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 6px 0 2px;
+  color: #0f172a;
+}
+
+.form-h span {
+  font-weight: 400;
+  font-size: 12.5px;
+  color: #64748b;
+  margin-left: 6px;
+}
+
+.form {
+  gap: 6px !important;
+}
+
+.cls {
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  margin: 0 !important;
+  background: #fff;
+}
+
+.cls .label-wrap {
+  justify-content: space-between !important;
+  text-align: left !important;
+  gap: 10px;
+}
+
+.cls .label-wrap > span:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  min-width: 0;
+  flex: 1;
+}
+
+.cls-tools {
+  gap: 8px !important;
+}
+
+.rules li.new {
+  border-left: 3px solid #22c55e;
+  background: #f0fdf4;
+  padding: 2px 8px;
+  border-radius: 0 6px 6px 0;
+}
+
+.legend {
+  font-size: 12.5px;
+  color: #475569;
+  margin: 2px 2px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend .sw {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-left: 3px solid #22c55e;
+  background: #f0fdf4;
+}
+
+.mono textarea {
+  font-family: ui-monospace,SFMono-Regular,Menlo,monospace !important;
+  font-size: 13px !important;
+}
+
+.limits {
+  font-size: 13px;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 10px;
+  margin-top: 6px;
+}
+
+mark.sample {
+  padding: 0 6px;
+}

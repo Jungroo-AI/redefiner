@@ -1,0 +1,79 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "algorithm",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "conference",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "country",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "field",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "metrics",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "product",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "programlang",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "researcher",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "task",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "university",
+   "description": "",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

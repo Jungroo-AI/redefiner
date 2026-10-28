@@ -1,0 +1,140 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "A1 Nationality, people and language adjectives such as \"American\", \"Dutch\", \"Israeli\", \"English\" are Other, never Country."
+ ],
+ "classes": [
+  {
+   "name": "Person",
+   "description": "Refers to an individual's name that is not a researcher.",
+   "rules": [
+    "PE1 Person is only for people outside research, such as actors, film characters, directors, writers, athletes and politicians: \"Harrison Ford\", \"Ridley Scott\", \"Lee Sedol\".",
+    "PE2 Examples: \"Francis Ford Coppola\", \"Michael Jackson\", \"John Wayne\", \"Rita Hayworth\", \"Dean Martin\"."
+   ]
+  },
+  {
+   "name": "Conference",
+   "description": "Refers to a research conference or journal in the field of Artificial Intelligence.",
+   "rules": [
+    "CON1 This category includes conferences where AI research is presented and published.",
+    "CON2 Research societies of AI, computing and computational linguistics are Conference, not Organization: \"Association for Computational Linguistics\", \"ACL\", \"AAAI\", \"Association for Computing Machinery\", \"ACM\". Societies of other fields, such as \"American Psychological Association\" and \"Cognitive Science Society\", and \"IEEE\" stay Organization.",
+    "CON3 Their special interest groups and resource associations are Conference too: \"Special Interest Group on Web as Corpus\", \"SIGWAC\", \"ELRA\".",
+    "CON4 Examples: \"AAAI\", \"1982 Association for the Advancement of Artificial Intelligence\", \"SIGGRAPH\", \"Symposium on Geometry Processing\", \"International Journal of Computer Vision\"."
+   ]
+  },
+  {
+   "name": "Country",
+   "description": "Refers to a sovereign nation.",
+   "rules": [
+    "CO1 Examples: \"Netherlands\", \"Japan\", \"Germany\", \"Canada\", \"Australia\"."
+   ]
+  },
+  {
+   "name": "University",
+   "description": "Refers to an educational institution of higher learning.",
+   "rules": [
+    "UN1 Label organizations that are universities as 'university'' entities.",
+    "UN2 Institutes and centres that are part of a university are University, not Organization: \"Robotics Institute\", \"Human-Computer Interaction Institute\", \"Entertainment Technology Center\", \"Indian Statistical Institute\".",
+    "UN3 Examples: \"University of Toronto\", \"Cambridge\", \"University of Groningen\", \"MIT\", \"Brown University\"."
+   ]
+  },
+  {
+   "name": "Other",
+   "description": "Refers to named entities that are not included in any other category.",
+   "rules": [
+    "OT1 An award or prize is one Other span that includes the organization name and year in front of it: \"NSF Career Award\", \"2018 Turing Award\", \"IEEE James L. Flanagan Speech and Audio Processing Award\".",
+    "OT2 Also label as Other: \"PhD\", \"IDE\".",
+    "OT3 Examples: \"unsupervised methods\", \"topological properties\", \"audio signal\", \"eigenfaces\", \"intelligent agents\"."
+   ]
+  },
+  {
+   "name": "ProgrammingLanguage",
+   "description": "Refers to a programming language used in the development of AI applications and research.",
+   "rules": [
+    "PL1 Annotate the name of the programming language, such as Java and Python.",
+    "PL2 Examples: \"Java\", \"R\", \"CLIPS\", \"Python\", \"C + +\"."
+   ]
+  },
+  {
+   "name": "Metric",
+   "description": "Refers to evaluation metrics used to assess the performance of AI models and algorithms.",
+   "rules": [
+    "ME1 Annotate specific metrics like F1-score.",
+    "ME2 Also label these evaluation terms as Metric: \"accuracy\", \"precision\", \"recall\", \"sensitivity\", \"specificity\", \"confusion matrix\".",
+    "ME3 A ratio formula is one Metric span: \"TP / ( TP + FP )\", \"FN / ( TN + FN )\".",
+    "ME4 Examples: \"mean squared error\", \"DCG\", \"maximum likelihood\", \"Recall-Oriented Understudy for Gisting Evaluation\", \"MSE\"."
+   ]
+  },
+  {
+   "name": "Product",
+   "description": "Refers to a product, system, or toolkit related to Artificial Intelligence.",
+   "rules": [
+    "PR1 This includes specific AI-enabled products (e.g., robots like Pepper), systems (e.g., facial recognition systems), and toolkits (e.g., Tensorflow and PyTorch).",
+    "PR2 Named software, operating systems, devices, voice assistants and lexical databases are Product, not Other or ProgrammingLanguage: \"WordNet\", \"Siri\", \"Android\", \"iPhone 4S\", \"Linux\", \"MATLAB\".",
+    "PR3 A Product span keeps a following \"system\", \"operating system\", \"toolkit\", \"API\" or \"package\": \"iOS operating system\", \"Sphinx toolkit\", \"Interlisp programming system\", \"interlingual machine translation system\".",
+    "PR4 Also label these kinds of robots and systems as Product: \"serial manipulator\", \"industrial robot\", \"recommender system\", \"chatbots\".",
+    "PR5 Translation tools and processing modules are Product, not Task: \"computer-aided translation\", \"machine-aided human translation\", \"coreference tagger\", \"Named entity recognition transducer\".",
+    "PR6 Examples: \"MATLAB\", \"Programmable Universal Machine for Assembly\", \"industrial robot\", \"opinion-based recommender system\", \"Octave\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Refers to a structured group, institution, company, or association.",
+   "rules": [
+    "OR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.",
+    "OR2 Examples: \"Unimation\", \"IAPR\", \"Audio Engineering Society\", \"National Science Foundation\", \"National Aeronautics and Space Administration\"."
+   ]
+  },
+  {
+   "name": "Algorithm",
+   "description": "Refers to an algorithmic procedure or computational model used in Artificial Intelligence research.",
+   "rules": [
+    "AL1 This category includes algorithms (e.g., decision trees) and models (e.g., CNN and LSTM).",
+    "AL2 Estimation methods \"maximum likelihood\", \"maximum a posteriori\" and \"MAP\" are Algorithm, not Metric.",
+    "AL3 Also label these as Algorithm: \"sigmoid function\", \"logistic function\", \"genetic algorithm\", \"convolution\".",
+    "AL4 An Algorithm span keeps a following \"algorithm\", \"method\", \"model\" or \"function\": \"EM algorithm\", \"Baum-Welch algorithm\", \"backpropagation algorithm\", \"maximum likelihood method\".",
+    "AL5 Named techniques and procedures are Algorithm, not Task: \"Collaborative filtering\", \"PCA whitening\", \"ZCA-whitening\", \"linear programming\", \"dynamic programming\", \"cross-validation\".",
+    "AL6 Examples: \"principal component analysis\", \"linear discriminant analysis\", \"gradient descent\", \"Support vector machine\", \"recurrent neural network\"."
+   ]
+  },
+  {
+   "name": "Researcher",
+   "description": "Refers to an individual engaged in research activities within the field of Artificial Intelligence (AI), including professors, Ph.D. students, and researchers in academia, research institutions, and companies.",
+   "rules": [
+    "RE1 If a person is involved in AI research, label them as a researcher entity instead of a person entity.",
+    "RE2 People described by research roles (elected fellow or member of a society, conference or program chair, journal editor, institute founder, developer of robots or software) are Researcher, also when only a surname or first name is given: \"Sycara\", \"Mehler\", \"Hayes\", \"Miller\", \"Devol\".",
+    "RE3 Examples: \"Jürgen Schmidhuber\", \"Seymour Papert\", \"Victor Scheinman\", \"Scheinman\", \"X.Y. Feng\"."
+   ]
+  },
+  {
+   "name": "Field",
+   "description": "Refers to a specific research area or subfield within Artificial Intelligence.",
+   "rules": [
+    "FI1 Also annotate acronyms such as NLP.",
+    "FI2 Learning paradigms and mining areas are Field, not Task: \"supervised learning\", \"semi-supervised learning\", \"text mining\", \"data mining\".",
+    "FI3 Also label broad disciplines as Field: \"computer science\", \"artificial intelligence\", \"mathematics\", \"statistics\", \"chemistry\", \"biology\".",
+    "FI4 Examples: \"deep learning\", \"pattern recognition\", \"image processing\", \"reinforcement learning\", \"natural language processing\"."
+   ]
+  },
+  {
+   "name": "Task",
+   "description": "Refers to a particular research task or problem within a specific AI research field.",
+   "rules": [
+    "TA1 Annotate the name of the specific task, such as machine translation or object detection.",
+    "TA2 Concrete problems a system solves are Task, not Field: \"object recognition\", \"object detection\", \"information retrieval\", \"speech perception\", \"OCR\".",
+    "TA3 Sub-domains and applications listed under a field are Task: \"scene reconstruction\", \"3D pose estimation\", \"audio signal processing\", \"video compression\".",
+    "TA4 Examples: \"speech synthesis\", \"information retrieval\", \"Feature extraction\", \"dimension reduction\", \"speech recognition\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to a specific geographical or structural location.",
+   "rules": [
+    "LO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.",
+    "LO2 Examples: \"Chișinău\", \"Paris\", \"Montreal\", \"Scotiabank Theatre Toronto\", \"TIFF Bell Lightbox\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

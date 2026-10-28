@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "redefiner"
+dynamic = ["version"]
+description = "A generalist 0.8B model for entity extraction and span labeling, guided by the rulebook you write."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Cibe", email = "cibe@jungroo.com" }]
+requires-python = ">=3.10"
+keywords = ["named-entity-recognition", "ner", "information-extraction", "span-labeling", "rulebook", "qwen"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+]
+dependencies = [
+    "torch>=2.9",
+    # model.py implements the cache interface of transformers' Qwen3.5 modeling code, which is internal and changes
+    # between minor versions; widen this range only after testing
+    "transformers>=5.19,<5.20",
+    "safetensors",
+    "huggingface_hub",
+]
+
+[project.optional-dependencies]
+gpu = ["flash-linear-attention==0.5.2"]
+export = ["peft==0.21.2", "accelerate"]
+dev = ["pytest", "ruff"]
+
+[project.urls]
+Homepage = "https://github.com/jungroo-ai/redefiner"
+Model = "https://huggingface.co/jungroo-ai/redefiner-0.8b"
+Demo = "https://huggingface.co/spaces/jungroo-ai/redefiner-demo"
+Issues = "https://github.com/jungroo-ai/redefiner/issues"
+
+[project.scripts]
+redefiner = "redefiner.serve:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "redefiner.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "space"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = [
+    "B905",     # zip() over a list and its own tail is the common case here; strict= would add noise
+    "SIM108",   # a short if/else block reads better than a long conditional expression
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["redefiner"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,30 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "Person",
+   "description": "first, middle and last names of people, animals and fictional characters aliases.",
+   "rules": [
+    "PE1 Examples: \"Obama\", \"President Obama\", \"@ SimoLove\", \"Kate Middleton\", \"Putin\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Companies (press agencies, studios, banks, stock markets, manufacturers, cooperatives) subdivisions of companies (newsrooms) brands political movements (political parties, terrorist organisations) government bodies (ministries, councils, courts, political unions of countries (e.g. the {\\it U.N.})) publications (magazines, newspapers, journals) musical companies (bands, choirs, opera companies, orchestras public organisations (schools, universities, charities other collections of people (sports clubs, sports teams, associations, theaters companies, religious orders, youth organisations.",
+   "rules": [
+    "OR1 Examples: \"@ Independent\", \"Irish News\", \"Malaysia Airlines\", \"Twitter\", \"BBC\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Roads (streets, motorways) trajectories regions (villages, towns, cities, provinces, countries, continents, dioceses, parishes) structures (bridges, ports, dams) natural locations (mountains, mountain ranges, woods, rivers, wells, fields, valleys, gardens, nature reserves, allotments, beaches, national parks) public places (squares, opera houses, museums, schools, markets, airports, stations, swimming pools, hospitals, sports facilities, youth centers, parks, town halls, theaters, cinemas, galleries, camping grounds, NASA launch pads, club houses, universities, libraries, churches, medical centers, parking lots, playgrounds, cemeteries) commercial places (chemists, pubs, restaurants, depots, hostels, hotels, industrial parks, nightclubs, music venues) assorted buildings (houses, monasteries, creches, mills, army barracks, castles, retirement homes, towers, halls, rooms, vicarages, courtyards) abstract ``places'' (e.g. {\\it the free world})",
+   "rules": [
+    "LO1 Examples: \"UK\", \"Ukraine\", \"US\", \"U . S .\", \"Iraq\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

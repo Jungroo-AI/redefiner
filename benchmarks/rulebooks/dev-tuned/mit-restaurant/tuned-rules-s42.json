@@ -1,0 +1,83 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "RestaurantName",
+   "description": "Refers to the specific names or titles of restaurants mentioned in the text.",
+   "rules": [
+    "RN1 It includes names of individual restaurants (hampton diner), chains, or franchises (mcdonalds) that uniquely identify a food establishment.",
+    "RN2 Chain and named places are RestaurantName, not Location or Cuisine, also after closest or nearest and when they hold a food word: \"arbys\", \"olive garden\", \"jack in the box\", \"pizza hut\", \"red lobster\", \"jacks steakhouse\".",
+    "RN3 Examples: \"mcdonalds\", \"burger king\", \"wendys\", \"taco bell\", \"olive garden\"."
+   ]
+  },
+  {
+   "name": "Price",
+   "description": "Refers to any specific information or descriptors related to the cost or pricing of the restaurant's menu items.",
+   "rules": [
+    "PR1 It includes various expressions, such as numerical price ranges (e.g., prices no more than 15.00), qualitative price indicators (e.g., cheap, moderately priced), and any other price-related descriptions (e.g., affordable, expensive).",
+    "PR2 A Price span is only the price word, without \"priced\", \"price\" or \"prices\": \"moderately\" in \"moderately priced\", \"reasonably\" in \"reasonably priced\", \"great\" in \"great prices\", \"low\" in \"low price\". Keep a \"not\": \"not expensive\".",
+    "PR3 Examples: \"cheap\", \"expensive\", \"reasonably\", \"cheapest\", \"affordable\"."
+   ]
+  },
+  {
+   "name": "Dish",
+   "description": "Refers to any specific food item, meal, or culinary creation offered by the restaurant.",
+   "rules": [
+    "DI1 It includes various food dishes, beverages, desserts, condiments, toppings, and other menu items that can be ordered and served.",
+    "DI2 A food or drink item is Dish, not Cuisine: \"tacos\", \"fried chicken\", \"catfish\", \"wontons\", \"bean soup\", \"cheeseburgers\".",
+    "DI3 Examples: \"pizza\", \"sushi\", \"steak\", \"burger\", \"ice cream\"."
+   ]
+  },
+  {
+   "name": "Cuisine",
+   "description": "Refers to any specific style or type of food associated with a particular culture, region, or culinary tradition.",
+   "rules": [
+    "CU1 It includes various types of cuisines, such as chinese, italian, mexican, fast food, seafood, etc.",
+    "CU2 A bare kind of eatery is Cuisine, not RestaurantName or Amenity: \"diner\", \"diners\", \"pub\", \"steakhouse\", \"microbrewery\", \"cafe\", \"delis\".",
+    "CU3 Examples: \"chinese\", \"italian\", \"mexican\", \"fast food\", \"seafood\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to any specific place, area, city, neighborhood, or geographical location mentioned in the context of a restaurant.",
+   "rules": [
+    "LO1 It includes various location expressions, such as city names (e.g., San Diego,Oakland), general areas (e.g., in town, in the area), relative positions (e.g., closest to my area, near me), or any other references to a place associated with the restaurant.",
+    "LO2 For a vague area keep the word in: \"in the area\", \"in town\", \"in this area\", \"in my area\"; for a named city or street leave in and on out: \"baltimore\", \"north street\".",
+    "LO3 Keep \"within\" and \"along\" in distance and route spans: \"within 5 miles\", \"within ten miles\", \"within a five mile radius\", \"along my route\".",
+    "LO4 A lone \"closest\", \"nearest\" or \"nearby\" is a one-word Location, without the word the before it or the restaurant name after it.",
+    "LO5 Examples: \"nearby\", \"closest\", \"nearest\", \"around here\", \"in the area\"."
+   ]
+  },
+  {
+   "name": "Hours",
+   "description": "Refers to any specific time-related information related to the operating hours or availability of the restaurant.",
+   "rules": [
+    "HO1 It includes expressions denoting specific times (e.g., 8pm), time intervals (e.g., until 11pm), and general time descriptions (e.g., late at night, open right now).",
+    "HO2 An opening time is one Hours span from \"open\" or \"still open\" to the end of the time: \"open until 1 am\", \"open at 5 am\", \"open late\", \"open past 9 pm\", \"still open\"; do not split open from the time. Keep after and before with a time: \"after midnight\", \"before 8 am\".",
+    "HO3 \"brunch\" is Hours, not Amenity.",
+    "HO4 Examples: \"lunch\", \"open\", \"dinner\", \"breakfast\", \"late night\"."
+   ]
+  },
+  {
+   "name": "Rating",
+   "description": "Refers to any specific qualitative or quantitative evaluation of a restaurant's quality, performance, or popularity, such as star ratings (5 start, 2-star), adjectives (e.g., good, excellent, best), and phrases that describe the restaurant's overall rating or customer experience (e.g., busy, top rated).",
+   "rules": [
+    "RA1 A praise word alone is a Rating: \"best\", \"highest rated\", \"nice\", \"good\"; keep the noun only for service and reviews: \"good service\", \"good reviews\".",
+    "RA2 Examples: \"good\", \"best\", \"nice\", \"great\", \"five star\"."
+   ]
+  },
+  {
+   "name": "Amenity",
+   "description": "Refers to any specific feature, service, or facility offered by a restaurant to enhance the customer experience.",
+   "rules": [
+    "AM1 It includes various expressions , such as accessibility options (handicapped accessible), special events (karaoke night), promotions (happy hour), or reservation requirements (do not require reservation), family-friendly services (kid friendly, kids eat free), smoking areas, parking facilities (valet parking), offerings (serve alcohol, buffet, takeout, free refills on soda), restaurant type (romantic, sports bar,..)  and other special or unique features that distinguish the restaurant.",
+    "AM2 Payment, portions and style are Amenity: \"credit cards\", \"american express\", \"large portions\", \"good sized portions\", \"fancy\".",
+    "AM3 Examples: \"kid friendly\", \"carry out\", \"take out\", \"buffet\", \"outdoor dining\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

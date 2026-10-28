@@ -1,0 +1,49 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "amenity",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "cuisine",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "dish",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "hours",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "price",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "rating",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "restaurant_name",
+   "description": "",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

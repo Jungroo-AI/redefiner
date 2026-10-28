@@ -1,0 +1,22 @@
+{
+  "buster_by_threshold": {
+    "buster_slimer@0.20": 0.58,
+    "buster_slimer@0.25": 0.43,
+    "buster_slimer@0.30": 0.43,
+    "buster_slimer@0.35": 0.39,
+    "buster_slimer@0.40": 0.31,
+    "buster_slimer@0.45": 0.28,
+    "buster_v5@0.20": 1.93,
+    "buster_v5@0.25": 2.17,
+    "buster_v5@0.30": 2.63,
+    "buster_v5@0.35": 2.91,
+    "buster_v5@0.40": 3.49,
+    "buster_v5@0.45": 3.49,
+    "buster_slimer@0.50": 0.21,
+    "buster_slimer@0.55": 0.25,
+    "buster_slimer@0.60": 0.24,
+    "buster_v5@0.50": 2.22,
+    "buster_v5@0.55": 1.55,
+    "buster_v5@0.60": 0.63
+  }
+}

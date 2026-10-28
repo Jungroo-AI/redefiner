@@ -1,0 +1,32 @@
+[RULES]
+G1 Extract every piece of personal information of the supplied types. Return exact spans from the text.
+
+[TYPE] NAME
+[DESCRIPTION] A person's first, last or full name.
+
+[TYPE] EMAIL
+[DESCRIPTION] An email address.
+
+[TYPE] PHONE
+[DESCRIPTION] A phone or fax number.
+
+[TYPE] STREET_ADDRESS
+[DESCRIPTION] A house number and street name.
+
+[TYPE] CITY
+[DESCRIPTION] A city or town.
+
+[TYPE] POSTCODE
+[DESCRIPTION] A postcode or ZIP code.
+
+[TYPE] DATE_OF_BIRTH
+[DESCRIPTION] A person's date of birth.
+
+[TYPE] ACCOUNT_NUMBER
+[DESCRIPTION] A bank account, card or customer account number.
+
+[TYPE] NOT_AN_ENTITY
+NE1 Our own support contacts, such as "help@acme.com" or "+1 800 555 0100".
+
+[RULES]
+G2 If a number could be a phone number or an account number, the word before it decides: "call" or "phone" means PHONE, "account" or "no." means ACCOUNT_NUMBER. This overrides everything above.

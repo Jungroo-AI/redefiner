@@ -1,0 +1,94 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "academicjournal",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "astronomicalobject",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "award",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "chemicalcompound",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "chemicalelement",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "country",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "discipline",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "enzyme",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "event",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "protein",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "scientist",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "theory",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "university",
+   "description": "",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

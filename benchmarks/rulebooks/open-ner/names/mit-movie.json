@@ -1,0 +1,69 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "actor",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "character",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "director",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "genre",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "plot",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "rating",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "ratings_average",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "review",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "song",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "title",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "trailer",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "year",
+   "description": "",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

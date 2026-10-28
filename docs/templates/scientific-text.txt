@@ -1,0 +1,21 @@
+[RULES]
+G1 Extract every entity of the supplied types from a research abstract. Return exact spans from the text.
+
+[TYPE] METHOD
+[DESCRIPTION] A named algorithm, model architecture or technique.
+M1 Models used as baselines are METHOD too ("an LSTM baseline", "compared with T5").
+
+[TYPE] DATASET
+[DESCRIPTION] A named dataset or benchmark.
+
+[TYPE] METRIC
+[DESCRIPTION] An evaluation metric, such as accuracy, F1 or BLEU.
+
+[TYPE] TASK
+[DESCRIPTION] The problem being solved, such as question answering or machine translation.
+
+[TYPE] NOT_AN_ENTITY
+NE1 Hardware and compute, such as "4 TPUs", "a single A100" or "16 GB of memory".
+
+[RULES]
+G2 Every evaluation measure is METRIC, never TASK, even when it sounds like a task ("answer accuracy", "span recall"). This overrides everything above.

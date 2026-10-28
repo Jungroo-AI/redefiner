@@ -1,0 +1,22 @@
+[RULES]
+G1 Extract every mention of the supplied types from a product review. Return exact spans from the text.
+
+[TYPE] PRODUCT
+[DESCRIPTION] The named product or model being reviewed or compared.
+P1 Named apps, services and accessories are PRODUCT too ("Apple Music", "AirPods").
+
+[TYPE] BRAND
+[DESCRIPTION] A company or brand name.
+
+[TYPE] FEATURE
+[DESCRIPTION] A part or property of the product the reviewer comments on, such as the battery, screen or price.
+F1 Label the feature word only ("battery"), not the opinion about it.
+
+[TYPE] PROBLEM
+[DESCRIPTION] A fault or problem the reviewer reports, as a short phrase ("drains overnight", "keeps crashing").
+
+[TYPE] NOT_AN_ENTITY
+NE1 Opinion words, such as "awesome", "slow" or "terrible".
+
+[RULES]
+G2 A brand inside a product name belongs to the product: "Samsung Galaxy" is PRODUCT, not BRAND. This overrides everything above.

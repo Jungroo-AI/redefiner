@@ -1,0 +1,843 @@
+{
+ "CrossNER AI": {
+  "mode": "extract",
+  "id": "CrossNER_AI/test/00385",
+  "text": "Increasingly , however , work at Cycorp involves giving the Cyc system the ability to communicate with end users in natural language , and to assist with the ongoing knowledge formation process via machine learning and natural language understanding .",
+  "gold": [
+   [
+    33,
+    39,
+    "Organization"
+   ],
+   [
+    60,
+    70,
+    "Product"
+   ],
+   [
+    198,
+    214,
+    "Field"
+   ],
+   [
+    219,
+    249,
+    "Task"
+   ]
+  ],
+  "a": [
+   [
+    33,
+    39,
+    "Organization"
+   ],
+   [
+    60,
+    63,
+    "Product"
+   ],
+   [
+    198,
+    214,
+    "Field"
+   ],
+   [
+    219,
+    249,
+    "Field"
+   ]
+  ],
+  "b": [
+   [
+    33,
+    39,
+    "Organization"
+   ],
+   [
+    60,
+    70,
+    "Product"
+   ],
+   [
+    198,
+    214,
+    "Field"
+   ]
+  ],
+  "base": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] Task\n[DESCRIPTION] Refers to a particular research task or problem within a specific AI research field.\nTA1 Annotate the name of the specific task, such as machine translation or object detection.\nTA2 Examples: \"speech synthesis\", \"information retrieval\", \"Feature extraction\", \"dimension reduction\", \"speech recognition\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to a specific geographical or structural location.\nLO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.\nLO2 Examples: \"Chișinău\", \"Paris\", \"Montreal\", \"Scotiabank Theatre Toronto\", \"TIFF Bell Lightbox\".\n\n[TYPE] Organization\n[DESCRIPTION] Refers to a structured group, institution, company, or association.\nOR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.\nOR2 Examples: \"Unimation\", \"IAPR\", \"Audio Engineering Society\", \"National Science Foundation\", \"National Aeronautics and Space Administration\".\n\n[TYPE] Metric\n[DESCRIPTION] Refers to evaluation metrics used to assess the performance of AI models and algorithms.\nME1 Annotate specific metrics like F1-score.\nME2 Examples: \"mean squared error\", \"DCG\", \"maximum likelihood\", \"Recall-Oriented Understudy for Gisting Evaluation\", \"MSE\".\n\n[TYPE] ProgrammingLanguage\n[DESCRIPTION] Refers to a programming language used in the development of AI applications and research.\nPL1 Annotate the name of the programming language, such as Java and Python.\nPL2 Examples: \"Java\", \"R\", \"CLIPS\", \"Python\", \"C + +\".\n\n[TYPE] Product\n[DESCRIPTION] Refers to a product, system, or toolkit related to Artificial Intelligence.\nPR1 This includes specific AI-enabled products (e.g., robots like Pepper), systems (e.g., facial recognition systems), and toolkits (e.g., Tensorflow and PyTorch).\nPR2 Examples: \"MATLAB\", \"Programmable Universal Machine for Assembly\", \"industrial robot\", \"opinion-based recommender system\", \"Octave\".\n\n[TYPE] Algorithm\n[DESCRIPTION] Refers to an algorithmic procedure or computational model used in Artificial Intelligence research.\nAL1 This category includes algorithms (e.g., decision trees) and models (e.g., CNN and LSTM).\nAL2 Examples: \"principal component analysis\", \"linear discriminant analysis\", \"gradient descent\", \"Support vector machine\", \"recurrent neural network\".\n\n[TYPE] Country\n[DESCRIPTION] Refers to a sovereign nation.\nCO1 Examples: \"Netherlands\", \"Japan\", \"Germany\", \"Canada\", \"Australia\".\n\n[TYPE] Person\n[DESCRIPTION] Refers to an individual's name that is not a researcher.\nPE1 Examples: \"Francis Ford Coppola\", \"Michael Jackson\", \"John Wayne\", \"Rita Hayworth\", \"Dean Martin\".\n\n[TYPE] Researcher\n[DESCRIPTION] Refers to an individual engaged in research activities within the field of Artificial Intelligence (AI), including professors, Ph.D. students, and researchers in academia, research institutions, and companies.\nRE1 If a person is involved in AI research, label them as a researcher entity instead of a person entity.\nRE2 Examples: \"Jürgen Schmidhuber\", \"Seymour Papert\", \"Victor Scheinman\", \"Scheinman\", \"X.Y. Feng\".\n\n[TYPE] Field\n[DESCRIPTION] Refers to a specific research area or subfield within Artificial Intelligence.\nFI1 Also annotate acronyms such as NLP.\nFI2 Examples: \"deep learning\", \"pattern recognition\", \"image processing\", \"reinforcement learning\", \"natural language processing\".\n\n[TYPE] Conference\n[DESCRIPTION] Refers to a research conference or journal in the field of Artificial Intelligence.\nCON1 This category includes conferences where AI research is presented and published.\nCON2 Examples: \"AAAI\", \"1982 Association for the Advancement of Artificial Intelligence\", \"SIGGRAPH\", \"Symposium on Geometry Processing\", \"International Journal of Computer Vision\".\n\n[TYPE] University\n[DESCRIPTION] Refers to an educational institution of higher learning.\nUN1 Label organizations that are universities as 'university'' entities.\nUN2 Examples: \"University of Toronto\", \"Cambridge\", \"University of Groningen\", \"MIT\", \"Brown University\".\n\n[TYPE] Other\n[DESCRIPTION] Refers to named entities that are not included in any other category.\nOT1 Examples: \"unsupervised methods\", \"topological properties\", \"audio signal\", \"eigenfaces\", \"intelligent agents\".\n",
+  "rules_book": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\nA1 Nationality, people and language adjectives such as \"American\", \"Dutch\", \"Israeli\", \"English\" are Other, never Country.\n\n[TYPE] Task\n[DESCRIPTION] Refers to a particular research task or problem within a specific AI research field.\nTA1 Annotate the name of the specific task, such as machine translation or object detection.\nTA2 Concrete problems a system solves are Task, not Field: \"object recognition\", \"object detection\", \"information retrieval\", \"speech perception\", \"OCR\".\nTA3 Sub-domains and applications listed under a field are Task: \"scene reconstruction\", \"3D pose estimation\", \"audio signal processing\", \"video compression\".\nTA4 Examples: \"speech synthesis\", \"information retrieval\", \"Feature extraction\", \"dimension reduction\", \"speech recognition\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to a specific geographical or structural location.\nLO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.\nLO2 Examples: \"Chișinău\", \"Paris\", \"Montreal\", \"Scotiabank Theatre Toronto\", \"TIFF Bell Lightbox\".\n\n[TYPE] Organization\n[DESCRIPTION] Refers to a structured group, institution, company, or association.\nOR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.\nOR2 Examples: \"Unimation\", \"IAPR\", \"Audio Engineering Society\", \"National Science Foundation\", \"National Aeronautics and Space Administration\".\n\n[TYPE] Metric\n[DESCRIPTION] Refers to evaluation metrics used to assess the performance of AI models and algorithms.\nME1 Annotate specific metrics like F1-score.\nME2 Also label these evaluation terms as Metric: \"accuracy\", \"precision\", \"recall\", \"sensitivity\", \"specificity\", \"confusion matrix\".\nME3 A ratio formula is one Metric span: \"TP / ( TP + FP )\", \"FN / ( TN + FN )\".\nME4 Examples: \"mean squared error\", \"DCG\", \"maximum likelihood\", \"Recall-Oriented Understudy for Gisting Evaluation\", \"MSE\".\n\n[TYPE] ProgrammingLanguage\n[DESCRIPTION] Refers to a programming language used in the development of AI applications and research.\nPL1 Annotate the name of the programming language, such as Java and Python.\nPL2 Examples: \"Java\", \"R\", \"CLIPS\", \"Python\", \"C + +\".\n\n[TYPE] Product\n[DESCRIPTION] Refers to a product, system, or toolkit related to Artificial Intelligence.\nPR1 This includes specific AI-enabled products (e.g., robots like Pepper), systems (e.g., facial recognition systems), and toolkits (e.g., Tensorflow and PyTorch).\nPR2 Named software, operating systems, devices, voice assistants and lexical databases are Product, not Other or ProgrammingLanguage: \"WordNet\", \"Siri\", \"Android\", \"iPhone 4S\", \"Linux\", \"MATLAB\".\nPR3 A Product span keeps a following \"system\", \"operating system\", \"toolkit\", \"API\" or \"package\": \"iOS operating system\", \"Sphinx toolkit\", \"Interlisp programming system\", \"interlingual machine translation system\".\nPR4 Also label these kinds of robots and systems as Product: \"serial manipulator\", \"industrial robot\", \"recommender system\", \"chatbots\".\nPR5 Translation tools and processing modules are Product, not Task: \"computer-aided translation\", \"machine-aided human translation\", \"coreference tagger\", \"Named entity recognition transducer\".\nPR6 Examples: \"MATLAB\", \"Programmable Universal Machine for Assembly\", \"industrial robot\", \"opinion-based recommender system\", \"Octave\".\n\n[TYPE] Algorithm\n[DESCRIPTION] Refers to an algorithmic procedure or computational model used in Artificial Intelligence research.\nAL1 This category includes algorithms (e.g., decision trees) and models (e.g., CNN and LSTM).\nAL2 Estimation methods \"maximum likelihood\", \"maximum a posteriori\" and \"MAP\" are Algorithm, not Metric.\nAL3 Also label these as Algorithm: \"sigmoid function\", \"logistic function\", \"genetic algorithm\", \"convolution\".\nAL4 An Algorithm span keeps a following \"algorithm\", \"method\", \"model\" or \"function\": \"EM algorithm\", \"Baum-Welch algorithm\", \"backpropagation algorithm\", \"maximum likelihood method\".\nAL5 Named techniques and procedures are Algorithm, not Task: \"Collaborative filtering\", \"PCA whitening\", \"ZCA-whitening\", \"linear programming\", \"dynamic programming\", \"cross-validation\".\nAL6 Examples: \"principal component analysis\", \"linear discriminant analysis\", \"gradient descent\", \"Support vector machine\", \"recurrent neural network\".\n\n[TYPE] Country\n[DESCRIPTION] Refers to a sovereign nation.\nCO1 Examples: \"Netherlands\", \"Japan\", \"Germany\", \"Canada\", \"Australia\".\n\n[TYPE] Person\n[DESCRIPTION] Refers to an individual's name that is not a researcher.\nPE1 Person is only for people outside research, such as actors, film characters, directors, writers, athletes and politicians: \"Harrison Ford\", \"Ridley Scott\", \"Lee Sedol\".\nPE2 Examples: \"Francis Ford Coppola\", \"Michael Jackson\", \"John Wayne\", \"Rita Hayworth\", \"Dean Martin\".\n\n[TYPE] Researcher\n[DESCRIPTION] Refers to an individual engaged in research activities within the field of Artificial Intelligence (AI), including professors, Ph.D. students, and researchers in academia, research institutions, and companies.\nRE1 If a person is involved in AI research, label them as a researcher entity instead of a person entity.\nRE2 People described by research roles (elected fellow or member of a society, conference or program chair, journal editor, institute founder, developer of robots or software) are Researcher, also when only a surname or first name is given: \"Sycara\", \"Mehler\", \"Hayes\", \"Miller\", \"Devol\".\nRE3 Examples: \"Jürgen Schmidhuber\", \"Seymour Papert\", \"Victor Scheinman\", \"Scheinman\", \"X.Y. Feng\".\n\n[TYPE] Field\n[DESCRIPTION] Refers to a specific research area or subfield within Artificial Intelligence.\nFI1 Also annotate acronyms such as NLP.\nFI2 Learning paradigms and mining areas are Field, not Task: \"supervised learning\", \"semi-supervised learning\", \"text mining\", \"data mining\".\nFI3 Also label broad disciplines as Field: \"computer science\", \"artificial intelligence\", \"mathematics\", \"statistics\", \"chemistry\", \"biology\".\nFI4 Examples: \"deep learning\", \"pattern recognition\", \"image processing\", \"reinforcement learning\", \"natural language processing\".\n\n[TYPE] Conference\n[DESCRIPTION] Refers to a research conference or journal in the field of Artificial Intelligence.\nCON1 This category includes conferences where AI research is presented and published.\nCON2 Research societies of AI, computing and computational linguistics are Conference, not Organization: \"Association for Computational Linguistics\", \"ACL\", \"AAAI\", \"Association for Computing Machinery\", \"ACM\". Societies of other fields, such as \"American Psychological Association\" and \"Cognitive Science Society\", and \"IEEE\" stay Organization.\nCON3 Their special interest groups and resource associations are Conference too: \"Special Interest Group on Web as Corpus\", \"SIGWAC\", \"ELRA\".\nCON4 Examples: \"AAAI\", \"1982 Association for the Advancement of Artificial Intelligence\", \"SIGGRAPH\", \"Symposium on Geometry Processing\", \"International Journal of Computer Vision\".\n\n[TYPE] University\n[DESCRIPTION] Refers to an educational institution of higher learning.\nUN1 Label organizations that are universities as 'university'' entities.\nUN2 Institutes and centres that are part of a university are University, not Organization: \"Robotics Institute\", \"Human-Computer Interaction Institute\", \"Entertainment Technology Center\", \"Indian Statistical Institute\".\nUN3 Examples: \"University of Toronto\", \"Cambridge\", \"University of Groningen\", \"MIT\", \"Brown University\".\n\n[TYPE] Other\n[DESCRIPTION] Refers to named entities that are not included in any other category.\nOT1 An award or prize is one Other span that includes the organization name and year in front of it: \"NSF Career Award\", \"2018 Turing Award\", \"IEEE James L. Flanagan Speech and Audio Processing Award\".\nOT2 Also label as Other: \"PhD\", \"IDE\".\nOT3 Examples: \"unsupervised methods\", \"topological properties\", \"audio signal\", \"eigenfaces\", \"intelligent agents\".\n"
+ },
+ "CrossNER Literature": {
+  "mode": "extract",
+  "id": "CrossNER_literature/test/00194",
+  "text": "He associated with a variety of figures in Britain 's intelligence community at the time , including Dennis Wheatley , Roald Dahl , Ian Fleming , and Maxwell Knight ,",
+  "gold": [
+   [
+    43,
+    50,
+    "Country"
+   ],
+   [
+    101,
+    116,
+    "Writer"
+   ],
+   [
+    119,
+    129,
+    "Writer"
+   ],
+   [
+    132,
+    143,
+    "Writer"
+   ],
+   [
+    150,
+    164,
+    "Person"
+   ]
+  ],
+  "a": [
+   [
+    43,
+    50,
+    "Country"
+   ],
+   [
+    101,
+    116,
+    "Person"
+   ],
+   [
+    119,
+    129,
+    "Writer"
+   ],
+   [
+    132,
+    143,
+    "Person"
+   ],
+   [
+    150,
+    164,
+    "Person"
+   ]
+  ],
+  "b": [
+   [
+    43,
+    50,
+    "Country"
+   ],
+   [
+    101,
+    116,
+    "Writer"
+   ],
+   [
+    119,
+    129,
+    "Writer"
+   ],
+   [
+    132,
+    143,
+    "Writer"
+   ],
+   [
+    150,
+    164,
+    "Person"
+   ]
+  ],
+  "base": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] Writer\n[DESCRIPTION] Refers to an individual actively engaged in the creation of literary works, including writers, novelists, scriptwriters, poets, and other literary artists.\nWR1 If a person is involved in literature-related roles, annotate them as a writer entity instead of a person entity.\nWR2 Examples: \"John Keegan\", \"Leo Tolstoy\", \"John Steinbeck\", \"Yeats\", \"Jacobs\".\n\n[TYPE] Organization\n[DESCRIPTION] Refers to a structured group, institution, company, or association.\nOR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.\nOR2 Examples: \"Science Fiction and Fantasy Writers of America\", \"The New York Times\", \"New York Times\", \"Food52\", \"Amnesty International\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to a specific geographical or structural location.\nLO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.\nLO2 Examples: \"London\", \"Chalcedon\", \"Charles Dickens Museum\", \"Charles Dickens Birthplace Museum\", \"Portsmouth\".\n\n[TYPE] Magazine\n[DESCRIPTION] Refers to a periodical publication that features articles, stories, and various literary works.\nMA1 Examples: \"The New Yorker\", \"Simbolul\", \"Private Eye\", \"The Atlantic\", \"The Crisis\".\n\n[TYPE] Country\n[DESCRIPTION] Refers to a sovereign nation.\nCO1 Examples: \"Germany\", \"Han dynasty\", \"England\", \"Italy\", \"Yuan dynasty\".\n\n[TYPE] Award\n[DESCRIPTION] Refers to a recognition or honor bestowed upon individuals or works of literature for notable achievements.\nAW1 Examples: \"Pulitzer Prize\", \"Nebula Award\", \"Hugo Award\", \"Academy Awards\", \"Nobel Prize in Literature\".\n\n[TYPE] Poem\n[DESCRIPTION] Refers to a literary composition characterized by its structured form, rhythm, and often heightened language.\nPO1 Examples: \"Barbara Frietchie\", \"The Barefoot Boy\", \"Maud Muller\", \"Snow-Bound\", \"Shishupala Vadha\".\n\n[TYPE] Person\n[DESCRIPTION] Refers to an individual's name that is not a writer.\nPE1 Examples: \"Lindbergh\", \"Giacomo di Benincasa\", \"Baron Cohen\", \"Emperor Toghon Temür\", \"Princess Noguk\".\n\n[TYPE] Event\n[DESCRIPTION] Refers to a significant occurrence or happening.\nEV1 Such as wars, conferences, festivals, sport events, etc.\nEV2 Examples: \"World War II\", \"Cannes Film Festival\", \"47th Berlin International Film Festival\", \"Luge at the 1976 Winter Olympics\", \"Equestrian at the 1976 Summer Olympics\".\n\n[TYPE] Book\n[DESCRIPTION] Refers to a published work of literature, typically consisting of written content bound in a physical or digital format.\nBO1 Examples: \"The Plague of Doves\", \"A History of Warfare\", \"The Color Purple\", \"Rabbit at Rest\", \"The Fountainhead\".\n\n[TYPE] Other\n[DESCRIPTION] Refers to named entities that are not included in any other category.\nOT1 Examples: \"American\", \"British\", \"English\", \"French\", \"Goryeo\".\n\n[TYPE] LiteraryGenre\n[DESCRIPTION] Refers to categories in literature defined by unique artistic techniques, themes, content, and lengths.\nLG1 Label words such as poetry, essay or novel as well as content categories like Science Fiction, Fantasy, and Fiction.\nLG2 It also encompasses culturally influenced genres, such as Nordic countries poetry.\nLG3 Examples: \"poem\", \"poems\", \"novels\", \"novel\", \"science fiction\".\n",
+  "rules_book": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] Writer\n[DESCRIPTION] Refers to an individual actively engaged in the creation of literary works, including writers, novelists, scriptwriters, poets, and other literary artists.\nWR1 If a person is involved in literature-related roles, annotate them as a writer entity instead of a person entity.\nWR2 A person known for writing is a Writer: novelists, poets, playwrights, screenwriters, journalists, critics, historians, philosophers and other authors, even when the sentence is about something else and even for a bare surname: \"Guillaume Apollinaire\", \"Herodotus\", \"Emily Brontë\", \"Elkin\".\nWR3 When unsure whether a person is a Writer or a Person, choose Writer.\nWR4 Examples: \"John Keegan\", \"Leo Tolstoy\", \"John Steinbeck\", \"Yeats\", \"Jacobs\".\n\n[TYPE] Organization\n[DESCRIPTION] Refers to a structured group, institution, company, or association.\nOR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.\nOR2 Examples: \"Science Fiction and Fantasy Writers of America\", \"The New York Times\", \"New York Times\", \"Food52\", \"Amnesty International\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to a specific geographical or structural location.\nLO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.\nLO2 Examples: \"London\", \"Chalcedon\", \"Charles Dickens Museum\", \"Charles Dickens Birthplace Museum\", \"Portsmouth\".\n\n[TYPE] Magazine\n[DESCRIPTION] Refers to a periodical publication that features articles, stories, and various literary works.\nMA1 Examples: \"The New Yorker\", \"Simbolul\", \"Private Eye\", \"The Atlantic\", \"The Crisis\".\n\n[TYPE] Country\n[DESCRIPTION] Refers to a sovereign nation.\nCO1 Nationality, people and language words are Other, not Country: \"American\", \"British\", \"English\", \"Roman\".\nCO2 Examples: \"Germany\", \"Han dynasty\", \"England\", \"Italy\", \"Yuan dynasty\".\n\n[TYPE] Award\n[DESCRIPTION] Refers to a recognition or honor bestowed upon individuals or works of literature for notable achievements.\nAW1 An Award span keeps the category after \"for\": \"Hugo Award for Novella\", \"Booker Prize for fiction\", \"Volpi Cup for Best Actor\"; it stops before \"for\" when the title of a work follows.\nAW2 Examples: \"Pulitzer Prize\", \"Nebula Award\", \"Hugo Award\", \"Academy Awards\", \"Nobel Prize in Literature\".\n\n[TYPE] Poem\n[DESCRIPTION] Refers to a literary composition characterized by its structured form, rhythm, and often heightened language.\nPO1 A single poem, including a long, epic or narrative poem or a ballad, is Poem, not Book: \"The Raggedy Man\", \"Divine Comedy\", \"The Tyger\".\nPO2 Examples: \"Barbara Frietchie\", \"The Barefoot Boy\", \"Maud Muller\", \"Snow-Bound\", \"Shishupala Vadha\".\n\n[TYPE] Person\n[DESCRIPTION] Refers to an individual's name that is not a writer.\nPE1 Person is only for people not known for writing, such as actors, fictional characters and rulers: \"Ingrid Bergman\", \"Jack Ryan\", \"Sennacherib\".\nPE2 Examples: \"Lindbergh\", \"Giacomo di Benincasa\", \"Baron Cohen\", \"Emperor Toghon Temür\", \"Princess Noguk\".\n\n[TYPE] Event\n[DESCRIPTION] Refers to a significant occurrence or happening.\nEV1 Such as wars, conferences, festivals, sport events, etc.\nEV2 Examples: \"World War II\", \"Cannes Film Festival\", \"47th Berlin International Film Festival\", \"Luge at the 1976 Winter Olympics\", \"Equestrian at the 1976 Summer Olympics\".\n\n[TYPE] Book\n[DESCRIPTION] Refers to a published work of literature, typically consisting of written content bound in a physical or digital format.\nBO1 Films and TV series are Other, not Book, even when they share a novel's title: \"Citizen Kane\", \"Vertigo\", \"Sling Blade\", \"The Darjeeling Limited\".\nBO2 Examples: \"The Plague of Doves\", \"A History of Warfare\", \"The Color Purple\", \"Rabbit at Rest\", \"The Fountainhead\".\n\n[TYPE] Other\n[DESCRIPTION] Refers to named entities that are not included in any other category.\nOT1 Nationality, people, religious and language words are Other: \"American\", \"Swedish\", \"Jewish\", \"Germans\".\nOT2 Examples: \"American\", \"British\", \"English\", \"French\", \"Goryeo\".\n\n[TYPE] LiteraryGenre\n[DESCRIPTION] Refers to categories in literature defined by unique artistic techniques, themes, content, and lengths.\nLG1 Label words such as poetry, essay or novel as well as content categories like Science Fiction, Fantasy, and Fiction.\nLG2 It also encompasses culturally influenced genres, such as Nordic countries poetry.\nLG3 Label every literary form or genre word, also as a plain common noun after his, her or the: \"novel\", \"novels\", \"poem\", \"poems\", \"short story\", \"prose\".\nLG4 Keep genre adjectives in the span (\"dystopian novel\", \"science fiction novel\", \"high fantasy novels\") but not ordinals or words like last: in \"his seventh novel\" label only \"novel\".\nLG5 Examples: \"poem\", \"poems\", \"novels\", \"novel\", \"science fiction\".\n"
+ },
+ "CrossNER Politics": {
+  "mode": "extract",
+  "id": "CrossNER_politics/test/00521",
+  "text": "Green deputies Noël Mamère , Martine Billard and Yves Cochet on September 10 , 2003 requested a Parliamentary Commission on the role of France in the support of military regimes in Latin America from 1973 to 1984 before the Foreign Affairs Commission of the National Assembly , presided by Edouard Balladur .",
+  "gold": [
+   [
+    15,
+    26,
+    "Politician"
+   ],
+   [
+    29,
+    44,
+    "Politician"
+   ],
+   [
+    49,
+    60,
+    "Politician"
+   ],
+   [
+    136,
+    142,
+    "Country"
+   ],
+   [
+    181,
+    194,
+    "Location"
+   ],
+   [
+    224,
+    275,
+    "Organization"
+   ],
+   [
+    290,
+    306,
+    "Politician"
+   ]
+  ],
+  "a": [
+   [
+    15,
+    26,
+    "Person"
+   ],
+   [
+    29,
+    44,
+    "Person"
+   ],
+   [
+    49,
+    60,
+    "Person"
+   ],
+   [
+    136,
+    142,
+    "Country"
+   ],
+   [
+    224,
+    275,
+    "Organization"
+   ],
+   [
+    290,
+    306,
+    "Person"
+   ]
+  ],
+  "b": [
+   [
+    15,
+    26,
+    "Politician"
+   ],
+   [
+    29,
+    44,
+    "Politician"
+   ],
+   [
+    49,
+    60,
+    "Politician"
+   ],
+   [
+    136,
+    142,
+    "Country"
+   ],
+   [
+    224,
+    275,
+    "Organization"
+   ],
+   [
+    290,
+    306,
+    "Politician"
+   ]
+  ],
+  "base": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] Country\n[DESCRIPTION] Refers to a sovereign nation.\nCO1 Examples: \"U.S.\", \"India\", \"China\", \"Germany\", \"United States\".\n\n[TYPE] Election\n[DESCRIPTION] Refers to an organized process in which individuals vote to choose a candidate or make a decision.\nEL1 If an event mentioned in the text pertains to an election, annotate it as an election entity.\nEL2 Examples: \"1997 Irish general election\", \"1992 United States presidential election\", \"1920 United States presidential election\", \"2000 United States presidential election\", \"2008 United States presidential election\".\n\n[TYPE] Organization\n[DESCRIPTION] Refers to a structured group, institution, company, or association that is not a political party.\nOR1 Examples: \"NARAL Pro-Choice America\", \"Planned Parenthood\", \"National Right to Life Committee\", \"United Daughters of the Confederacy\", \"Sons of Confederate Veterans\".\n\n[TYPE] Politician\n[DESCRIPTION] Refers to a person who is actively engaged in politics, holding a public office, involved in political activities or part of a political party.\nPO1 If a person entity is identified as a politician, annotate that person's name as a politician entity.\nPO2 Examples: \"Bush\", \"Ronald Reagan\", \"Al Gore\", \"Joseph Stalin\", \"Richard Nixon\".\n\n[TYPE] PoliticalParty\n[DESCRIPTION] A political party is an organization that coordinates candidates to compete in a particular country's elections.\nPP1 Also annotate acronyms of political parties.\nPP2 Examples: \"SPD\", \"National Party of Australia\", \"Sinn Féin\", \"FDP\", \"Liberal Party of Australia\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to a specific geographical or structural location.\nLO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.\nLO2 Examples: \"Paris\", \"London\", \"Berlin\", \"Rome\", \"Dublin\".\n\n[TYPE] Person\n[DESCRIPTION] Refers to an individual's name that is not a politician.\nPE1 Examples: \"Bennelong\", \"Zappa\", \"Tower\", \"Andrea Fischer\", \"Wyden\".\n\n[TYPE] Other\n[DESCRIPTION] Refers to named entities that are not included in any other category.\nOT1 Examples: \"Republican\", \"German\", \"Democrat\", \"Soviet\", \"Republicans\".\n\n[TYPE] Event\n[DESCRIPTION] Refers to a significant occurrence or happening.\nEV1 Such as wars, conferences, summits, conventions, etc.\nEV2 Examples: \"Decembrist revolt\", \"1952 Republican National Convention\", \"1943 Tehran Conference\", \"World War II\", \"1983 Commonwealth heads of Government summit\".\n",
+  "rules_book": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\nC1 Words for a nationality, people or language, such as \"American\", \"British\", \"Polish\" or \"Russian\", are never Country or Location; label them Other.\n\n[TYPE] Country\n[DESCRIPTION] Refers to a sovereign nation.\nCO1 Examples: \"U.S.\", \"India\", \"China\", \"Germany\", \"United States\".\n\n[TYPE] Election\n[DESCRIPTION] Refers to an organized process in which individuals vote to choose a candidate or make a decision.\nEL1 If an event mentioned in the text pertains to an election, annotate it as an election entity.\nEL2 An Election span starts at its year, or at the month when one comes before the year, and covers the whole name: \"1997 Canadian federal election\", \"1977 Ontario general election\", \"2016 Basque regional election\", \"February 1974 United Kingdom general election\". Never label the country or region inside it on its own.\nEL3 Examples: \"1997 Irish general election\", \"1992 United States presidential election\", \"1920 United States presidential election\", \"2000 United States presidential election\", \"2008 United States presidential election\".\n\n[TYPE] Organization\n[DESCRIPTION] Refers to a structured group, institution, company, or association that is not a political party.\nOR1 International federations of parties are Organization, not PoliticalParty: \"Liberal International\".\nOR2 Examples: \"NARAL Pro-Choice America\", \"Planned Parenthood\", \"National Right to Life Committee\", \"United Daughters of the Confederacy\", \"Sons of Confederate Veterans\".\n\n[TYPE] Politician\n[DESCRIPTION] Refers to a person who is actively engaged in politics, holding a public office, involved in political activities or part of a political party.\nPO1 If a person entity is identified as a politician, annotate that person's name as a politician entity.\nPO2 Candidates, party leaders and party officials are Politician even if they never held office, also when named by surname only: \"Nicole Malliotakis\", \"Guy Millner\", \"Giacomo Montalto\", \"Samis\", \"Dubé\".\nPO3 Examples: \"Bush\", \"Ronald Reagan\", \"Al Gore\", \"Joseph Stalin\", \"Richard Nixon\".\n\n[TYPE] PoliticalParty\n[DESCRIPTION] A political party is an organization that coordinates candidates to compete in a particular country's elections.\nPP1 Also annotate acronyms of political parties.\nPP2 Groups that run in elections are PoliticalParty even without the word Party in their name: \"Euskadiko Ezkerra\", \"Polisario Front\", \"Kuomintang\", \"Fatah\", \"GroenLinks\".\nPP3 Examples: \"SPD\", \"National Party of Australia\", \"Sinn Féin\", \"FDP\", \"Liberal Party of Australia\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to a specific geographical or structural location.\nLO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.\nLO2 Examples: \"Paris\", \"London\", \"Berlin\", \"Rome\", \"Dublin\".\n\n[TYPE] Person\n[DESCRIPTION] Refers to an individual's name that is not a politician.\nPE1 Person is only for people with no political role, such as actors, singers, writers, journalists and scholars.\nPE2 Examples: \"Bennelong\", \"Zappa\", \"Tower\", \"Andrea Fischer\", \"Wyden\".\n\n[TYPE] Other\n[DESCRIPTION] Refers to named entities that are not included in any other category.\nOT1 A party word used alone for a person, voter or adjective is Other, not PoliticalParty: \"Republican\", \"Democrat\", \"Republicans\", \"Democrats\".\nOT2 Examples: \"Republican\", \"German\", \"Democrat\", \"Soviet\", \"Republicans\".\n\n[TYPE] Event\n[DESCRIPTION] Refers to a significant occurrence or happening.\nEV1 Such as wars, conferences, summits, conventions, etc.\nEV2 Examples: \"Decembrist revolt\", \"1952 Republican National Convention\", \"1943 Tehran Conference\", \"World War II\", \"1983 Commonwealth heads of Government summit\".\n"
+ },
+ "MIT Restaurant": {
+  "mode": "extract",
+  "id": "mit-restaurant/test/01185",
+  "text": "what restaurant serves the largest portions of meat within 10 mile",
+  "gold": [
+   [
+    27,
+    43,
+    "Amenity"
+   ],
+   [
+    47,
+    51,
+    "Dish"
+   ],
+   [
+    52,
+    66,
+    "Location"
+   ]
+  ],
+  "a": [
+   [
+    47,
+    51,
+    "Cuisine"
+   ],
+   [
+    59,
+    66,
+    "Location"
+   ]
+  ],
+  "b": [
+   [
+    27,
+    43,
+    "Amenity"
+   ],
+   [
+    47,
+    51,
+    "Dish"
+   ],
+   [
+    52,
+    66,
+    "Location"
+   ]
+  ],
+  "base": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] Price\n[DESCRIPTION] Refers to any specific information or descriptors related to the cost or pricing of the restaurant's menu items.\nPR1 It includes various expressions, such as numerical price ranges (e.g., prices no more than 15.00), qualitative price indicators (e.g., cheap, moderately priced), and any other price-related descriptions (e.g., affordable, expensive).\nPR2 Examples: \"cheap\", \"expensive\", \"reasonably\", \"cheapest\", \"affordable\".\n\n[TYPE] Amenity\n[DESCRIPTION] Refers to any specific feature, service, or facility offered by a restaurant to enhance the customer experience.\nAM1 It includes various expressions , such as accessibility options (handicapped accessible), special events (karaoke night), promotions (happy hour), or reservation requirements (do not require reservation), family-friendly services (kid friendly, kids eat free), smoking areas, parking facilities (valet parking), offerings (serve alcohol, buffet, takeout, free refills on soda), restaurant type (romantic, sports bar,..)  and other special or unique features that distinguish the restaurant.\nAM2 Examples: \"kid friendly\", \"carry out\", \"take out\", \"buffet\", \"outdoor dining\".\n\n[TYPE] Hours\n[DESCRIPTION] Refers to any specific time-related information related to the operating hours or availability of the restaurant.\nHO1 It includes expressions denoting specific times (e.g., 8pm), time intervals (e.g., until 11pm), and general time descriptions (e.g., late at night, open right now).\nHO2 Examples: \"lunch\", \"open\", \"dinner\", \"breakfast\", \"late night\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to any specific place, area, city, neighborhood, or geographical location mentioned in the context of a restaurant.\nLO1 It includes various location expressions, such as city names (e.g., San Diego,Oakland), general areas (e.g., in town, in the area), relative positions (e.g., closest to my area, near me), or any other references to a place associated with the restaurant.\nLO2 Examples: \"nearby\", \"closest\", \"nearest\", \"around here\", \"in the area\".\n\n[TYPE] Rating\n[DESCRIPTION] Refers to any specific qualitative or quantitative evaluation of a restaurant's quality, performance, or popularity, such as star ratings (5 start, 2-star), adjectives (e.g., good, excellent, best), and phrases that describe the restaurant's overall rating or customer experience (e.g., busy, top rated).\nRA1 Examples: \"good\", \"best\", \"nice\", \"great\", \"five star\".\n\n[TYPE] RestaurantName\n[DESCRIPTION] Refers to the specific names or titles of restaurants mentioned in the text.\nRN1 It includes names of individual restaurants (hampton diner), chains, or franchises (mcdonalds) that uniquely identify a food establishment.\nRN2 Examples: \"mcdonalds\", \"burger king\", \"wendys\", \"taco bell\", \"olive garden\".\n\n[TYPE] Cuisine\n[DESCRIPTION] Refers to any specific style or type of food associated with a particular culture, region, or culinary tradition.\nCU1 It includes various types of cuisines, such as chinese, italian, mexican, fast food, seafood, etc.\nCU2 Examples: \"chinese\", \"italian\", \"mexican\", \"fast food\", \"seafood\".\n\n[TYPE] Dish\n[DESCRIPTION] Refers to any specific food item, meal, or culinary creation offered by the restaurant.\nDI1 It includes various food dishes, beverages, desserts, condiments, toppings, and other menu items that can be ordered and served.\nDI2 Examples: \"pizza\", \"sushi\", \"steak\", \"burger\", \"ice cream\".\n",
+  "rules_book": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] Price\n[DESCRIPTION] Refers to any specific information or descriptors related to the cost or pricing of the restaurant's menu items.\nPR1 It includes various expressions, such as numerical price ranges (e.g., prices no more than 15.00), qualitative price indicators (e.g., cheap, moderately priced), and any other price-related descriptions (e.g., affordable, expensive).\nPR2 A Price span is only the price word, without \"priced\", \"price\" or \"prices\": \"moderately\" in \"moderately priced\", \"reasonably\" in \"reasonably priced\", \"great\" in \"great prices\", \"low\" in \"low price\". Keep a \"not\": \"not expensive\".\nPR3 Examples: \"cheap\", \"expensive\", \"reasonably\", \"cheapest\", \"affordable\".\n\n[TYPE] Amenity\n[DESCRIPTION] Refers to any specific feature, service, or facility offered by a restaurant to enhance the customer experience.\nAM1 It includes various expressions , such as accessibility options (handicapped accessible), special events (karaoke night), promotions (happy hour), or reservation requirements (do not require reservation), family-friendly services (kid friendly, kids eat free), smoking areas, parking facilities (valet parking), offerings (serve alcohol, buffet, takeout, free refills on soda), restaurant type (romantic, sports bar,..)  and other special or unique features that distinguish the restaurant.\nAM2 Payment, portions and style are Amenity: \"credit cards\", \"american express\", \"large portions\", \"good sized portions\", \"fancy\".\nAM3 Examples: \"kid friendly\", \"carry out\", \"take out\", \"buffet\", \"outdoor dining\".\n\n[TYPE] Hours\n[DESCRIPTION] Refers to any specific time-related information related to the operating hours or availability of the restaurant.\nHO1 It includes expressions denoting specific times (e.g., 8pm), time intervals (e.g., until 11pm), and general time descriptions (e.g., late at night, open right now).\nHO2 An opening time is one Hours span from \"open\" or \"still open\" to the end of the time: \"open until 1 am\", \"open at 5 am\", \"open late\", \"open past 9 pm\", \"still open\"; do not split open from the time. Keep after and before with a time: \"after midnight\", \"before 8 am\".\nHO3 \"brunch\" is Hours, not Amenity.\nHO4 Examples: \"lunch\", \"open\", \"dinner\", \"breakfast\", \"late night\".\n\n[TYPE] Location\n[DESCRIPTION] Refers to any specific place, area, city, neighborhood, or geographical location mentioned in the context of a restaurant.\nLO1 It includes various location expressions, such as city names (e.g., San Diego,Oakland), general areas (e.g., in town, in the area), relative positions (e.g., closest to my area, near me), or any other references to a place associated with the restaurant.\nLO2 For a vague area keep the word in: \"in the area\", \"in town\", \"in this area\", \"in my area\"; for a named city or street leave in and on out: \"baltimore\", \"north street\".\nLO3 Keep \"within\" and \"along\" in distance and route spans: \"within 5 miles\", \"within ten miles\", \"within a five mile radius\", \"along my route\".\nLO4 A lone \"closest\", \"nearest\" or \"nearby\" is a one-word Location, without the word the before it or the restaurant name after it.\nLO5 Examples: \"nearby\", \"closest\", \"nearest\", \"around here\", \"in the area\".\n\n[TYPE] Rating\n[DESCRIPTION] Refers to any specific qualitative or quantitative evaluation of a restaurant's quality, performance, or popularity, such as star ratings (5 start, 2-star), adjectives (e.g., good, excellent, best), and phrases that describe the restaurant's overall rating or customer experience (e.g., busy, top rated).\nRA1 A praise word alone is a Rating: \"best\", \"highest rated\", \"nice\", \"good\"; keep the noun only for service and reviews: \"good service\", \"good reviews\".\nRA2 Examples: \"good\", \"best\", \"nice\", \"great\", \"five star\".\n\n[TYPE] RestaurantName\n[DESCRIPTION] Refers to the specific names or titles of restaurants mentioned in the text.\nRN1 It includes names of individual restaurants (hampton diner), chains, or franchises (mcdonalds) that uniquely identify a food establishment.\nRN2 Chain and named places are RestaurantName, not Location or Cuisine, also after closest or nearest and when they hold a food word: \"arbys\", \"olive garden\", \"jack in the box\", \"pizza hut\", \"red lobster\", \"jacks steakhouse\".\nRN3 Examples: \"mcdonalds\", \"burger king\", \"wendys\", \"taco bell\", \"olive garden\".\n\n[TYPE] Cuisine\n[DESCRIPTION] Refers to any specific style or type of food associated with a particular culture, region, or culinary tradition.\nCU1 It includes various types of cuisines, such as chinese, italian, mexican, fast food, seafood, etc.\nCU2 A bare kind of eatery is Cuisine, not RestaurantName or Amenity: \"diner\", \"diners\", \"pub\", \"steakhouse\", \"microbrewery\", \"cafe\", \"delis\".\nCU3 Examples: \"chinese\", \"italian\", \"mexican\", \"fast food\", \"seafood\".\n\n[TYPE] Dish\n[DESCRIPTION] Refers to any specific food item, meal, or culinary creation offered by the restaurant.\nDI1 It includes various food dishes, beverages, desserts, condiments, toppings, and other menu items that can be ordered and served.\nDI2 A food or drink item is Dish, not Cuisine: \"tacos\", \"fried chicken\", \"catfish\", \"wontons\", \"bean soup\", \"cheeseburgers\".\nDI3 Examples: \"pizza\", \"sushi\", \"steak\", \"burger\", \"ice cream\".\n"
+ },
+ "E3C": {
+  "mode": "extract",
+  "id": "E3C/test/00317",
+  "text": "Because of hepato-splenomegaly , pancytopenia , hyperferritinemia and hypofibrinogenemia the diagnosis of Macrophage activation syndrome was evoked indicating a bone marrow aspiration that showed numerous morphologically benign macrophages with haemophagocytic activity that comforting the diagnosis of a SAM according to Ravelli and HLH - 2004 criteria .",
+  "gold": [
+   [
+    11,
+    30,
+    "ClinicalEntity"
+   ],
+   [
+    33,
+    45,
+    "ClinicalEntity"
+   ],
+   [
+    48,
+    65,
+    "ClinicalEntity"
+   ],
+   [
+    70,
+    88,
+    "ClinicalEntity"
+   ],
+   [
+    106,
+    136,
+    "ClinicalEntity"
+   ],
+   [
+    305,
+    308,
+    "ClinicalEntity"
+   ]
+  ],
+  "a": [
+   [
+    11,
+    30,
+    "ClinicalEntity"
+   ],
+   [
+    33,
+    45,
+    "ClinicalEntity"
+   ],
+   [
+    48,
+    65,
+    "ClinicalEntity"
+   ],
+   [
+    70,
+    88,
+    "ClinicalEntity"
+   ],
+   [
+    106,
+    136,
+    "ClinicalEntity"
+   ],
+   [
+    205,
+    239,
+    "ClinicalEntity"
+   ],
+   [
+    305,
+    308,
+    "ClinicalEntity"
+   ],
+   [
+    322,
+    344,
+    "ClinicalEntity"
+   ]
+  ],
+  "b": [
+   [
+    11,
+    30,
+    "ClinicalEntity"
+   ],
+   [
+    33,
+    45,
+    "ClinicalEntity"
+   ],
+   [
+    48,
+    65,
+    "ClinicalEntity"
+   ],
+   [
+    70,
+    88,
+    "ClinicalEntity"
+   ],
+   [
+    106,
+    136,
+    "ClinicalEntity"
+   ],
+   [
+    305,
+    308,
+    "ClinicalEntity"
+   ]
+  ],
+  "base": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] ClinicalEntity\n[DESCRIPTION] A definite pathologic process with a characteristic set of signs and symptoms.\nCE1 Examples: \"tumor\", \"tumour\", \"vomiting\", \"swelling\", \"epistaxis\".\n",
+  "rules_book": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\nE1 Label disorders: diseases, injuries, infections, tumours, signs, symptoms and abnormal findings, also when written as an adjective.\nE2 Never label tests, measurements or their results (\"BP\", \"pulse\", \"temperature\", \"haemoglobin 10.9 g / dl\", \"liver enzymes\"), procedures and treatments (\"oesophageo-gastro-duodenoscopy\", \"coronary artery bypass grafting\", \"surgery\", \"antibiotics\", \"prednisolone\"), body parts on their own (\"mucosa\", \"knees\"), or habits (\"alcohol use\").\nE3 Label a disorder also when it is negated or absent, leaving out the negating word.\nE4 A mention is the disorder phrase itself, usually one to three words. Never label a clause, a sentence or a description of an examination or of a procedure.\n\n[TYPE] ClinicalEntity\n[DESCRIPTION] A definite pathologic process with a characteristic set of signs and symptoms.\nCE1 Common disorder words are mentions on their own: \"fever\", \"tumor\", \"cyst\", \"lesions\", \"headache\", \"diabetic\".\nCE2 Leave out a leading word that gives side, size or severity: label \"pitting oedema\", \"hepatomegaly\", \"VI nerve palsy\", \"ovarian cyst\".\nCE3 Keep a following phrase that says where the disorder is: \"tinnitus in the right ear\", \"pain behind both eyes\", \"hyperemia of nasal mucosa\".\nCE4 Examples: \"tumor\", \"tumour\", \"vomiting\", \"swelling\", \"epistaxis\".\n"
+ },
+ "WikiEvents": {
+  "mode": "extract",
+  "id": "WikiEvents_NER/test/00440",
+  "text": "Bellingcat says it is possible to geolocate the video of the falling drone to the same location as the fire in the apartment that firefighters had claimed was caused by a gas canister explosion.",
+  "gold": [
+   [
+    0,
+    10,
+    "Organization"
+   ],
+   [
+    69,
+    74,
+    "Vehicle"
+   ],
+   [
+    87,
+    95,
+    "Location"
+   ],
+   [
+    115,
+    124,
+    "Facility"
+   ],
+   [
+    130,
+    142,
+    "Person"
+   ],
+   [
+    175,
+    183,
+    "Weapon"
+   ]
+  ],
+  "a": [
+   [
+    0,
+    10,
+    "Organization"
+   ],
+   [
+    69,
+    74,
+    "Vehicle"
+   ],
+   [
+    115,
+    124,
+    "Facility"
+   ],
+   [
+    130,
+    142,
+    "Organization"
+   ],
+   [
+    171,
+    193,
+    "Weapon"
+   ]
+  ],
+  "b": [
+   [
+    0,
+    10,
+    "Organization"
+   ],
+   [
+    69,
+    74,
+    "Vehicle"
+   ],
+   [
+    115,
+    124,
+    "Facility"
+   ],
+   [
+    130,
+    142,
+    "Person"
+   ]
+  ],
+  "base": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] Person\n[DESCRIPTION] Person entities are limited to humans.\nPE1 A Person entity may be a single person or a group.\nPE2 Examples: \"he\", \"his\", \"who\", \"people\", \"they\".\n\n[TYPE] Vehicle\n[DESCRIPTION] A physical device primarily designed to move an object from one location to another, by (for example) carrying, flying, pulling, or pushing the transported object.\nVE1 Vehicle entities may or may not have their own power source.\nVE2 Examples: \"car\", \"drone\", \"drones\", \"vehicle\", \"boat\".\n\n[TYPE] Information\n[DESCRIPTION] An information object such as a field of study or topic of communication, including thoughts, opinions, etc.\nIN1 Examples: \"conference\", \"images\", \"report\", \"statement\", \"name\".\n\n[TYPE] BodyPart\n[DESCRIPTION] An identifiable, living part of a human's or animal's body, such as a eye, ear, neck, leg, etc.\nBP1 Examples: \"tatoo\", \"limbs\", \"the bodies\", \"neck\", \"ear\".\n\n[TYPE] Organization\n[DESCRIPTION] Corporations, agencies, and other groups of people defined by an established organizational structure.\nOR1 An ORG entity may be a single organization or a group.\nOR2 A key feature of an ORG is that it can change members without changing identity.\nOR3 Examples: \"police\", \"government\", \"FBI\", \"IRA\", \"military\".\n\n[TYPE] CommercialProduct\n[DESCRIPTION] A tangible product or article of trade for which someone pays or barters, or more generally, an artifact or a thing.\nCP1 Examples: \"Arduino\", \"ID\", \"food\", \"bottle cap\", \"backpack\".\n\n[TYPE] Facility\n[DESCRIPTION] A functional, primarily man-made structure.\nFA1 Facilities are artifacts falling under the domains of architecture and civil engineering, including more temporary human constructs, such as police lines and checkpoints.\nFA2 Examples: \"where\", \"prison\", \"station\", \"home\", \"hospital\".\n\n[TYPE] SideOfConflict\n[DESCRIPTION] The different sides of a conflict, such as philosophical, cultural, ideological, religious, political, guiding philosophical movement or group orientation.\nSO1 This will encompass sides of the battle/conflict, sports fans when salient, and other such affiliations, in addition to religions, political parties, and other philosophies.\nSO2 Examples: \"church\", \"officers\", \"supporters\", \"radical Islam\".\n\n[TYPE] Numeric\n[DESCRIPTION] A numerical value or non-numerical value such as an informational property such as color or make or URL.\nNU1 Examples: \"two\", \"three\", \"2\", \"five\", \"Tuesday\".\n\n[TYPE] MedicalHealthIssue\n[DESCRIPTION] Any medical condition or health issue, to include everything from disease to broken bones to fever to general ill health, medical errors, even natural causes\nMH1 Examples: \"disease\", \"fever\", \"autism spectrum disorder\", \"weak\", \"coronavirus\".\n\n[TYPE] Money\n[DESCRIPTION] A monetary payment.\nMO1 The extent of a Money mention includes modifying quantifiers, the amount, and the currency unit, all of which can be optional.\nMO2 Examples: \"cash\", \"$925\", \"$2,775\", \"$5.2 million\", \"$400\".\n\n[TYPE] GPE\n[DESCRIPTION] Geopolitical entities such as countries, provinces, states, cities, towns, etc. GPEs are composite entities, consisting of a physical location, a government, and a population.\nGP1 All three of these elements must be present for an entity to be tagged as a GPE.\nGP2 A GPE entity may be a single geopolitical entity or a group.\nGP3 Examples: \"Boston\", \"U.S\", \"U.S.\", \"Venezuela\", \"country\".\n\n[TYPE] Abstract\n[DESCRIPTION] Abstract, non-tangible artifacts such as software (e.g., programs, tool kits, apps, e-mail), measureable intellectual property, contracts, etc. (nb: does not include laws, which are LAW type)\nAB1 Examples: \"documents\", \"technology\", \"Proposals\", \"report\", \"research\".\n\n[TYPE] Location\n[DESCRIPTION] Geographical entities such as geographical areas and landmasses, bodies of water.\nLO1 Examples: \"area\", \"line\", \"world\", \"areas\", \"where\".\n\n[TYPE] Weapon\n[DESCRIPTION] A physical device that is primarily used as an instrument for physically harming or destroying entities.\nWE1 Examples: \"bomb\", \"bombs\", \"drone\", \"explosives\", \"device\".\n\n[TYPE] JobTitle\n[DESCRIPTION] A person's title or job role.\nJT1 Examples: \"President\", \"president\", \"Attorney General\", \"opposition activist\", \"Prime Minister\".\n",
+  "rules_book": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\nW1 Label every mention of an entity, not only names: names (\"Maduro\", \"Islamic State\"), common nouns (\"people\", \"police\", \"city\", \"bombs\") and pronouns (\"he\", \"his\", \"who\", \"they\", \"I\", \"its\"). Label each mention separately, also when it refers to an entity that is already labelled.\nW2 For a common noun, label only its head word, without articles, numbers or adjectives: \"soldiers\" in \"Russian soldiers\", \"militia\" in \"a pro-Assad militia\", \"general\" in \"a major general\". Names are labelled in full (\"Dzhokhar Tsarnaev\", \"U.S. Air Force Office of Special Investigations\"). The one exception is \"the government\", which keeps its article.\nW3 A modifier that names a country or a group is its own mention: in \"Russian soldiers and Syrian pro-regime militiamen\", \"Russian\" and \"Syrian\" are GPE, \"regime\" is Organization, and \"soldiers\" and \"militiamen\" are Person.\nW4 A title before a name is a separate Person mention: \"General\" and \"Vyacheslav Gladkikh\" in \"Major General Vyacheslav Gladkikh\".\nW5 Events such as \"explosion\" or \"attack\" are not entities. Reports, statements, videos and social media are usually left unlabelled.\nW6 SideOfConflict, JobTitle, Information and Abstract are almost never used. Fighters, troops, forces, militants, insurgents, rebels, protesters, terrorists and supporters are Person. A title or role that refers to the person holding it is Person. Reports, statements, photos and software are left unlabelled.\n\n[TYPE] Person\n[DESCRIPTION] Person entities are limited to humans.\nPE1 A Person entity may be a single person or a group.\nPE2 Personal pronouns are Person mentions: \"he\", \"she\", \"I\", \"we\", \"you\", \"they\", \"who\", \"him\", \"them\".\nPE3 Possessive pronouns are Person mentions too: \"his\", \"her\", \"their\".\nPE4 Nouns for people are Person: \"people\", \"man\", \"men\", \"women\", \"children\", \"suspect\", \"members\".\nPE5 Groups acting as people are Person: \"authorities\", \"prosecutors\", \"forces\", \"militants\".\nPE6 Police acting as a group of people are Person (\"Police have cordoned off the area\").\nPE7 A title or role that refers to the person holding it is Person: \"general\", \"Minister\", \"spokesman\", \"Agent\".\nPE8 Examples: \"he\", \"his\", \"who\", \"people\", \"they\".\n\n[TYPE] Vehicle\n[DESCRIPTION] A physical device primarily designed to move an object from one location to another, by (for example) carrying, flying, pulling, or pushing the transported object.\nVE1 Vehicle entities may or may not have their own power source.\nVE2 Cars, trucks, buses, bikes, aircraft and convoys are Vehicles: \"truck\", \"car\", \"bus\", \"bike\", \"helicopter\", \"UAVs\", \"convoy\".\nVE3 Examples: \"car\", \"drone\", \"drones\", \"vehicle\", \"boat\".\n\n[TYPE] Information\n[DESCRIPTION] An information object such as a field of study or topic of communication, including thoughts, opinions, etc.\nIN1 Examples: \"conference\", \"images\", \"report\", \"statement\", \"name\".\n\n[TYPE] BodyPart\n[DESCRIPTION] An identifiable, living part of a human's or animal's body, such as a eye, ear, neck, leg, etc.\nBP1 Examples: \"tatoo\", \"limbs\", \"the bodies\", \"neck\", \"ear\".\n\n[TYPE] Organization\n[DESCRIPTION] Corporations, agencies, and other groups of people defined by an established organizational structure.\nOR1 An ORG entity may be a single organization or a group.\nOR2 A key feature of an ORG is that it can change members without changing identity.\nOR3 Governments, regimes, armies, police forces, agencies, courts, assemblies, parties, armed groups and news outlets are Organizations, also as common nouns or pronouns: \"government\", \"regime\", \"military\", \"army\", \"court\", \"assembly\", \"group\", \"services\", \"Al-Monitor\", \"AFP\", \"BBC\", \"it\", \"their\".\nOR4 \"police\" before another noun is an Organization (\"a police source\", \"French police officers\", \"all police prefects\").\nOR5 \"the government\" is labelled with its article.\nOR6 Examples: \"police\", \"government\", \"FBI\", \"IRA\", \"military\".\n\n[TYPE] CommercialProduct\n[DESCRIPTION] A tangible product or article of trade for which someone pays or barters, or more generally, an artifact or a thing.\nCP1 Examples: \"Arduino\", \"ID\", \"food\", \"bottle cap\", \"backpack\".\n\n[TYPE] Facility\n[DESCRIPTION] A functional, primarily man-made structure.\nFA1 Facilities are artifacts falling under the domains of architecture and civil engineering, including more temporary human constructs, such as police lines and checkpoints.\nFA2 Buildings, rooms, streets and other built places are Facilities, also as common nouns: \"street\", \"bakery\", \"jail\", \"prison\", \"shop\", \"hospital\", \"home\", \"station\", \"restaurant\", \"Bagram Airfield\".\nFA3 Examples: \"where\", \"prison\", \"station\", \"home\", \"hospital\".\n\n[TYPE] SideOfConflict\n[DESCRIPTION] The different sides of a conflict, such as philosophical, cultural, ideological, religious, political, guiding philosophical movement or group orientation.\nSO1 This will encompass sides of the battle/conflict, sports fans when salient, and other such affiliations, in addition to religions, political parties, and other philosophies.\nSO2 Examples: \"church\", \"officers\", \"supporters\", \"radical Islam\".\n\n[TYPE] Numeric\n[DESCRIPTION] A numerical value or non-numerical value such as an informational property such as color or make or URL.\nNU1 Examples: \"two\", \"three\", \"2\", \"five\", \"Tuesday\".\n\n[TYPE] MedicalHealthIssue\n[DESCRIPTION] Any medical condition or health issue, to include everything from disease to broken bones to fever to general ill health, medical errors, even natural causes\nMH1 Diseases and symptoms are MedicalHealthIssues: \"fever\", \"disease\", \"dengue\", \"cancer\".\nMH2 Examples: \"disease\", \"fever\", \"autism spectrum disorder\", \"weak\", \"coronavirus\".\n\n[TYPE] Money\n[DESCRIPTION] A monetary payment.\nMO1 The extent of a Money mention includes modifying quantifiers, the amount, and the currency unit, all of which can be optional.\nMO2 Examples: \"cash\", \"$925\", \"$2,775\", \"$5.2 million\", \"$400\".\n\n[TYPE] GPE\n[DESCRIPTION] Geopolitical entities such as countries, provinces, states, cities, towns, etc. GPEs are composite entities, consisting of a physical location, a government, and a population.\nGP1 All three of these elements must be present for an entity to be tagged as a GPE.\nGP2 A GPE entity may be a single geopolitical entity or a group.\nGP3 Common nouns and pronouns that refer to a GPE are GPE: \"city\", \"state\", \"country\", \"republic\", \"province\", \"its\", \"our\".\nGP4 Nationality and country adjectives are GPE: \"French\", \"Russian\", \"American\", \"British\", \"Chechen\", \"Syrian\", \"Venezuelan\".\nGP5 Examples: \"Boston\", \"U.S\", \"U.S.\", \"Venezuela\", \"country\".\n\n[TYPE] Abstract\n[DESCRIPTION] Abstract, non-tangible artifacts such as software (e.g., programs, tool kits, apps, e-mail), measureable intellectual property, contracts, etc. (nb: does not include laws, which are LAW type)\nAB1 Examples: \"documents\", \"technology\", \"Proposals\", \"report\", \"research\".\n\n[TYPE] Location\n[DESCRIPTION] Geographical entities such as geographical areas and landmasses, bodies of water.\nLO1 General places and natural features are Locations: \"area\", \"district\", \"centre\", \"scene\", \"desert\", \"territory\", \"border\", \"region\", \"Euphrates\".\nLO2 Examples: \"area\", \"line\", \"world\", \"areas\", \"where\".\n\n[TYPE] Weapon\n[DESCRIPTION] A physical device that is primarily used as an instrument for physically harming or destroying entities.\nWE1 Bombs, explosive devices, guns and knives are Weapons: \"bombs\", \"IED\", \"device\", \"gun\", \"explosives\", \"mortar\"; the explosion itself is not.\nWE2 Examples: \"bomb\", \"bombs\", \"drone\", \"explosives\", \"device\".\n\n[TYPE] JobTitle\n[DESCRIPTION] A person's title or job role.\nJT1 Examples: \"President\", \"president\", \"Attorney General\", \"opposition activist\", \"Prime Minister\".\n"
+ },
+ "FabNER": {
+  "mode": "extract",
+  "id": "FabNER/test/00292",
+  "text": "In the work of Scheithauer , the droplet formation behavior of zirconia suspensions for thermoplastic 3D printing was investigated .",
+  "gold": [
+   [
+    33,
+    40,
+    "ConceptPrinciples"
+   ],
+   [
+    63,
+    71,
+    "Material"
+   ],
+   [
+    88,
+    113,
+    "ManufacturingProcess"
+   ]
+  ],
+  "a": [
+   [
+    33,
+    50,
+    "ConceptPrinciples"
+   ],
+   [
+    63,
+    83,
+    "Material"
+   ],
+   [
+    88,
+    113,
+    "ManufacturingProcess"
+   ]
+  ],
+  "b": [
+   [
+    63,
+    71,
+    "Material"
+   ],
+   [
+    88,
+    113,
+    "ManufacturingProcess"
+   ]
+  ],
+  "base": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\n\n[TYPE] ManufacturingProcess\n[DESCRIPTION] Refers to a specific technique, method, or procedure used in the production of goods.\nMP1 Examples: \"AM\", \"additive manufacturing\", \"SLM\", \"3D printing\", \"fabrication\".\n\n[TYPE] ConceptPrinciples\n[DESCRIPTION] Refers to key concepts, principles, and elements related to manufacturing processes.\nCP1 Examples: \"process\", \"model\", \"mechanical properties\", \"samples\", \"materials\".\n\n[TYPE] EnablingTechnology\n[DESCRIPTION] Specific tools, methods, processes, or technologies that play a pivotal role in facilitating or enhancing various aspects of manufacturing processes.\nET1 Examples: \"laser\", \"simulation\", \"modeling\", \"simulations\", \"CT\".\n\n[TYPE] MechanicalProperties\n[DESCRIPTION] Refers to specific attributes or characteristics of materials that describe their behavior under mechanical forces and conditions.\nMEC1 These properties play a crucial role in manufacturing processes and are often used to evaluate the suitability and performance of materials for different applications.\nMEC2 Examples: \"porosity\", \"strength\", \"density\", \"hardness\", \"residual stress\".\n\n[TYPE] ManufacturingStandards\n[DESCRIPTION] Refer to specific guidelines, specifications, benchmarks, and terminology used within the manufacturing industry to ensure uniformity, quality, and compatibility of products, processes, and systems.\nMS1 Examples: \"ISO\", \"benchmark\", \"ISO 25178-2\", \"file\", \"STL\".\n\n[TYPE] MachineEquipment\n[DESCRIPTION] Any necessary items required for a particular purpose, including assembled parts and set of tools.\nME1 Equipments are required to set up not only the mechanical machines, but also for setting up any relevant operation or task.\nME2 Examples: \"components\", \"component\", \"nozzle\", \"beam\", \"powder bed\".\n\n[TYPE] Application\n[DESCRIPTION] Refers to the specific field or industry in which a manufacturing process is utilized or intended to be utilized.\nAP1 It signifies the purpose, domain, or sector where the manufacturing process finds its use.\nAP2 Examples: \"mechanical\", \"imaging\", \"coating\", \"industrial\", \"support\".\n\n[TYPE] ProcessParameters\n[DESCRIPTION] Process parameters refer to specific quantitative values or attributes that play a significant role in manufacturing processes.\nPP1 Examples: \"temperature\", \"layer\", \"build\", \"range\", \"temperatures\".\n\n[TYPE] EngineeringFeatures\n[DESCRIPTION] Encompass distinct terms or phrases that convey specific information related to the structural, functional, or visual properties of a manufacturing process.\nEF1 Examples: \"design\", \"designed\", \"texture\", \"lattice structures\", \"designs\".\n\n[TYPE] Material\n[DESCRIPTION] Refers to any substance or compound used in manufacturing processes that has a significant impact on the process, properties, or characteristics of the end product.\nMA1 Materials can include metals, alloys, polymers, ceramics, composites, and more.\nMA2 Examples: \"as\", \"be\", \"material\", \"powder\", \"alloy\".\n\n[TYPE] Biomedical\n[DESCRIPTION] Refers to any biomedical entity involved in the manufacturing process.\nBI1 Examples: \"bone\", \"dendrites\", \"starch\", \"dendrite\", \"bone scaffolds\".\n\n[TYPE] ProcessCharacterization\n[DESCRIPTION] Refers to the detailed analysis and measurement of various aspects of manufacturing processes to understand their performance, quality, and characteristics.\nPC1 Examples: \"accuracy\", \"optical\", \"measurement\", \"spatter\", \"SEM\".\n",
+  "rules_book": "[RULES]\nExtract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.\nF1 Spans are short, mostly one or two words. Label the core term without the modifiers before it or the noun after it: \"fatigue\" in \"high-cycle fatigue resistance\", \"oxygen\" in \"dissolved oxygen\", \"tungsten\" and \"rod\" in \"tungsten rod\".\n\n[TYPE] ManufacturingProcess\n[DESCRIPTION] Refers to a specific technique, method, or procedure used in the production of goods.\nMP1 A process span leaves out modifiers and the product: \"arc welding\" in \"robotic arc welding\", \"sand casting\" in \"green sand casting\", \"additively manufactured\" in \"additively manufactured components\".\nMP2 After \"AM\" the next noun stays in the span: \"AM process\", \"AM processes\" and \"AM technologies\" are ManufacturingProcess.\nMP3 \"production\" is ManufacturingProcess.\nMP4 \"heat treatment\", \"joining\" and \"assembly\" are ManufacturingProcess.\nMP5 Examples: \"AM\", \"additive manufacturing\", \"SLM\", \"3D printing\", \"fabrication\".\n\n[TYPE] ConceptPrinciples\n[DESCRIPTION] Refers to key concepts, principles, and elements related to manufacturing processes.\nCP1 \"mechanical properties\", \"microhardness\", \"microstructure\", \"HAZ\" and \"heat affected zone\" are ConceptPrinciples, not MechanicalProperties.\nCP2 \"experimental\" is ConceptPrinciples.\nCP3 \"research\" and \"samples\" are ConceptPrinciples.\nCP4 \"geometry\" and \"interface\" are ConceptPrinciples, not EngineeringFeatures.\nCP5 \"performance\" is ConceptPrinciples.\nCP6 \"process parameters\" is ConceptPrinciples, not ProcessParameters.\nCP7 \"process\" is ConceptPrinciples.\nCP8 \"fabricated\" and \"complexity\" are ConceptPrinciples.\nCP9 Examples: \"process\", \"model\", \"mechanical properties\", \"samples\", \"materials\".\n\n[TYPE] EnablingTechnology\n[DESCRIPTION] Specific tools, methods, processes, or technologies that play a pivotal role in facilitating or enhancing various aspects of manufacturing processes.\nET1 \"rapid prototyping\" and \"generative design\" are EnablingTechnology, not ManufacturingProcess.\nET2 Examples: \"laser\", \"simulation\", \"modeling\", \"simulations\", \"CT\".\n\n[TYPE] MechanicalProperties\n[DESCRIPTION] Refers to specific attributes or characteristics of materials that describe their behavior under mechanical forces and conditions.\nMEC1 These properties play a crucial role in manufacturing processes and are often used to evaluate the suitability and performance of materials for different applications.\nMEC2 Named properties and defects stay MechanicalProperties: \"tensile properties\", \"porosity\", \"residual stress\", \"anisotropy\", \"pores\", \"ductility\".\nMEC3 Examples: \"porosity\", \"strength\", \"density\", \"hardness\", \"residual stress\".\n\n[TYPE] ManufacturingStandards\n[DESCRIPTION] Refer to specific guidelines, specifications, benchmarks, and terminology used within the manufacturing industry to ensure uniformity, quality, and compatibility of products, processes, and systems.\nMS1 Examples: \"ISO\", \"benchmark\", \"ISO 25178-2\", \"file\", \"STL\".\n\n[TYPE] MachineEquipment\n[DESCRIPTION] Any necessary items required for a particular purpose, including assembled parts and set of tools.\nME1 Equipments are required to set up not only the mechanical machines, but also for setting up any relevant operation or task.\nME2 \"AM parts\", \"AM machines\", \"3D printers\" and \"3D printer\" are MachineEquipment, not ManufacturingProcess.\nME3 Every \"component\" and \"components\" is MachineEquipment.\nME4 \"tools\" is MachineEquipment.\nME5 Examples: \"components\", \"component\", \"nozzle\", \"beam\", \"powder bed\".\n\n[TYPE] Application\n[DESCRIPTION] Refers to the specific field or industry in which a manufacturing process is utilized or intended to be utilized.\nAP1 It signifies the purpose, domain, or sector where the manufacturing process finds its use.\nAP2 Examples: \"mechanical\", \"imaging\", \"coating\", \"industrial\", \"support\".\n\n[TYPE] ProcessParameters\n[DESCRIPTION] Process parameters refer to specific quantitative values or attributes that play a significant role in manufacturing processes.\nPP1 \"layer\" is ProcessParameters.\nPP2 \"temperature\" is ProcessParameters.\nPP3 Examples: \"temperature\", \"layer\", \"build\", \"range\", \"temperatures\".\n\n[TYPE] EngineeringFeatures\n[DESCRIPTION] Encompass distinct terms or phrases that convey specific information related to the structural, functional, or visual properties of a manufacturing process.\nEF1 \"design\" is EngineeringFeatures.\nEF2 Examples: \"design\", \"designed\", \"texture\", \"lattice structures\", \"designs\".\n\n[TYPE] Material\n[DESCRIPTION] Refers to any substance or compound used in manufacturing processes that has a significant impact on the process, properties, or characteristics of the end product.\nMA1 Materials can include metals, alloys, polymers, ceramics, composites, and more.\nMA2 A Material span is the material name alone, without grade numbers, modifiers or the part made of it: \"metal\" in \"metal parts\", \"carbon steel\" in \"carbon steel cladding\", \"metallic glass\" in \"bulk metallic glass\", \"Ti\" in \"Ti 6-4\".\nMA3 Examples: \"as\", \"be\", \"material\", \"powder\", \"alloy\".\n\n[TYPE] Biomedical\n[DESCRIPTION] Refers to any biomedical entity involved in the manufacturing process.\nBI1 Examples: \"bone\", \"dendrites\", \"starch\", \"dendrite\", \"bone scaffolds\".\n\n[TYPE] ProcessCharacterization\n[DESCRIPTION] Refers to the detailed analysis and measurement of various aspects of manufacturing processes to understand their performance, quality, and characteristics.\nPC1 Microscopy, diffraction and test methods are ProcessCharacterization, not EnablingTechnology: \"scanning electron microscopy\", \"EBSD\", \"X-ray diffraction\", \"tensile tests\".\nPC2 \"accuracy\" is ProcessCharacterization.\nPC3 Examples: \"accuracy\", \"optical\", \"measurement\", \"spatter\", \"SEM\".\n"
+ },
+ "S1MB Few-NERD (label mode)": {
+  "mode": "label",
+  "id": "few_nerd:supervised:test:31050",
+  "text": "On 8 January 1996 , an Air Africa Antonov An-32 aircraft ( RA-26222 ) which had been wet-leased by Moscow Airways to Scibe Airlift crashed into a market shortly after taking off from N'Dolo Airport in Kinshasa , capital of the Democratic Republic of the Congo , killing approximately 300 people ( `` see 1 996 Air Africa crash `` ) .",
+  "targets": [
+   {
+    "start": 23,
+    "end": 47,
+    "gold": "product",
+    "label": "product",
+    "confidence": 0.517,
+    "unsupported": null
+   },
+   {
+    "start": 59,
+    "end": 67,
+    "gold": "product",
+    "label": "product",
+    "confidence": 0.66,
+    "unsupported": null
+   },
+   {
+    "start": 99,
+    "end": 113,
+    "gold": "organization",
+    "label": "organization",
+    "confidence": 0.977,
+    "unsupported": null
+   },
+   {
+    "start": 117,
+    "end": 130,
+    "gold": "organization",
+    "label": "organization",
+    "confidence": 0.961,
+    "unsupported": null
+   },
+   {
+    "start": 183,
+    "end": 197,
+    "gold": "building",
+    "label": "location",
+    "confidence": 0.879,
+    "unsupported": null
+   },
+   {
+    "start": 201,
+    "end": 209,
+    "gold": "location",
+    "label": "location",
+    "confidence": 0.981,
+    "unsupported": null
+   },
+   {
+    "start": 227,
+    "end": 259,
+    "gold": "location",
+    "label": "location",
+    "confidence": 0.792,
+    "unsupported": null
+   },
+   {
+    "start": 306,
+    "end": 326,
+    "gold": "event",
+    "label": "other",
+    "confidence": 0.672,
+    "unsupported": null
+   }
+  ],
+  "types": [
+   "product",
+   "organization",
+   "building",
+   "person",
+   "location",
+   "event",
+   "art",
+   "other"
+  ],
+  "descriptions": [
+   "product",
+   "organization",
+   "building",
+   "person",
+   "location",
+   "event",
+   "art",
+   "other"
+  ]
+ },
+ "S1MB Gretel PII (label mode)": {
+  "mode": "label",
+  "id": "gretel_pii:default:test:3168",
+  "text": "**Student Information**\n- **Name:** David Sharp\n- **Date of Birth:** 1928-02-02\n- **Social Security Number:** 530-02-4035\n- **Address:** 124 Sara Drive Suite 285, Masseyfurt, Angola\n- **City:** Port Janetshire\n- **State:** Montana\n- **Postcode:** 528077\n- **Phone Number:** +911963591347\n- **Email:** christopher70@example.com\n\n**Payment Information**\n- **Card Number:** *************763\n- **Bank Routing Number:** 672011065\n\n**Medical Information**\n- **Medical Record Number:** MED92328708\n- **Health Plan Beneficiary Number:** L615216836",
+  "targets": [
+   {
+    "start": 69,
+    "end": 79,
+    "gold": "date_of_birth",
+    "label": "date_of_birth",
+    "confidence": 0.928,
+    "unsupported": null
+   },
+   {
+    "start": 110,
+    "end": 121,
+    "gold": "ssn",
+    "label": "ssn",
+    "confidence": 0.671,
+    "unsupported": null
+   },
+   {
+    "start": 137,
+    "end": 181,
+    "gold": "address",
+    "label": "country",
+    "confidence": 0.263,
+    "unsupported": null
+   },
+   {
+    "start": 194,
+    "end": 209,
+    "gold": "city",
+    "label": "city",
+    "confidence": 0.962,
+    "unsupported": null
+   },
+   {
+    "start": 223,
+    "end": 230,
+    "gold": "state",
+    "label": "state",
+    "confidence": 0.975,
+    "unsupported": null
+   },
+   {
+    "start": 247,
+    "end": 253,
+    "gold": "postcode",
+    "label": "postcode",
+    "confidence": 0.896,
+    "unsupported": null
+   },
+   {
+    "start": 274,
+    "end": 287,
+    "gold": "phone_number",
+    "label": "phone_number",
+    "confidence": 0.985,
+    "unsupported": null
+   },
+   {
+    "start": 301,
+    "end": 326,
+    "gold": "email",
+    "label": "email",
+    "confidence": 0.995,
+    "unsupported": null
+   },
+   {
+    "start": 384,
+    "end": 387,
+    "gold": "cvv",
+    "label": "credit_card_number",
+    "confidence": 0.192,
+    "unsupported": null
+   },
+   {
+    "start": 415,
+    "end": 424,
+    "gold": "bank_routing_number",
+    "label": "bank_routing_number",
+    "confidence": 0.926,
+    "unsupported": null
+   },
+   {
+    "start": 479,
+    "end": 490,
+    "gold": "medical_record_number",
+    "label": "medical_record_number",
+    "confidence": 0.818,
+    "unsupported": null
+   },
+   {
+    "start": 529,
+    "end": 539,
+    "gold": "health_plan_beneficiary_number",
+    "label": "health_plan_beneficiary_number",
+    "confidence": 0.791,
+    "unsupported": null
+   }
+  ],
+  "types": [
+   "health_plan_beneficiary_number",
+   "address",
+   "biometric_identifier",
+   "user_name",
+   "tax_id",
+   "password",
+   "state",
+   "time",
+   "pin",
+   "api_key",
+   "postcode",
+   "city",
+   "vehicle_identifier",
+   "cvv",
+   "phone_number",
+   "company_name",
+   "credit_card_number",
+   "national_id",
+   "ipv4",
+   "name",
+   "swift_bic",
+   "license_plate",
+   "email",
+   "medical_record_number",
+   "bank_routing_number",
+   "account_number",
+   "device_identifier",
+   "unique_identifier",
+   "certificate_license_number",
+   "coordinate",
+   "date_of_birth",
+   "ssn",
+   "date_time",
+   "url",
+   "ipv6",
+   "country"
+  ],
+  "descriptions": [
+   "health plan beneficiary number",
+   "address",
+   "biometric identifier",
+   "user name",
+   "tax id",
+   "password",
+   "state",
+   "time",
+   "pin",
+   "api key",
+   "postcode",
+   "city",
+   "vehicle identifier",
+   "cvv",
+   "phone number",
+   "company name",
+   "credit card number",
+   "national id",
+   "ipv4",
+   "name",
+   "swift bic",
+   "license plate",
+   "email",
+   "medical record number",
+   "bank routing number",
+   "account number",
+   "device identifier",
+   "unique identifier",
+   "certificate license number",
+   "coordinate",
+   "date of birth",
+   "ssn",
+   "date time",
+   "url",
+   "ipv6",
+   "country"
+  ]
+ }
+}

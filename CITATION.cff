@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use ReDefiNER, please cite it as below."
+title: "ReDefiNER: Rule-Defined Named Entity Recognition"
+type: software
+version: 1.0.0
+license: Apache-2.0
+authors:
+  - name: "Jungroo AI Labs"
+url: "https://huggingface.co/jungroo-ai/redefiner-0.8b"
+repository-code: "https://github.com/jungroo-ai/redefiner"
+keywords:
+  - named-entity-recognition
+  - information-extraction
+  - span-labeling
+  - rule-following
+preferred-citation:
+  type: generic
+  title: "ReDefiNER: Rule-Defined Named Entity Recognition"
+  authors:
+    - name: "Jungroo AI Labs"
+  year: 2026
+  url: "https://huggingface.co/jungroo-ai/redefiner-0.8b"
+  notes: "Release 1.0"

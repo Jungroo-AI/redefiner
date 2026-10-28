@@ -1,0 +1,54 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "country",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "election",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "event",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "politicalparty",
+   "description": "",
+   "rules": []
+  },
+  {
+   "name": "politician",
+   "description": "",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

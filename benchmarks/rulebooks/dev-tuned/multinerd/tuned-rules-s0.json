@@ -1,0 +1,130 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "G1 Years, decades, centuries and calendar dates are never entities: \"2010\", \"2014\", \"1980 s\", \"19th century\", \"February 2014\".",
+  "G2 Centuries and decades are never entities, also with \"early\", \"mid\" or \"late\": \"18th century\", \"20th century\", \"late 19th century\", \"1970 s\".",
+  "G3 Nationality words and disc formats are never entities: \"British\", \"Chinese\", \"German\", \"DVD\", \"Blu-ray\"."
+ ],
+ "classes": [
+  {
+   "name": "Location",
+   "description": "Physical locations (e.g. mountains, bodies of water), geopolitical entities (e.g. cities, states), and facilities (e.g. bridges, buildings, airports)",
+   "rules": [
+    "LO1 Examples: \"United States\", \"Australia\", \"Brazil\", \"China\", \"United Kingdom\"."
+   ]
+  },
+  {
+   "name": "Media",
+   "description": "Titles of films, books, magazines, songs and albums, fictional characters and languages.",
+   "rules": [
+    "ME1 Examples: \"Rotten Tomatoes\", \"Oxford English Dictionary\", \"TV Guide\", \"Entertainment Weekly\", \"Rolling Stone\"."
+   ]
+  },
+  {
+   "name": "Instrument",
+   "description": "Technological instruments, mechanical instruments, musical instruments, and other tools.",
+   "rules": [
+    "IN1 Examples: \"LaserDisc\", \"Android\", \"Voyager 2\", \"Voyager 1\", \"Laserdisc\"."
+   ]
+  },
+  {
+   "name": "Celestial",
+   "description": "Planets, stars, asteroids, comets, nebulae, galaxies and other astronomical objects.",
+   "rules": [
+    "CE1 Examples: \"Earth\", \"Sun\", \"Jupiter\", \"Moon\", \"Milky Way\"."
+   ]
+  },
+  {
+   "name": "Plant",
+   "description": "Types of trees, flowers, and other plants, including their scientific names.",
+   "rules": [
+    "PL1 Spices and herbs are Plant, not Food, even in recipes: \"cinnamon\", \"garlic\", \"ginger\", \"nutmeg\", \"saffron\", \"paprika\", \"cumin\", \"black pepper\".",
+    "PL2 Named fruits, vegetables and grain crops are Plant, not Food: \"lemon\", \"banana\", \"pineapple\", \"strawberry\", \"durian\", \"cabbage\", \"onion\", \"cassava\", \"maize\", \"sweet corn\".",
+    "PL3 \"tomato\", \"barley\", \"tobacco\", \"pumpkin\", \"deciduous\" and \"evergreen\" are Plant.",
+    "PL4 Examples: \"plant\", \"wheat\", \"shrub\", \"rice\", \"deciduous\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Associations, companies, agencies, institutions, nationalities and religious or political groups.",
+   "rules": [
+    "OR1 TV channels, broadcasters, websites and news agencies are Organization, not Media: \"ITV\", \"VH1\", \"YouTube\", \"Netflix\", \"Reuters\".",
+    "OR2 Examples: \"European Union\", \"BBC\", \"Boston Red Sox\", \"New York Yankees\", \"Pittsburgh Pirates\"."
+   ]
+  },
+  {
+   "name": "Animal",
+   "description": "Breeds of dogs, cats and other animals, including their scientific names.",
+   "rules": [
+    "AN1 Fish, shellfish and game are Animal, not Food or Plant, even as food: \"fish\", \"shrimp\", \"cod\", \"trout\", \"salmon\".",
+    "AN2 Insects, mites, worms and animal genera are Animal, not Biological: \"Drosophila\", \"Demodex\", \"Glyptodon\".",
+    "AN3 Examples: \"moth\", \"sea snail\", \"Erebidae\", \"Noctuidae\", \"mine\"."
+   ]
+  },
+  {
+   "name": "Event",
+   "description": "Sport events, battles, wars and other events.",
+   "rules": [
+    "EV1 Examples: \"World War II\", \"World War I\", \"American Civil War\", \"FA Cup\", \"Vietnam War\"."
+   ]
+  },
+  {
+   "name": "Food",
+   "description": "Foods and drinks.",
+   "rules": [
+    "FO1 Food is for dishes, drinks and processed foods: \"butter\", \"flour\", \"cheese\", \"ice cream\".",
+    "FO2 \"cardamom\", \"vanilla\", \"mango\", \"potato\", \"avocado\" and \"coconut\" are Food, not Plant.",
+    "FO3 Plural food words are not labelled.",
+    "FO4 Water, chemicals, drugs and non-food materials are not Food: \"water\", \"alcohol\", \"glucose\", \"caffeine\", \"cocaine\", \"coal\", \"cotton\".",
+    "FO5 Examples: \"sugar\", \"salt\", \"beef\", \"fruit\", \"pork\"."
+   ]
+  },
+  {
+   "name": "Biological",
+   "description": "Genus of fungus, bacteria and protoctists, families of viruses, and other biological entities.",
+   "rules": [
+    "BI1 Biological is only for bacteria, fungi, protists and viruses: \"E. coli\", \"Aspergillus\", \"Plasmodium\". Drugs, hormones, proteins and genes are not labelled: \"spironolactone\", \"ivermectin\", \"insulin\".",
+    "BI2 Examples: \"Escherichia coli\", \"E. coli\", \"Plasmodium\", \"Aspergillus\", \"HIV\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "People.",
+   "rules": [
+    "PE1 Examples: \"George Hampson\", \"Edward Meyrick\", \"Breuning\", \"Francis Walker\", \"Aristotle\"."
+   ]
+  },
+  {
+   "name": "Vehicle",
+   "description": "Cars, motorcycles and other vehicles.",
+   "rules": [
+    "VE1 Examples: \"Airbus A380\", \"Titanic\", \"Tupolev Tu-144\", \"Mayflower\", \"Dornier Do X\"."
+   ]
+  },
+  {
+   "name": "Mythological",
+   "description": "Mythological and religious entities.",
+   "rules": [
+    "MY1 Examples: \"Thomas Aquinas\", \"Zeus\", \"Satan\", \"Ra\", \"Aphrodite\"."
+   ]
+  },
+  {
+   "name": "Disease",
+   "description": "Physical, mental, infectious, non-infectious, deficiency, inherited, degenerative, social and self-inflicted diseases.",
+   "rules": [
+    "DI1 Examples: \"cancer\", \"anxiety\", \"schizophrenia\", \"tuberculosis\", \"Alzheimer 's disease\"."
+   ]
+  },
+  {
+   "name": "Time",
+   "description": "Specific and well-defined time intervals, such as eras, historical periods, centuries, years and important days.",
+   "rules": [
+    "TI1 No months and days of the week.",
+    "TI2 Holidays and festivals are Time, not Event: \"Christmas\", \"Easter\", \"Halloween\".",
+    "TI3 Examples: \"Middle Ages\", \"Great Depression\", \"Renaissance\", \"Bronze Age\", \"half-life\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

@@ -1,0 +1,15 @@
+[RULES]
+G1 Extract every entity of the supplied types. Return exact spans from the text.
+
+[TYPE] FIRST_TYPE
+[DESCRIPTION] One line saying what this type is.
+FT1 Optional: where a span starts and ends, or what to include or leave out ("the Acme app" -> "Acme").
+
+[TYPE] SECOND_TYPE
+[DESCRIPTION] One line saying what this type is.
+
+[TYPE] NOT_AN_ENTITY
+NE1 Optional: what is never labelled, with examples ("this", "that").
+
+[RULES]
+G2 Optional closing rules, such as which rule wins when two disagree. This overrides everything above.

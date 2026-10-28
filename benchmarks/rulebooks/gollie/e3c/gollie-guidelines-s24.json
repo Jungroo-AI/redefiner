@@ -1,0 +1,16 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "ClinicalEntity",
+   "description": "A definite pathologic process with a characteristic set of signs and symptoms.",
+   "rules": [
+    "CE1 Examples: \"tumor\", \"tumour\", \"vomiting\", \"swelling\", \"epistaxis\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

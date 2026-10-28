@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Try the demo
+    url: https://huggingface.co/spaces/jungroo-ai/redefiner-demo
+    about: Test a rulebook on your own text in the browser.
+  - name: How to write rules that work
+    url: https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md
+    about: Patterns that work, patterns that don't, and templates to start from.

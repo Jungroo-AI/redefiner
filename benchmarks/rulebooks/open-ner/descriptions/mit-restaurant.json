@@ -1,0 +1,49 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "amenity",
+   "description": "A restaurant feature, service, facility, offering or special characteristic.",
+   "rules": []
+  },
+  {
+   "name": "cuisine",
+   "description": "A restaurant's cuisine, regional food style or dietary category.",
+   "rules": []
+  },
+  {
+   "name": "dish",
+   "description": "A food, beverage, dessert or other specific menu item.",
+   "rules": []
+  },
+  {
+   "name": "hours",
+   "description": "A restaurant's operating hours, opening times or availability.",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "A restaurant location or proximity expression, including nearby or near me.",
+   "rules": []
+  },
+  {
+   "name": "price",
+   "description": "A cost, price range or qualitative description of restaurant pricing.",
+   "rules": []
+  },
+  {
+   "name": "rating",
+   "description": "A restaurant's star rating, popularity or qualitative quality evaluation.",
+   "rules": []
+  },
+  {
+   "name": "restaurant_name",
+   "description": "The name of a restaurant, chain or food establishment.",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

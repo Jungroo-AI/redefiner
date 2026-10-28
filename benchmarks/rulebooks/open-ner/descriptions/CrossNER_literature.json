@@ -1,0 +1,69 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "award",
+   "description": "A named literary award or honor for literary achievement.",
+   "rules": []
+  },
+  {
+   "name": "book",
+   "description": "The title of a published book or literary work.",
+   "rules": []
+  },
+  {
+   "name": "country",
+   "description": "A sovereign country or nation.",
+   "rules": []
+  },
+  {
+   "name": "event",
+   "description": "A named occurrence, war, conference, festival or other event.",
+   "rules": []
+  },
+  {
+   "name": "literarygenre",
+   "description": "A literary genre, form or category, including culturally specific genres.",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "A geographic place, city, region or landmark other than a country.",
+   "rules": []
+  },
+  {
+   "name": "magazine",
+   "description": "The name of a magazine or periodical publication.",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "A named entity outside the other supplied categories.",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "The name of an organization, institution, company or association.",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "A person's name, excluding writers and literary artists.",
+   "rules": []
+  },
+  {
+   "name": "poem",
+   "description": "The title of a poem or poetic composition.",
+   "rules": []
+  },
+  {
+   "name": "writer",
+   "description": "The name of a writer, novelist, poet, scriptwriter or literary artist.",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

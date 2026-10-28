@@ -1,0 +1,94 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "academicjournal",
+   "description": "The name of a scholarly journal publishing scientific research.",
+   "rules": []
+  },
+  {
+   "name": "astronomicalobject",
+   "description": "A celestial object, such as a star, planet, galaxy or nebula.",
+   "rules": []
+  },
+  {
+   "name": "award",
+   "description": "A named scientific award or distinction.",
+   "rules": []
+  },
+  {
+   "name": "chemicalcompound",
+   "description": "A named chemical substance made from multiple chemical elements.",
+   "rules": []
+  },
+  {
+   "name": "chemicalelement",
+   "description": "A chemical element, identified by its name or symbol.",
+   "rules": []
+  },
+  {
+   "name": "country",
+   "description": "A sovereign country or nation.",
+   "rules": []
+  },
+  {
+   "name": "discipline",
+   "description": "A scientific discipline or specialized branch of scientific study.",
+   "rules": []
+  },
+  {
+   "name": "enzyme",
+   "description": "A named biological catalyst or enzyme, taking precedence over protein.",
+   "rules": []
+  },
+  {
+   "name": "event",
+   "description": "A named conference, festival, sporting event or other significant occurrence.",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "A geographic place, city, region or landmark other than a country.",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "A named entity outside the other supplied categories.",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "An organization, company or institution other than a university.",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "A person's name, excluding scientists.",
+   "rules": []
+  },
+  {
+   "name": "protein",
+   "description": "A named biological protein other than an enzyme.",
+   "rules": []
+  },
+  {
+   "name": "scientist",
+   "description": "The name of a scientist or expert in natural or physical science.",
+   "rules": []
+  },
+  {
+   "name": "theory",
+   "description": "A named scientific theory, law, principle or explanatory phenomenon.",
+   "rules": []
+  },
+  {
+   "name": "university",
+   "description": "A university or institution of higher education.",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

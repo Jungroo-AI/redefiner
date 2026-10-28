@@ -1,0 +1,99 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "Writer",
+   "description": "Refers to an individual actively engaged in the creation of literary works, including writers, novelists, scriptwriters, poets, and other literary artists.",
+   "rules": [
+    "WR1 If a person is involved in literature-related roles, annotate them as a writer entity instead of a person entity.",
+    "WR2 Examples: \"John Keegan\", \"Leo Tolstoy\", \"John Steinbeck\", \"Yeats\", \"Jacobs\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Refers to a structured group, institution, company, or association.",
+   "rules": [
+    "OR1 This category covers a diverse range of organizations, including businesses, non-profits, educational institutions, and government agencies.",
+    "OR2 Examples: \"Science Fiction and Fantasy Writers of America\", \"The New York Times\", \"New York Times\", \"Food52\", \"Amnesty International\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to a specific geographical or structural location.",
+   "rules": [
+    "LO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.",
+    "LO2 Examples: \"London\", \"Chalcedon\", \"Charles Dickens Museum\", \"Charles Dickens Birthplace Museum\", \"Portsmouth\"."
+   ]
+  },
+  {
+   "name": "Magazine",
+   "description": "Refers to a periodical publication that features articles, stories, and various literary works.",
+   "rules": [
+    "MA1 Examples: \"The New Yorker\", \"Simbolul\", \"Private Eye\", \"The Atlantic\", \"The Crisis\"."
+   ]
+  },
+  {
+   "name": "Country",
+   "description": "Refers to a sovereign nation.",
+   "rules": [
+    "CO1 Examples: \"Germany\", \"Han dynasty\", \"England\", \"Italy\", \"Yuan dynasty\"."
+   ]
+  },
+  {
+   "name": "Award",
+   "description": "Refers to a recognition or honor bestowed upon individuals or works of literature for notable achievements.",
+   "rules": [
+    "AW1 Examples: \"Pulitzer Prize\", \"Nebula Award\", \"Hugo Award\", \"Academy Awards\", \"Nobel Prize in Literature\"."
+   ]
+  },
+  {
+   "name": "Poem",
+   "description": "Refers to a literary composition characterized by its structured form, rhythm, and often heightened language.",
+   "rules": [
+    "PO1 Examples: \"Barbara Frietchie\", \"The Barefoot Boy\", \"Maud Muller\", \"Snow-Bound\", \"Shishupala Vadha\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "Refers to an individual's name that is not a writer.",
+   "rules": [
+    "PE1 Examples: \"Lindbergh\", \"Giacomo di Benincasa\", \"Baron Cohen\", \"Emperor Toghon Temür\", \"Princess Noguk\"."
+   ]
+  },
+  {
+   "name": "Event",
+   "description": "Refers to a significant occurrence or happening.",
+   "rules": [
+    "EV1 Such as wars, conferences, festivals, sport events, etc.",
+    "EV2 Examples: \"World War II\", \"Cannes Film Festival\", \"47th Berlin International Film Festival\", \"Luge at the 1976 Winter Olympics\", \"Equestrian at the 1976 Summer Olympics\"."
+   ]
+  },
+  {
+   "name": "Book",
+   "description": "Refers to a published work of literature, typically consisting of written content bound in a physical or digital format.",
+   "rules": [
+    "BO1 Examples: \"The Plague of Doves\", \"A History of Warfare\", \"The Color Purple\", \"Rabbit at Rest\", \"The Fountainhead\"."
+   ]
+  },
+  {
+   "name": "Other",
+   "description": "Refers to named entities that are not included in any other category.",
+   "rules": [
+    "OT1 Examples: \"American\", \"British\", \"English\", \"French\", \"Goryeo\"."
+   ]
+  },
+  {
+   "name": "LiteraryGenre",
+   "description": "Refers to categories in literature defined by unique artistic techniques, themes, content, and lengths.",
+   "rules": [
+    "LG1 Label words such as poetry, essay or novel as well as content categories like Science Fiction, Fantasy, and Fiction.",
+    "LG2 It also encompasses culturally influenced genres, such as Nordic countries poetry.",
+    "LG3 Examples: \"poem\", \"poems\", \"novels\", \"novel\", \"science fiction\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

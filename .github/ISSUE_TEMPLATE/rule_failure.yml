@@ -1,0 +1,45 @@
+name: A rule doesn't work
+description: The model ignores a rule, or follows it wrongly.
+labels: [rule-failure]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Failing rulebooks are the most useful feedback we get: they decide what the next model
+        is trained on. Please don't paste personal or confidential data; a made-up text that shows the same problem is
+        just as good.
+  - type: textarea
+    id: rulebook
+    attributes:
+      label: Rulebook
+      description: The full rulebook you used, as text.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: Text
+      description: The text you ran it on (and, for label mode, the spans you gave).
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected output
+      description: Which spans and types you expected, and which rule should have produced them.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual output
+      description: What the model returned (the JSON from extract or label, or a screenshot of the demo).
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and device
+      description: Output of `python -c "import redefiner; print(redefiner.__version__)"`, and CPU or GPU. Write "demo" if you used the demo.

@@ -1,0 +1,48 @@
+[RULES] Travel desk rulebook. Label each entity in the traveller's message with one of the types below.
+G1 Label all entities in the message, not only the first one.
+G2 Keep each span as short as the entity itself ("a flight to Oslo" -> "Oslo").
+G3 When two types fit, the precedence rules below decide.
+[PRECEDENCE]
+P1 An airport name or a three-letter airport code is AIRPORT, never ORIGIN or DESTINATION, even after "from" or "to".
+P2 Direction decides between ORIGIN and DESTINATION: a place after "from", "out of" or "leaving" is ORIGIN; after "to", "into", "arriving in" or "back to" is DESTINATION.
+P3 The person who will fly is TRAVELLER; the person who arranges or pays is BOOKER.
+P4 A date after "leave", "depart" or "out on" is DEPARTURE_DATE; after "return", "back on" or "fly home" is RETURN_DATE.
+P5 An airline name followed by a programme word ("Miles", "Club", "Rewards") is LOYALTY_PROGRAM; any other airline name is AIRLINE.
+P6 The reference format decides, whatever the traveller calls it: a code that mixes letters and digits is BOOKING_REF, even when called a ticket number; a long code of digits only is TICKET_NUMBER, even when called a booking reference.
+[TYPE] TRAVELLER
+[DESCRIPTION] A person who will take the trip.
+TR1 "Book Wanda on the morning flight" -> "Wanda"; "seats for Ilse and Gus" -> "Ilse", "Gus".
+[TYPE] BOOKER
+[DESCRIPTION] A person who arranges or pays for someone else's trip.
+BK1 "Petra is booking for her son Leon" -> "Petra" is BOOKER, "Leon" is TRAVELLER.
+BK2 "charge it to Viktor's card" -> "Viktor".
+[TYPE] ORIGIN
+[DESCRIPTION] The city or country the trip starts from.
+OR1 "from Porto" -> "Porto"; "leaving Seoul" -> "Seoul".
+[TYPE] DESTINATION
+[DESCRIPTION] The city or country the trip goes to.
+DS1 "to Nairobi" -> "Nairobi"; "back to Quito" -> "Quito".
+[TYPE] AIRPORT
+[DESCRIPTION] A named airport or a three-letter airport code.
+AI1 "from YYZ" -> "YYZ"; "into Changi" -> "Changi".
+[TYPE] DEPARTURE_DATE
+[DESCRIPTION] The date the outbound trip starts.
+DD1 "leave on 4 June" -> "4 June"; "I went out on 2 May" -> "2 May".
+[TYPE] RETURN_DATE
+[DESCRIPTION] The date of the return trip.
+RD1 "back on 11 June" -> "11 June".
+[TYPE] AIRLINE
+[DESCRIPTION] An airline the traveller flies with.
+AL1 "on Skyvane" -> "Skyvane".
+[TYPE] LOYALTY_PROGRAM
+[DESCRIPTION] An airline's points or membership programme.
+LY1 The span keeps the programme word ("my Skyvane Club number" -> "Skyvane Club").
+[TYPE] BOOKING_REF
+[DESCRIPTION] A booking reference: a short code of letters and digits.
+BR1 "reference QX7PLM" -> "QX7PLM"; "my ticket number is HB2RWA" -> "HB2RWA" is BOOKING_REF.
+[TYPE] TICKET_NUMBER
+[DESCRIPTION] An e-ticket number: a long code of digits only.
+TN1 "ticket 2201234567890" -> "2201234567890"; "booking ref 1259876543210" -> "1259876543210" is TICKET_NUMBER.
+[NOT_AN_ENTITY]
+NE1 Places the traveller wants to avoid ("not via Doha", "no stop in Frankfurt").
+NE2 Request phrases ("can you", "please") and generic words ("flight", "seat", "trip").

@@ -1,0 +1,74 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "album",
+   "description": "The title of a released collection of songs or musical compositions.",
+   "rules": []
+  },
+  {
+   "name": "award",
+   "description": "A named award or honor for musical achievement.",
+   "rules": []
+  },
+  {
+   "name": "band",
+   "description": "The name of a band or group of musical performers.",
+   "rules": []
+  },
+  {
+   "name": "country",
+   "description": "A sovereign country or nation.",
+   "rules": []
+  },
+  {
+   "name": "event",
+   "description": "A named music event, concert, festival or competition.",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "A geographic place, city, region or landmark other than a country.",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "A named entity outside the other supplied categories.",
+   "rules": []
+  },
+  {
+   "name": "musicalartist",
+   "description": "The name of an individual musician, singer, composer or songwriter.",
+   "rules": []
+  },
+  {
+   "name": "musicalinstrument",
+   "description": "An instrument or device used to produce musical sounds.",
+   "rules": []
+  },
+  {
+   "name": "musicgenre",
+   "description": "A music style or genre, including regional musical traditions.",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "An organization, company or institution other than a musical band.",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "A person's name, excluding musical artists.",
+   "rules": []
+  },
+  {
+   "name": "song",
+   "description": "The title of an individual song or musical composition.",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

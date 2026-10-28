@@ -1,0 +1,79 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "algorithm",
+   "description": "An AI algorithm or computational model, including named model architectures.",
+   "rules": []
+  },
+  {
+   "name": "conference",
+   "description": "An AI research conference or journal where research is published.",
+   "rules": []
+  },
+  {
+   "name": "country",
+   "description": "A sovereign country or nation.",
+   "rules": []
+  },
+  {
+   "name": "field",
+   "description": "An AI research field or subfield, including its acronyms.",
+   "rules": []
+  },
+  {
+   "name": "location",
+   "description": "A geographic place, city, region or landmark other than a country.",
+   "rules": []
+  },
+  {
+   "name": "metrics",
+   "description": "A metric used to evaluate AI models or algorithms.",
+   "rules": []
+  },
+  {
+   "name": "misc",
+   "description": "A named entity outside the other supplied categories.",
+   "rules": []
+  },
+  {
+   "name": "organisation",
+   "description": "An organization or company other than a university.",
+   "rules": []
+  },
+  {
+   "name": "person",
+   "description": "A person's name, excluding AI researchers.",
+   "rules": []
+  },
+  {
+   "name": "product",
+   "description": "An AI product, software system, library or toolkit.",
+   "rules": []
+  },
+  {
+   "name": "programlang",
+   "description": "A named programming language used in software or AI.",
+   "rules": []
+  },
+  {
+   "name": "researcher",
+   "description": "The name of an AI researcher, professor or research student.",
+   "rules": []
+  },
+  {
+   "name": "task",
+   "description": "An AI research task or problem, such as machine translation.",
+   "rules": []
+  },
+  {
+   "name": "university",
+   "description": "A university or institution of higher education.",
+   "rules": []
+  }
+ ],
+ "never": [],
+ "closing": []
+}

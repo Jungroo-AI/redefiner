@@ -1,0 +1,152 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "W1 Label every mention of an entity, not only names: names (\"Maduro\", \"Islamic State\"), common nouns (\"people\", \"police\", \"city\", \"bombs\") and pronouns (\"he\", \"his\", \"who\", \"they\", \"I\", \"its\"). Label each mention separately, also when it refers to an entity that is already labelled.",
+  "W2 For a common noun, label only its head word, without articles, numbers or adjectives: \"soldiers\" in \"Russian soldiers\", \"militia\" in \"a pro-Assad militia\", \"general\" in \"a major general\". Names are labelled in full (\"Dzhokhar Tsarnaev\", \"U.S. Air Force Office of Special Investigations\"). The one exception is \"the government\", which keeps its article.",
+  "W3 A modifier that names a country or a group is its own mention: in \"Russian soldiers and Syrian pro-regime militiamen\", \"Russian\" and \"Syrian\" are GPE, \"regime\" is Organization, and \"soldiers\" and \"militiamen\" are Person.",
+  "W4 A title before a name is a separate Person mention: \"General\" and \"Vyacheslav Gladkikh\" in \"Major General Vyacheslav Gladkikh\".",
+  "W5 Events such as \"explosion\" or \"attack\" are not entities. Reports, statements, videos and social media are usually left unlabelled.",
+  "W6 SideOfConflict, JobTitle, Information and Abstract are almost never used. Fighters, troops, forces, militants, insurgents, rebels, protesters, terrorists and supporters are Person. A title or role that refers to the person holding it is Person. Reports, statements, photos and software are left unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "Person",
+   "description": "Person entities are limited to humans.",
+   "rules": [
+    "PE1 A Person entity may be a single person or a group.",
+    "PE2 Personal pronouns are Person mentions: \"he\", \"she\", \"I\", \"we\", \"you\", \"they\", \"who\", \"him\", \"them\".",
+    "PE3 Possessive pronouns are Person mentions too: \"his\", \"her\", \"their\".",
+    "PE4 Nouns for people are Person: \"people\", \"man\", \"men\", \"women\", \"children\", \"suspect\", \"members\".",
+    "PE5 Groups acting as people are Person: \"authorities\", \"prosecutors\", \"forces\", \"militants\".",
+    "PE6 Police acting as a group of people are Person (\"Police have cordoned off the area\").",
+    "PE7 A title or role that refers to the person holding it is Person: \"general\", \"Minister\", \"spokesman\", \"Agent\".",
+    "PE8 Examples: \"he\", \"his\", \"who\", \"people\", \"they\"."
+   ]
+  },
+  {
+   "name": "Vehicle",
+   "description": "A physical device primarily designed to move an object from one location to another, by (for example) carrying, flying, pulling, or pushing the transported object.",
+   "rules": [
+    "VE1 Vehicle entities may or may not have their own power source.",
+    "VE2 Cars, trucks, buses, bikes, aircraft and convoys are Vehicles: \"truck\", \"car\", \"bus\", \"bike\", \"helicopter\", \"UAVs\", \"convoy\".",
+    "VE3 Examples: \"car\", \"drone\", \"drones\", \"vehicle\", \"boat\"."
+   ]
+  },
+  {
+   "name": "Information",
+   "description": "An information object such as a field of study or topic of communication, including thoughts, opinions, etc.",
+   "rules": [
+    "IN1 Examples: \"conference\", \"images\", \"report\", \"statement\", \"name\"."
+   ]
+  },
+  {
+   "name": "BodyPart",
+   "description": "An identifiable, living part of a human's or animal's body, such as a eye, ear, neck, leg, etc.",
+   "rules": [
+    "BP1 Examples: \"tatoo\", \"limbs\", \"the bodies\", \"neck\", \"ear\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Corporations, agencies, and other groups of people defined by an established organizational structure.",
+   "rules": [
+    "OR1 An ORG entity may be a single organization or a group.",
+    "OR2 A key feature of an ORG is that it can change members without changing identity.",
+    "OR3 Governments, regimes, armies, police forces, agencies, courts, assemblies, parties, armed groups and news outlets are Organizations, also as common nouns or pronouns: \"government\", \"regime\", \"military\", \"army\", \"court\", \"assembly\", \"group\", \"services\", \"Al-Monitor\", \"AFP\", \"BBC\", \"it\", \"their\".",
+    "OR4 \"police\" before another noun is an Organization (\"a police source\", \"French police officers\", \"all police prefects\").",
+    "OR5 \"the government\" is labelled with its article.",
+    "OR6 Examples: \"police\", \"government\", \"FBI\", \"IRA\", \"military\"."
+   ]
+  },
+  {
+   "name": "CommercialProduct",
+   "description": "A tangible product or article of trade for which someone pays or barters, or more generally, an artifact or a thing.",
+   "rules": [
+    "CP1 Examples: \"Arduino\", \"ID\", \"food\", \"bottle cap\", \"backpack\"."
+   ]
+  },
+  {
+   "name": "Facility",
+   "description": "A functional, primarily man-made structure.",
+   "rules": [
+    "FA1 Facilities are artifacts falling under the domains of architecture and civil engineering, including more temporary human constructs, such as police lines and checkpoints.",
+    "FA2 Buildings, rooms, streets and other built places are Facilities, also as common nouns: \"street\", \"bakery\", \"jail\", \"prison\", \"shop\", \"hospital\", \"home\", \"station\", \"restaurant\", \"Bagram Airfield\".",
+    "FA3 Examples: \"where\", \"prison\", \"station\", \"home\", \"hospital\"."
+   ]
+  },
+  {
+   "name": "SideOfConflict",
+   "description": "The different sides of a conflict, such as philosophical, cultural, ideological, religious, political, guiding philosophical movement or group orientation.",
+   "rules": [
+    "SO1 This will encompass sides of the battle/conflict, sports fans when salient, and other such affiliations, in addition to religions, political parties, and other philosophies.",
+    "SO2 Examples: \"church\", \"officers\", \"supporters\", \"radical Islam\"."
+   ]
+  },
+  {
+   "name": "Numeric",
+   "description": "A numerical value or non-numerical value such as an informational property such as color or make or URL.",
+   "rules": [
+    "NU1 Examples: \"two\", \"three\", \"2\", \"five\", \"Tuesday\"."
+   ]
+  },
+  {
+   "name": "MedicalHealthIssue",
+   "description": "Any medical condition or health issue, to include everything from disease to broken bones to fever to general ill health, medical errors, even natural causes",
+   "rules": [
+    "MH1 Diseases and symptoms are MedicalHealthIssues: \"fever\", \"disease\", \"dengue\", \"cancer\".",
+    "MH2 Examples: \"disease\", \"fever\", \"autism spectrum disorder\", \"weak\", \"coronavirus\"."
+   ]
+  },
+  {
+   "name": "Money",
+   "description": "A monetary payment.",
+   "rules": [
+    "MO1 The extent of a Money mention includes modifying quantifiers, the amount, and the currency unit, all of which can be optional.",
+    "MO2 Examples: \"cash\", \"$925\", \"$2,775\", \"$5.2 million\", \"$400\"."
+   ]
+  },
+  {
+   "name": "GPE",
+   "description": "Geopolitical entities such as countries, provinces, states, cities, towns, etc. GPEs are composite entities, consisting of a physical location, a government, and a population.",
+   "rules": [
+    "GP1 All three of these elements must be present for an entity to be tagged as a GPE.",
+    "GP2 A GPE entity may be a single geopolitical entity or a group.",
+    "GP3 Common nouns and pronouns that refer to a GPE are GPE: \"city\", \"state\", \"country\", \"republic\", \"province\", \"its\", \"our\".",
+    "GP4 Nationality and country adjectives are GPE: \"French\", \"Russian\", \"American\", \"British\", \"Chechen\", \"Syrian\", \"Venezuelan\".",
+    "GP5 Examples: \"Boston\", \"U.S\", \"U.S.\", \"Venezuela\", \"country\"."
+   ]
+  },
+  {
+   "name": "Abstract",
+   "description": "Abstract, non-tangible artifacts such as software (e.g., programs, tool kits, apps, e-mail), measureable intellectual property, contracts, etc. (nb: does not include laws, which are LAW type)",
+   "rules": [
+    "AB1 Examples: \"documents\", \"technology\", \"Proposals\", \"report\", \"research\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Geographical entities such as geographical areas and landmasses, bodies of water.",
+   "rules": [
+    "LO1 General places and natural features are Locations: \"area\", \"district\", \"centre\", \"scene\", \"desert\", \"territory\", \"border\", \"region\", \"Euphrates\".",
+    "LO2 Examples: \"area\", \"line\", \"world\", \"areas\", \"where\"."
+   ]
+  },
+  {
+   "name": "Weapon",
+   "description": "A physical device that is primarily used as an instrument for physically harming or destroying entities.",
+   "rules": [
+    "WE1 Bombs, explosive devices, guns and knives are Weapons: \"bombs\", \"IED\", \"device\", \"gun\", \"explosives\", \"mortar\"; the explosion itself is not.",
+    "WE2 Examples: \"bomb\", \"bombs\", \"drone\", \"explosives\", \"device\"."
+   ]
+  },
+  {
+   "name": "JobTitle",
+   "description": "A person's title or job role.",
+   "rules": [
+    "JT1 Examples: \"President\", \"president\", \"Attorney General\", \"opposition activist\", \"Prime Minister\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

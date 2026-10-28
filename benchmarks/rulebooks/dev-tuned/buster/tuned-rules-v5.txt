@@ -1,0 +1,58 @@
+[RULES]
+Find every entity in the query, return its exact span and its type. Use the supplied entity types.
+G1 Label a company only when the text makes its role in the transaction clear: it buys, it is bought, it sells, or it advises on the deal. Leave every other company, organisation and person unlabelled.
+G2 Label an amount only when it is a company's annual revenue. Leave every other number unlabelled.
+G3 If the role of a company is not clear from the text, do not label it.
+G4 Label a company only in a sentence that itself states its role in the deal, as in "X acquired Y", "Y was sold to X" or "Z advised X".
+G5 Never label a company in an "About" paragraph, forward-looking statements, risk factors, a quote, a name change, or call and contact details, unless that sentence itself states its role in the deal.
+G6 Never label a stock ticker that follows an exchange name, as in "NYSE : RAD"; a short name the text defines for a party, as in ( " PSTS " ), is labelled like the party.
+G7 Never label generic words such as "the Company", "the Buyer", "the Seller" or "the Partnership".
+
+[TYPE] GENERIC_CONSULTING_COMPANY
+[DESCRIPTION] A company that gives non-legal advice on the transaction, such as a financial advisor, investment bank, accounting or due-diligence firm.
+GC1 Never label a law firm with this type; label it LEGAL_CONSULTING_COMPANY.
+GC2 Label only firms, never a person's name.
+GC3 Label a firm only when the text says it advises on this transaction.
+GC4 Label it only when words such as "financial advisor", "advised", "fairness opinion" or "acted as" describe the firm.
+GC5 An investment firm, private equity fund, bank or holding company that buys or sells in the deal is not an advisor; label it BUYING_COMPANY or SELLING_COMPANY.
+GC6 Never label a company because it provides services, hosts a call, manages funds or invests.
+GC7 Advisors are usually named in a sentence such as "X acted as financial advisor to Y" or "X served as financial advisor"; label X there.
+
+[TYPE] LEGAL_CONSULTING_COMPANY
+[DESCRIPTION] A law firm or company that gives legal advice on the transaction, such as on regulation, litigation, anti-trust, structured finance or tax.
+LC1 Label only firms, never a person's name.
+LC2 Never label a financial advisor with this type; label it GENERIC_CONSULTING_COMPANY.
+LC3 Label it only when words such as "legal counsel", "legal advisor" or "represented" describe the firm.
+LC4 Legal advisors are usually named in a sentence such as "X acted as legal counsel to Y" or "X served as legal advisor"; label X there.
+
+[TYPE] ANNUAL_REVENUES
+[DESCRIPTION] The amount of a company's total income for a past or current fiscal year.
+AR1 Label only the amount, for example "120 million", never the word "revenue".
+AR2 Never label half-year or quarterly revenues, or revenue forecasts.
+AR3 Never label amounts that are not annual revenue, such as deal prices, assets, deposits, debt or share counts.
+AR4 Label an amount only when the word revenue, revenues, sales or turnover is in the same phrase, as in "annual revenues of $11 million" or "$40 million in revenue".
+AR5 Never label expected amounts or guidance, such as "is expected to be", "will generate" or "projected".
+AR6 Never label EBITDA, income, profit, earnings, costs, charges, prices, volumes, years or dates.
+
+[TYPE] ACQUIRED_COMPANY
+[DESCRIPTION] A company that is being acquired by, or merged into, another company in the transaction.
+AC1 Label only companies, never products or assets.
+AC2 Label it only when the text shows it is the one being acquired.
+AC3 If its role in the transaction is not clear, do not label it.
+AC4 The company that acquires, buys or announces an acquisition is never ACQUIRED_COMPANY; label it BUYING_COMPANY.
+AC5 In "X acquired Y's business" or "X acquired assets from Y", Y is the seller, not the acquired company.
+
+[TYPE] BUYING_COMPANY
+[DESCRIPTION] A company that acquires another company, or its assets or shares, in the transaction.
+BC1 Label it only when the text shows it is the one acquiring.
+BC2 Never label the buyer's subsidiaries or companies with other roles.
+BC3 If its role in the transaction is not clear, do not label it.
+BC4 The subject of "acquired", "bought", "purchased", "completed the acquisition of" or "will acquire" is the buyer.
+BC5 An investment firm or private equity fund that acquires a company is the buyer.
+
+[TYPE] SELLING_COMPANY
+[DESCRIPTION] A company that sells or divests assets, subsidiaries or shares to another party in the transaction.
+SC1 The seller is often not the subject of the sentence: in "X acquired Y from Z", Z is the seller.
+SC2 An owner, vendor or parent company that gives up a business or assets is the seller.
+SC3 Never label the company being sold as the seller; label it ACQUIRED_COMPANY.
+SC4 If its role in the transaction is not clear, do not label it.

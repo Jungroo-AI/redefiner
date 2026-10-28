@@ -1,0 +1,130 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled."
+ ],
+ "classes": [
+  {
+   "name": "Vehicle",
+   "description": "A physical device primarily designed to move an object from one location to another, by (for example) carrying, flying, pulling, or pushing the transported object.",
+   "rules": [
+    "VE1 Vehicle entities may or may not have their own power source.",
+    "VE2 Examples: \"car\", \"drone\", \"drones\", \"vehicle\", \"boat\"."
+   ]
+  },
+  {
+   "name": "GPE",
+   "description": "Geopolitical entities such as countries, provinces, states, cities, towns, etc. GPEs are composite entities, consisting of a physical location, a government, and a population.",
+   "rules": [
+    "GP1 All three of these elements must be present for an entity to be tagged as a GPE.",
+    "GP2 A GPE entity may be a single geopolitical entity or a group.",
+    "GP3 Examples: \"Boston\", \"U.S\", \"U.S.\", \"Venezuela\", \"country\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Geographical entities such as geographical areas and landmasses, bodies of water.",
+   "rules": [
+    "LO1 Examples: \"area\", \"line\", \"world\", \"areas\", \"where\"."
+   ]
+  },
+  {
+   "name": "Abstract",
+   "description": "Abstract, non-tangible artifacts such as software (e.g., programs, tool kits, apps, e-mail), measureable intellectual property, contracts, etc. (nb: does not include laws, which are LAW type)",
+   "rules": [
+    "AB1 Examples: \"documents\", \"technology\", \"Proposals\", \"report\", \"research\"."
+   ]
+  },
+  {
+   "name": "Money",
+   "description": "A monetary payment.",
+   "rules": [
+    "MO1 The extent of a Money mention includes modifying quantifiers, the amount, and the currency unit, all of which can be optional.",
+    "MO2 Examples: \"cash\", \"$925\", \"$2,775\", \"$5.2 million\", \"$400\"."
+   ]
+  },
+  {
+   "name": "MedicalHealthIssue",
+   "description": "Any medical condition or health issue, to include everything from disease to broken bones to fever to general ill health, medical errors, even natural causes",
+   "rules": [
+    "MH1 Examples: \"disease\", \"fever\", \"autism spectrum disorder\", \"weak\", \"coronavirus\"."
+   ]
+  },
+  {
+   "name": "Information",
+   "description": "An information object such as a field of study or topic of communication, including thoughts, opinions, etc.",
+   "rules": [
+    "IN1 Examples: \"conference\", \"images\", \"report\", \"statement\", \"name\"."
+   ]
+  },
+  {
+   "name": "BodyPart",
+   "description": "An identifiable, living part of a human's or animal's body, such as a eye, ear, neck, leg, etc.",
+   "rules": [
+    "BP1 Examples: \"tatoo\", \"limbs\", \"the bodies\", \"neck\", \"ear\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "Person entities are limited to humans.",
+   "rules": [
+    "PE1 A Person entity may be a single person or a group.",
+    "PE2 Examples: \"he\", \"his\", \"who\", \"people\", \"they\"."
+   ]
+  },
+  {
+   "name": "SideOfConflict",
+   "description": "The different sides of a conflict, such as philosophical, cultural, ideological, religious, political, guiding philosophical movement or group orientation.",
+   "rules": [
+    "SO1 This will encompass sides of the battle/conflict, sports fans when salient, and other such affiliations, in addition to religions, political parties, and other philosophies.",
+    "SO2 Examples: \"church\", \"officers\", \"supporters\", \"radical Islam\"."
+   ]
+  },
+  {
+   "name": "Weapon",
+   "description": "A physical device that is primarily used as an instrument for physically harming or destroying entities.",
+   "rules": [
+    "WE1 Examples: \"bomb\", \"bombs\", \"drone\", \"explosives\", \"device\"."
+   ]
+  },
+  {
+   "name": "Facility",
+   "description": "A functional, primarily man-made structure.",
+   "rules": [
+    "FA1 Facilities are artifacts falling under the domains of architecture and civil engineering, including more temporary human constructs, such as police lines and checkpoints.",
+    "FA2 Examples: \"where\", \"prison\", \"station\", \"home\", \"hospital\"."
+   ]
+  },
+  {
+   "name": "CommercialProduct",
+   "description": "A tangible product or article of trade for which someone pays or barters, or more generally, an artifact or a thing.",
+   "rules": [
+    "CP1 Examples: \"Arduino\", \"ID\", \"food\", \"bottle cap\", \"backpack\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Corporations, agencies, and other groups of people defined by an established organizational structure.",
+   "rules": [
+    "OR1 An ORG entity may be a single organization or a group.",
+    "OR2 A key feature of an ORG is that it can change members without changing identity.",
+    "OR3 Examples: \"police\", \"government\", \"FBI\", \"IRA\", \"military\"."
+   ]
+  },
+  {
+   "name": "Numeric",
+   "description": "A numerical value or non-numerical value such as an informational property such as color or make or URL.",
+   "rules": [
+    "NU1 Examples: \"two\", \"three\", \"2\", \"five\", \"Tuesday\"."
+   ]
+  },
+  {
+   "name": "JobTitle",
+   "description": "A person's title or job role.",
+   "rules": [
+    "JT1 Examples: \"President\", \"president\", \"Attorney General\", \"opposition activist\", \"Prime Minister\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

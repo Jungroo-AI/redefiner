@@ -1,0 +1,121 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "F1 Spans are short, mostly one or two words. Label the core term without the modifiers before it or the noun after it: \"fatigue\" in \"high-cycle fatigue resistance\", \"oxygen\" in \"dissolved oxygen\", \"tungsten\" and \"rod\" in \"tungsten rod\"."
+ ],
+ "classes": [
+  {
+   "name": "ProcessParameters",
+   "description": "Process parameters refer to specific quantitative values or attributes that play a significant role in manufacturing processes.",
+   "rules": [
+    "PP1 \"layer\" is ProcessParameters.",
+    "PP2 \"temperature\" is ProcessParameters.",
+    "PP3 Examples: \"temperature\", \"layer\", \"build\", \"range\", \"temperatures\"."
+   ]
+  },
+  {
+   "name": "MechanicalProperties",
+   "description": "Refers to specific attributes or characteristics of materials that describe their behavior under mechanical forces and conditions.",
+   "rules": [
+    "MEC1 These properties play a crucial role in manufacturing processes and are often used to evaluate the suitability and performance of materials for different applications.",
+    "MEC2 Named properties and defects stay MechanicalProperties: \"tensile properties\", \"porosity\", \"residual stress\", \"anisotropy\", \"pores\", \"ductility\".",
+    "MEC3 Examples: \"porosity\", \"strength\", \"density\", \"hardness\", \"residual stress\"."
+   ]
+  },
+  {
+   "name": "MachineEquipment",
+   "description": "Any necessary items required for a particular purpose, including assembled parts and set of tools.",
+   "rules": [
+    "ME1 Equipments are required to set up not only the mechanical machines, but also for setting up any relevant operation or task.",
+    "ME2 \"AM parts\", \"AM machines\", \"3D printers\" and \"3D printer\" are MachineEquipment, not ManufacturingProcess.",
+    "ME3 Every \"component\" and \"components\" is MachineEquipment.",
+    "ME4 \"tools\" is MachineEquipment.",
+    "ME5 Examples: \"components\", \"component\", \"nozzle\", \"beam\", \"powder bed\"."
+   ]
+  },
+  {
+   "name": "EnablingTechnology",
+   "description": "Specific tools, methods, processes, or technologies that play a pivotal role in facilitating or enhancing various aspects of manufacturing processes.",
+   "rules": [
+    "ET1 \"rapid prototyping\" and \"generative design\" are EnablingTechnology, not ManufacturingProcess.",
+    "ET2 Examples: \"laser\", \"simulation\", \"modeling\", \"simulations\", \"CT\"."
+   ]
+  },
+  {
+   "name": "ConceptPrinciples",
+   "description": "Refers to key concepts, principles, and elements related to manufacturing processes.",
+   "rules": [
+    "CP1 \"mechanical properties\", \"microhardness\", \"microstructure\", \"HAZ\" and \"heat affected zone\" are ConceptPrinciples, not MechanicalProperties.",
+    "CP2 \"experimental\" is ConceptPrinciples.",
+    "CP3 \"research\" and \"samples\" are ConceptPrinciples.",
+    "CP4 \"geometry\" and \"interface\" are ConceptPrinciples, not EngineeringFeatures.",
+    "CP5 \"performance\" is ConceptPrinciples.",
+    "CP6 \"process parameters\" is ConceptPrinciples, not ProcessParameters.",
+    "CP7 \"process\" is ConceptPrinciples.",
+    "CP8 \"fabricated\" and \"complexity\" are ConceptPrinciples.",
+    "CP9 Examples: \"process\", \"model\", \"mechanical properties\", \"samples\", \"materials\"."
+   ]
+  },
+  {
+   "name": "ProcessCharacterization",
+   "description": "Refers to the detailed analysis and measurement of various aspects of manufacturing processes to understand their performance, quality, and characteristics.",
+   "rules": [
+    "PC1 Microscopy, diffraction and test methods are ProcessCharacterization, not EnablingTechnology: \"scanning electron microscopy\", \"EBSD\", \"X-ray diffraction\", \"tensile tests\".",
+    "PC2 \"accuracy\" is ProcessCharacterization.",
+    "PC3 Examples: \"accuracy\", \"optical\", \"measurement\", \"spatter\", \"SEM\"."
+   ]
+  },
+  {
+   "name": "Biomedical",
+   "description": "Refers to any biomedical entity involved in the manufacturing process.",
+   "rules": [
+    "BI1 Examples: \"bone\", \"dendrites\", \"starch\", \"dendrite\", \"bone scaffolds\"."
+   ]
+  },
+  {
+   "name": "Application",
+   "description": "Refers to the specific field or industry in which a manufacturing process is utilized or intended to be utilized.",
+   "rules": [
+    "AP1 It signifies the purpose, domain, or sector where the manufacturing process finds its use.",
+    "AP2 Examples: \"mechanical\", \"imaging\", \"coating\", \"industrial\", \"support\"."
+   ]
+  },
+  {
+   "name": "EngineeringFeatures",
+   "description": "Encompass distinct terms or phrases that convey specific information related to the structural, functional, or visual properties of a manufacturing process.",
+   "rules": [
+    "EF1 \"design\" is EngineeringFeatures.",
+    "EF2 Examples: \"design\", \"designed\", \"texture\", \"lattice structures\", \"designs\"."
+   ]
+  },
+  {
+   "name": "Material",
+   "description": "Refers to any substance or compound used in manufacturing processes that has a significant impact on the process, properties, or characteristics of the end product.",
+   "rules": [
+    "MA1 Materials can include metals, alloys, polymers, ceramics, composites, and more.",
+    "MA2 A Material span is the material name alone, without grade numbers, modifiers or the part made of it: \"metal\" in \"metal parts\", \"carbon steel\" in \"carbon steel cladding\", \"metallic glass\" in \"bulk metallic glass\", \"Ti\" in \"Ti 6-4\".",
+    "MA3 Examples: \"as\", \"be\", \"material\", \"powder\", \"alloy\"."
+   ]
+  },
+  {
+   "name": "ManufacturingProcess",
+   "description": "Refers to a specific technique, method, or procedure used in the production of goods.",
+   "rules": [
+    "MP1 A process span leaves out modifiers and the product: \"arc welding\" in \"robotic arc welding\", \"sand casting\" in \"green sand casting\", \"additively manufactured\" in \"additively manufactured components\".",
+    "MP2 After \"AM\" the next noun stays in the span: \"AM process\", \"AM processes\" and \"AM technologies\" are ManufacturingProcess.",
+    "MP3 \"production\" is ManufacturingProcess.",
+    "MP4 \"heat treatment\", \"joining\" and \"assembly\" are ManufacturingProcess.",
+    "MP5 Examples: \"AM\", \"additive manufacturing\", \"SLM\", \"3D printing\", \"fabrication\"."
+   ]
+  },
+  {
+   "name": "ManufacturingStandards",
+   "description": "Refer to specific guidelines, specifications, benchmarks, and terminology used within the manufacturing industry to ensure uniformity, quality, and compatibility of products, processes, and systems.",
+   "rules": [
+    "MS1 Examples: \"ISO\", \"benchmark\", \"ISO 25178-2\", \"file\", \"STL\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

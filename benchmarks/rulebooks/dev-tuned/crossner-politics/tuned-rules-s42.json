@@ -1,0 +1,84 @@
+{
+ "general": [
+  "Extract every entity of the supplied types. Return exact spans from the query. Leave other text unlabelled.",
+  "C1 Words for a nationality, people or language, such as \"American\", \"British\", \"Polish\" or \"Russian\", are never Country or Location; label them Other."
+ ],
+ "classes": [
+  {
+   "name": "Politician",
+   "description": "Refers to a person who is actively engaged in politics, holding a public office, involved in political activities or part of a political party.",
+   "rules": [
+    "PO1 If a person entity is identified as a politician, annotate that person's name as a politician entity.",
+    "PO2 Candidates, party leaders and party officials are Politician even if they never held office, also when named by surname only: \"Nicole Malliotakis\", \"Guy Millner\", \"Giacomo Montalto\", \"Samis\", \"Dubé\".",
+    "PO3 Examples: \"Bush\", \"Ronald Reagan\", \"Al Gore\", \"Joseph Stalin\", \"Richard Nixon\"."
+   ]
+  },
+  {
+   "name": "Event",
+   "description": "Refers to a significant occurrence or happening.",
+   "rules": [
+    "EV1 Such as wars, conferences, summits, conventions, etc.",
+    "EV2 Examples: \"Decembrist revolt\", \"1952 Republican National Convention\", \"1943 Tehran Conference\", \"World War II\", \"1983 Commonwealth heads of Government summit\"."
+   ]
+  },
+  {
+   "name": "Country",
+   "description": "Refers to a sovereign nation.",
+   "rules": [
+    "CO1 Examples: \"U.S.\", \"India\", \"China\", \"Germany\", \"United States\"."
+   ]
+  },
+  {
+   "name": "PoliticalParty",
+   "description": "A political party is an organization that coordinates candidates to compete in a particular country's elections.",
+   "rules": [
+    "PP1 Also annotate acronyms of political parties.",
+    "PP2 Groups that run in elections are PoliticalParty even without the word Party in their name: \"Euskadiko Ezkerra\", \"Polisario Front\", \"Kuomintang\", \"Fatah\", \"GroenLinks\".",
+    "PP3 Examples: \"SPD\", \"National Party of Australia\", \"Sinn Féin\", \"FDP\", \"Liberal Party of Australia\"."
+   ]
+  },
+  {
+   "name": "Other",
+   "description": "Refers to named entities that are not included in any other category.",
+   "rules": [
+    "OT1 A party word used alone for a person, voter or adjective is Other, not PoliticalParty: \"Republican\", \"Democrat\", \"Republicans\", \"Democrats\".",
+    "OT2 Examples: \"Republican\", \"German\", \"Democrat\", \"Soviet\", \"Republicans\"."
+   ]
+  },
+  {
+   "name": "Location",
+   "description": "Refers to a specific geographical or structural location.",
+   "rules": [
+    "LO1 This includes but is not limited to: places (e.g., parks, landmarks), bridges, cities, towns, villages, areas and other distinct regions.",
+    "LO2 Examples: \"Paris\", \"London\", \"Berlin\", \"Rome\", \"Dublin\"."
+   ]
+  },
+  {
+   "name": "Election",
+   "description": "Refers to an organized process in which individuals vote to choose a candidate or make a decision.",
+   "rules": [
+    "EL1 If an event mentioned in the text pertains to an election, annotate it as an election entity.",
+    "EL2 An Election span starts at its year, or at the month when one comes before the year, and covers the whole name: \"1997 Canadian federal election\", \"1977 Ontario general election\", \"2016 Basque regional election\", \"February 1974 United Kingdom general election\". Never label the country or region inside it on its own.",
+    "EL3 Examples: \"1997 Irish general election\", \"1992 United States presidential election\", \"1920 United States presidential election\", \"2000 United States presidential election\", \"2008 United States presidential election\"."
+   ]
+  },
+  {
+   "name": "Person",
+   "description": "Refers to an individual's name that is not a politician.",
+   "rules": [
+    "PE1 Person is only for people with no political role, such as actors, singers, writers, journalists and scholars.",
+    "PE2 Examples: \"Bennelong\", \"Zappa\", \"Tower\", \"Andrea Fischer\", \"Wyden\"."
+   ]
+  },
+  {
+   "name": "Organization",
+   "description": "Refers to a structured group, institution, company, or association that is not a political party.",
+   "rules": [
+    "OR1 International federations of parties are Organization, not PoliticalParty: \"Liberal International\".",
+    "OR2 Examples: \"NARAL Pro-Choice America\", \"Planned Parenthood\", \"National Right to Life Committee\", \"United Daughters of the Confederacy\", \"Sons of Confederate Veterans\"."
+   ]
+  }
+ ],
+ "never": [],
+ "closing": []
+}

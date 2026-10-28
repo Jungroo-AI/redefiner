@@ -1,0 +1,19 @@
+[RULES] <Domain> rulebook. Label each entity in the text with one of the types below.
+G1 Label all entities in the text, not only the first one.
+G2 Keep each span as short as the entity itself ("a flight to Oslo" -> "Oslo").
+G3 When two types fit, the precedence rules below decide.
+[PRECEDENCE]
+P1 <A cue in the text> decides between TYPE_A and TYPE_B: after "<cue>" or "<cue>" it is TYPE_A; after "<cue>" or "<cue>" it is TYPE_B.
+P2 <A visible format, such as a prefix> decides the type, whatever the text calls it: "<prefix>..." is TYPE_C, even when called <other name>.
+[TYPE] TYPE_A
+[DESCRIPTION] One line saying what this type is.
+TA1 "<a short made-up text>" -> "<the span>".
+TA2 "<a made-up text where TYPE_B looks right>" -> "<the span>" is TYPE_A.
+[TYPE] TYPE_B
+[DESCRIPTION] One line saying what this type is.
+TB1 "<a short made-up text>" -> "<the span>".
+[TYPE] TYPE_C
+[DESCRIPTION] One line saying what this type is.
+TC1 "<a short made-up text>" -> "<the span>".
+[NOT_AN_ENTITY]
+NE1 <What is never labelled, even though it looks like one of the types> ("<example>", "<example>").
