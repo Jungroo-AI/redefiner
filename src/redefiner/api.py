@@ -180,7 +180,10 @@ class Tagger:
             batch_size: queries per forward pass.
 
         Returns:
-            Per text, its spans sorted by start; a single list when `texts` is a string.
+            Per text, its spans sorted by start; a single list when `texts` is a string. A span's confidence is its
+            span probability times its type probability. `threshold` filters on the span probability alone, and
+            `none_bias` lowers NONE only while the type is picked, so a returned span can have a confidence below
+            `threshold`.
 
         Raises:
             ValueError: the rulebook has no [TYPE] sections.
@@ -241,7 +244,8 @@ class Tagger:
             batch_size: queries per forward pass.
 
         Returns:
-            Per text, one result per span in the given order; a single list when `texts` is a string. A span is
+            Per text, one result per span in the given order; a single list when `texts` is a string. A label's
+            confidence is its probability among the rulebook's types (and NONE, with allow_none). A span is
             unsupported (an "unsupported" reason instead of a label) when its offsets are invalid, when it is longer
             than `max_width` model tokens, or when it does not start and end on token boundaries and snap is False.
 

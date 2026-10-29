@@ -58,7 +58,7 @@ pip install redefiner
 ```python
 from redefiner import Tagger
 
-tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # CPU by default; device="cuda" for a GPU
+tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # GPU if available, else CPU; device="cpu" forces CPU
 
 rulebook = """[RULES]
 Extract every entity of the supplied types. Return exact spans from the text.
@@ -82,8 +82,16 @@ tagger.extract("Prof Ada Lovelace corresponded with the Royal Society.", without
 #  {'start': 40, 'end': 53, 'text': 'Royal Society', 'label': 'ORGANIZATION', 'confidence': 0.424}]
 
 tagger.label("Ada Lovelace corresponded with the Royal Society.", [(0, 12), (35, 48)], rulebook)
-# PERSON for "Ada Lovelace", ORGANIZATION for "Royal Society", each with a confidence and two alternatives
+# PERSON for "Ada Lovelace" (1.0), ORGANIZATION for "Royal Society" (0.997), each with the other type as an alternative
 ```
+
+Each extracted span's `confidence` is its span probability times its type probability. Two settings decide which
+spans come back: `threshold` (default 0.5) is the minimum span probability, and `none_bias` (default 2) is subtracted
+from the score of "none of these types" before the type is picked, so borderline spans get a type instead of being
+dropped. The confidence is computed without that bias, so a returned span can score below 0.5. Above, "Royal Society"
+is almost certainly a span (0.997), but the model weighs ORGANIZATION (0.491) and none of the types (0.508) about
+equally: 0.997 × 0.491 = 0.489. Filter on `confidence` if you only want the spans the model is sure of. In `label`,
+`confidence` is the probability of the chosen type among the rulebook's types.
 
 **Writing your own rulebook:** start from a [template](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates) (a blank layout; PII, news, product reviews and scientific text; and a skeleton for types that depend on context), and see [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md).
 
