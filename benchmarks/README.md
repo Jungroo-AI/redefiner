@@ -201,6 +201,7 @@ Reproduce: the scripts, outputs, scores and threshold sweeps are in `liquid/`.
 | Superion S1 | n/a ² | 88.5 | **95.5** | 92.0 |
 | bekko-system-one-v0-68m ¹ | 0.07B | 87.2 | 90.1 | 88.6 |
 | Jev 1.13.0 | n/a ² | 80.2 | 88.1 | 84.1 |
+| Fastino GLiDE (hosted API) | n/a ² | 83.2 | 74.2 | 78.7 |
 | d1-2B (Liquid AI), our run | 1.92B | 70.1 | 78.5 | 74.3 |
 | ReDefiNER (this page) | 0.8B | 71.8 | 72.2 | 72.0 |
 | bekko-system-one-v0-17m ¹ | 0.02B | 76.0 | 66.9 | 71.4 |
