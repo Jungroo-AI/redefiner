@@ -3,5 +3,5 @@
 from .api import LabelResult, Span, Tagger
 from .rulebook import to_text
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __all__ = ["LabelResult", "Span", "Tagger", "to_text", "__version__"]
