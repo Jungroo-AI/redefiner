@@ -556,8 +556,37 @@ measured through our benchmark server, HTTP included:
 
 GPU memory use was not measured.
 
-Server: `redefiner serve --model jungroo-ai/redefiner-0.8b --port 8000` exposes `POST /extract` and `POST /label`
-(see `src/redefiner/serve.py` for the request format).
+## HTTP server
+
+```bash
+redefiner serve --model jungroo-ai/redefiner-0.8b --port 8000
+```
+
+It listens on 127.0.0.1 (`--host` to change) and handles one request at a time. Both endpoints take a list of texts
+and return one result list per text. The rulebook is text or, as here, the dict form of `to_text`:
+
+```bash
+RULEBOOK='{"general": ["Extract every entity of the supplied types. Return exact spans from the text."],
+           "classes": [{"name": "PERSON", "description": "The name of a person."},
+                       {"name": "ORGANIZATION", "description": "A company, university or other institution."}]}'
+
+curl -s localhost:8000/extract -d "{\"rulebook\": $RULEBOOK, \"texts\": [\"Ada Lovelace corresponded with the Royal Society.\"]}"
+# {"results": [[{"start": 0, "end": 12, "text": "Ada Lovelace", "label": "PERSON", "confidence": 0.989},
+#               {"start": 35, "end": 48, "text": "Royal Society", "label": "ORGANIZATION", "confidence": 0.431}]], "ms": 2101}
+
+curl -s localhost:8000/label -d "{\"rulebook\": $RULEBOOK, \"texts\": [\"Ada Lovelace corresponded with the Royal Society.\"], \"spans\": [[[0, 12], [35, 48]]]}"
+# {"results": [[{"start": 0, "end": 12, "text": "Ada Lovelace", "label": "PERSON", "confidence": 0.999, "alternatives": [["ORGANIZATION", 0.001]]},
+#               {"start": 35, "end": 48, "text": "Royal Society", "label": "ORGANIZATION", "confidence": 0.994, "alternatives": [["PERSON", 0.006]]}]], "ms": 302}
+```
+
+| Endpoint | Fields | Optional fields (default) |
+|---|---|---|
+| `POST /extract` | `rulebook`, `texts` | `threshold` (0.5), `none_bias` (2) |
+| `POST /label` | `rulebook`, `texts`, `spans`: one list of `[start, end]` per text | `allow_none` (false), `snap` (false), `none_bias` (2) |
+| `GET /info` | | |
+
+A span that can't be labelled comes back with an `unsupported` reason in place of a label (see
+[Label mode](#label-mode)). A malformed request gets HTTP 400 and an `error` message.
 
 ## Benchmarks
 

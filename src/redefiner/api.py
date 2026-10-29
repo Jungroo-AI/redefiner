@@ -15,6 +15,7 @@ own, so the same string can get different labels in different windows of one doc
 
 import collections
 import json
+import logging
 import sys
 from pathlib import Path
 from typing import TypedDict
@@ -28,8 +29,22 @@ from .windows import edge_distance, label_windows, text_windows
 # decoding defaults, used where a release folder's config.json does not set them
 DEFAULTS = {"d_span": 512, "max_width": 16, "max_query_tokens": 256, "threshold": 0.5, "none_bias": 2.0}
 TOP_K = 3   # label(): the chosen type plus up to two alternatives
+# the files from_pretrained needs from a Hugging Face repo; the model repo also holds benchmarks and docs
+RELEASE_FILES = ["config.json", "model.safetensors", "tokenizer.json", "tokenizer_config.json", "vocab.json",
+                 "merges.txt", "chat_template.jinja", "LICENSE", "NOTICE"]
 
 Rulebook = str | dict
+
+
+class _CpuFallbackFilter(logging.Filter):
+    """Drops transformers' "falling back to its reference PyTorch implementation" warnings.
+
+    They recommend causal_conv1d and flash-linear-attention, which are CUDA kernels; off CUDA the torch path (with
+    fastconv's convolution) is the intended one.
+    """
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        return "falling back to its reference PyTorch implementation" not in record.getMessage()
 
 
 class Span(TypedDict):
@@ -84,7 +99,10 @@ class Tagger:
                 (see fastconv.py).
 
         Off CUDA this also sets sys.modules["fla"] = None, so transformers uses its torch implementation instead of
-        flash-linear-attention's GPU kernels. Both changes apply to the whole process.
+        flash-linear-attention's GPU kernels, and silences transformers' warnings recommending those kernels. These
+        changes apply to the whole process.
+
+        From a Hugging Face repo only the files in RELEASE_FILES are downloaded.
 
         Raises:
             ValueError: the folder is not an int8 release folder.
@@ -94,7 +112,7 @@ class Tagger:
         root = Path(path).expanduser()
         if not root.exists():
             from huggingface_hub import snapshot_download
-            root = Path(snapshot_download(str(path), revision=revision))
+            root = Path(snapshot_download(str(path), revision=revision, allow_patterns=RELEASE_FILES))
         config = dict(DEFAULTS)
         config.update(json.loads((root / "config.json").read_text()))
         if config.get("format") != "int8":
@@ -102,6 +120,9 @@ class Tagger:
         device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
         if device.type != "cuda":
             sys.modules.setdefault("fla", None)
+            hub_kernels = logging.getLogger("transformers.integrations.hub_kernels")
+            if not any(isinstance(f, _CpuFallbackFilter) for f in hub_kernels.filters):
+                hub_kernels.addFilter(_CpuFallbackFilter())
             if cpu_fast_conv:
                 from . import fastconv
                 fastconv.install()

@@ -1,7 +1,7 @@
 """End-to-end checks with the release weights (skipped without ./weights). About a minute on a laptop CPU."""
 import pytest
 
-from .conftest import requires_weights
+from .conftest import WEIGHTS, requires_weights
 
 pytestmark = requires_weights
 
@@ -67,3 +67,8 @@ def test_long_text_is_chunked(tagger):
     last = text.rindex("Marie Curie")
     assert any(s["start"] == last for s in curie)
     assert tagger.label(text, [(last, last + len("Marie Curie"))], RULEBOOK)[0]["label"] == "PERSON"
+
+
+def test_hub_download_list_covers_the_release_folder():
+    from redefiner.api import RELEASE_FILES
+    assert sorted(p.name for p in WEIGHTS.iterdir()) == sorted(RELEASE_FILES)
