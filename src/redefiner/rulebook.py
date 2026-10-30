@@ -58,7 +58,9 @@ def to_text(book: str | dict) -> str:
     {"general": ["rule for every type", ...],
      "classes": [{"name": "PERSON", "description": "A person's name.", "rules": ["PE1 ...", ...]}, ...],
      "never": ["what is never tagged", ...],      # optional
-     "closing": ["rules after the classes", ...]} # optional
+     "closing": ["rules after the classes", ...]} # optional, written under a second [RULES] line
+
+Each list item is one rule line, written as given (rules are not numbered).
 
     Raises:
         ValueError: a dict without a "classes" list, or a class without a "name".
@@ -80,7 +82,7 @@ def to_text(book: str | dict) -> str:
     if book.get("never"):
         sections.append("\n".join(["[TYPE] NOT_AN_ENTITY", *book["never"]]))
     if book.get("closing"):
-        sections.append("\n".join(book["closing"]))
+        sections.append("\n".join(["[RULES]", *book["closing"]]))
     return "\n\n".join(sections) + "\n"
 
 

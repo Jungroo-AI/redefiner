@@ -4,6 +4,9 @@ These patterns come from the benchmark rulebooks in `benchmarks/` and from the e
 full BroadTwitter and HarveyNER rulebooks are in `benchmarks/`, before and after the rules were added; templates to
 start from are in [`templates/`](templates/).
 
+Each rule quoted below is a single line in its rulebook, however long: a rule wrapped onto continuation lines scores
+lower (see Rule lines in the [README](../README.md#rulebooks)).
+
 ## 1. Always write a description
 
 Every `[TYPE]` should have a one-line `[DESCRIPTION]`. On our open-NER sets, descriptions are worth about 7 F1 over
@@ -16,9 +19,7 @@ Most errors on a new dataset are boundary conventions, not wrong types. State th
 appear in your text.
 
 ```
-B1 An @username is an entity. Its span always starts at the "@" and covers the whole name: label "@ Calum5SOS",
-   never "Calum5SOS" alone. This holds anywhere in the tweet: after RT ("RT @ BenHannington :"), at the start
-   ("@ DMorifeu What is that ?") and in a list ("@ Luke5SOS @ Calum5SOS @ Ashton5SOS").
+B1 An @username is an entity. Its span always starts at the "@" and covers the whole name: label "@ Calum5SOS", never "Calum5SOS" alone. This holds anywhere in the tweet: after RT ("RT @ BenHannington :"), at the start ("@ DMorifeu What is that ?") and in a list ("@ Luke5SOS @ Calum5SOS @ Ashton5SOS").
 ```
 
 This one rule took @-mention recall on BroadTwitter from 17% to 61%, and the dataset from 45.5 to 70.6 F1.
@@ -26,9 +27,7 @@ This one rule took @-mention recall on BroadTwitter from 17% to 61%, and the dat
 For multi-part names, say that the whole phrase is one span and that its parts are not labelled again:
 
 ```
-G4 A Point is the whole location phrase as one span, with its cross street, address, city, state and zip:
-   "corner of Richey St and W Harris Ave in Pasadena", "900 Portway Drive , Houston , TX 77024".
-   Do not also label the roads, towns or buildings inside it.
+G4 A Point is the whole location phrase as one span, with its cross street, address, city, state and zip: "corner of Richey St and W Harris Ave in Pasadena", "Mason Rd . and HWY 290", "Covenant Church on Wilson Rd", "The Buckingham nursing home 8580 Woodway", "900 Portway Drive , Houston , TX 77024", "45 north just past Dickinson". Do not also label the roads, towns or buildings inside it.
 ```
 
 ## 3. Name the false positives you see most
@@ -36,8 +35,7 @@ G4 A Point is the whole location phrase as one span, with its cross street, addr
 A short list of the exact strings the model keeps labelling works better than a general principle.
 
 ```
-G2 Never label "Houston", "Texas" or "Harris County" on their own, a US state, a country, or the storm
-   ("Harvey", "Hurricane Harvey"), including their hashtags ("# Houston", "# Harvey").
+G2 Never label "Houston", "Texas" or "Harris County" on their own, a US state, a country, or the storm ("Harvey", "Hurricane Harvey"), including their hashtags ("# Houston", "# Harvey"); they are too broad to map.
 B3 "RT", links, emoticons, zodiac signs ("Aries", "Gemini", "Virgo") and words that are not names are never entities.
 ```
 
@@ -48,8 +46,7 @@ On HarveyNER, G2 cut predictions of those strings from 389 to 5.
 When two types could claim the same span, say which one wins and when:
 
 ```
-RO1 A road or highway named without an intersection, address or exit is a Road ("I-45", "Memorial Drive");
-    when it has a cross street or address, the whole phrase is one Point instead.
+RO1 A road or highway named without an intersection, address or exit is a Road ("I-45", "Memorial Drive", "US-59 South"); when it has a cross street or address, the whole phrase is one Point instead.
 ```
 
 ## 5. Give positive cues for rare types

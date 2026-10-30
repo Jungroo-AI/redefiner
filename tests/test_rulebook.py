@@ -14,7 +14,7 @@ def test_to_text_layout():
                              "[TYPE] PERSON\n[DESCRIPTION] A person's name.\nPE1 Full names only.\n\n"
                              "[TYPE] CITY\n[DESCRIPTION] A city.\n\n"
                              "[TYPE] NOT_AN_ENTITY\nPronouns.\n\n"
-                             "G2 These rules override everything above.\n")
+                             "[RULES]\nG2 These rules override everything above.\n")
     assert to_text("[TYPE] X\n") == "[TYPE] X\n"
 
 

@@ -594,8 +594,23 @@ rulebook = {
 
 Type names use letters, digits and underscores (`DATE_OF_BIRTH`, not `DATE-OF-BIRTH`), on a line of their own:
 `[TYPE] NAME`. A line that starts with `[TYPE]` but is written any other way is an error, so a type is never dropped
-silently. To see what was read, `parse(to_text(rulebook))` (both from `redefiner.rulebook`) returns the layout and the
-type names, e.g. `("uniform", ["PERSON", "ORGANIZATION"])`.
+silently. Names are case-sensitive and come back exactly as written, so `Person` and `PERSON` are two types. To see
+what was read, `parse(to_text(rulebook))` (both from `redefiner.rulebook`) returns the layout and the type names, e.g.
+`("uniform", ["PERSON", "ORGANIZATION"])`.
+
+**Rule lines.**
+- One rule per line. Don't wrap a long rule onto continuation lines: on CrossNER AI, wrapping the long rules of two
+  rulebooks lowered F1 by 0.8 and 0.5.
+- Start each rule with a short ID: `G1` in `[RULES]`, the type's letters under a type (`PE1`), `NE1` under
+  `NOT_AN_ENTITY`. IDs let rules refer to each other ("the precedence rules below decide"). They are optional: removing
+  them from the same two rulebooks changed F1 by −0.02 and +0.6. Every rulebook in this repo uses them. In the dict
+  form, write the ID in the string; `to_text` doesn't number rules.
+- A rule belongs to the section it sits in, not to its ID. Everything under `[TYPE] X` up to the next `[TYPE]` or
+  `[RULES]` line is X's. Put `[DESCRIPTION]` on the line right after `[TYPE]`, and keep it to one line.
+- Quoted strings under a type are read as examples of that type, even inside a "never" sentence, so put exclusions in
+  `[RULES]` or `NOT_AN_ENTITY` ([why](docs/writing-rules.md#6-put-exclusions-in-rules-and-examples-under-their-type)).
+- Rules that apply after all the types, such as which rule wins when two disagree, go under a second `[RULES]` line at
+  the end. In the dict form that is the `"closing"` list.
 
 **Two layouts.** The layout above has `[RULES]` on a line of its own and `[TYPE] NOT_AN_ENTITY` for what is never
 tagged. The other, used by [`hard-rules.txt`](docs/templates/hard-rules.txt) and the travel-desk example, has text on
