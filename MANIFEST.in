@@ -1,0 +1,2 @@
+# The tests need the weights and the rest of the repository; they are not part of the source package.
+prune tests

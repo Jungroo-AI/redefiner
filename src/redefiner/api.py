@@ -105,11 +105,15 @@ class Tagger:
         From a Hugging Face repo only the files in RELEASE_FILES are downloaded.
 
         Raises:
+            FileNotFoundError: `path` is a local path (starting with ".", "/", "~" or a drive letter) that doesn't
+                exist.
             ValueError: the folder is not an int8 release folder.
         """
+        root = Path(path).expanduser()
+        if not root.exists() and _looks_local(str(path)):
+            raise FileNotFoundError(f"no folder at {path}")
         from safetensors.torch import load_file
         from transformers.models.qwen3_5.tokenization_qwen3_5 import Qwen3_5Tokenizer
-        root = Path(path).expanduser()
         if not root.exists():
             from huggingface_hub import snapshot_download
             root = Path(snapshot_download(str(path), revision=revision, allow_patterns=RELEASE_FILES))
@@ -214,6 +218,8 @@ class Tagger:
                 for s, e, k, conf in self.model.predict(markers, h, q.q2_start, threshold=threshold,
                                                         none_bias=none_bias):
                     cs, ce = Encoder.char_span(q, s, e)
+                    if ce <= cs:   # the tokens were only whitespace
+                        continue
                     found[ti].append((edge_distance(s, e, n, at_start, at_end), conf, c0 + cs, c0 + ce, rb.types[k]))
         results = []
         for ti, spans in enumerate(found):
@@ -325,7 +331,20 @@ class Tagger:
 
 
 def _offsets(span) -> tuple[int, int]:
-    """(start, end) from a (start, end) pair or a {"start", "end"} dict."""
-    if isinstance(span, dict):
-        return int(span["start"]), int(span["end"])
-    return int(span[0]), int(span[1])
+    """(start, end) from a (start, end) pair or a {"start", "end"} dict.
+
+    Raises:
+        ValueError: `span` is neither.
+    """
+    try:
+        if isinstance(span, dict):
+            return int(span["start"]), int(span["end"])
+        start, end = span
+        return int(start), int(end)
+    except (KeyError, TypeError, ValueError):
+        raise ValueError(f'a span must be a (start, end) pair or a {{"start", "end"}} dict, not {span!r}') from None
+
+
+def _looks_local(path: str) -> bool:
+    """True for paths a Hugging Face repo id can't be: ./x, ../x, /x, ~/x, C:\\x."""
+    return path.startswith((".", "/", "~", "\\")) or Path(path).is_absolute() or path[1:2] == ":"

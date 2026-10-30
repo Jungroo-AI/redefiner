@@ -47,3 +47,31 @@ def test_markers_compact_layout():
     text = "[TYPE] PERSON\nA name.\n[NOT_AN_ENTITY]\nPronouns.\n"
     parts = with_markers(text, ["PERSON"], "compact").split(MARKER)
     assert parts[0].rstrip().endswith("A name.") and parts[1].lstrip().startswith("[NOT_AN_ENTITY]")
+
+
+@pytest.mark.parametrize("line", ["[TYPE] DATE-OF-BIRTH", "[TYPE]EMAIL", "[TYPE] Job Title", "[type] CITY",
+                                  "[TYPE] CITY  (towns too)", "  [TYPE] CITY", "[TYPE]"])
+def test_unreadable_type_line_is_an_error(line):
+    text = f"[RULES]\nExtract every entity.\n\n[TYPE] PERSON\n[DESCRIPTION] A name.\n\n{line}\n[DESCRIPTION] More.\n"
+    with pytest.raises(ValueError, match="unreadable type line"):
+        parse(text)
+
+
+def test_windows_line_endings_and_bom_read_the_same():
+    compact = "Find the entities.\n\n[TYPE] PERSON\nA name.\n\n[NOT_AN_ENTITY]\nPronouns.\n"
+    for text in (to_text(BOOK), compact):
+        windows = "\ufeff" + text.replace("\n", "\r\n")
+        assert to_text(windows) == text
+        assert parse(windows) == parse(text)
+
+
+def test_mixed_layouts_are_an_error():
+    with pytest.raises(ValueError, match="mixes two layouts"):
+        parse("[RULES]\nFind the entities.\n\n[TYPE] PERSON\nA name.\n\n[NOT_AN_ENTITY]\nPronouns.\n")
+
+
+def test_rulebook_object_needs_classes_with_names():
+    with pytest.raises(ValueError, match='"classes"'):
+        to_text({"general": ["Extract every entity."]})
+    with pytest.raises(ValueError, match='"name"'):
+        to_text({"classes": [{"description": "A city."}]})

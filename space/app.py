@@ -526,7 +526,7 @@ with gr.Blocks(title="ReDefiNER") as demo:
                 tp = gr.Dropdown(list(TEMPLATES), value="PII", label="Start from a template", scale=1)
             t_text = gr.Textbox(TEMPLATES["PII"].sample, label="Text", lines=3, max_lines=10)
             t_editor = RulebookEditor(TEXT_SLOTS, template_text("PII"))
-            with gr.Row():
+            with gr.Row(elem_classes="run-row"):
                 t_go = gr.Button("Run", variant="primary", scale=0, min_width=140)
                 t_none = gr.Checkbox(False, label="Allow NONE (the span may be none of the types)", visible=False)
                 gr.HTML('<span class="hint">The first run after a rulebook edit takes a few seconds.</span>')

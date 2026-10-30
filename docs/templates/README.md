@@ -1,13 +1,16 @@
 # Rulebook templates
 
-Copy a file, change the types, descriptions and rules to fit your task, and pass the text as the rulebook:
+Copy a file, change the types, descriptions and rules to fit your task, and pass the text as the rulebook. The
+templates are in this repository, not in the pip package: read one from a clone (`Path("docs/templates/pii.txt")`), or
+download it:
 
 ```python
-from pathlib import Path
+import urllib.request
 from redefiner import Tagger
 
 tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")
-rulebook = Path("docs/templates/pii.txt").read_text()
+url = "https://raw.githubusercontent.com/Jungroo-AI/redefiner/main/docs/templates/pii.txt"
+rulebook = urllib.request.urlopen(url).read().decode()
 tagger.extract("Please update the record for Maria Gonzalez, born 14 May 1987.", rulebook)
 ```
 

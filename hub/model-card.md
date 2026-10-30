@@ -90,9 +90,9 @@ Output: Zoom `PRODUCT` · 6.2.5 `VERSION` · MacBook Air `DEVICE` · 1132 `ERROR
 | Benchmarks | 59.8 F1 on the 13 GoLLIE zero-shot NER sets, with GoLLIE's own guidelines (GoLLIE 34B: 58.1); 63.1 on 7 CrossNER and MIT sets with one-line type descriptions (GLiNER large: 61.7, or 62.2 with a dev-tuned threshold). It trails with type names only, on BUSTER and on S1MB labeling: [all results](#benchmarks) |
 | Limits | Rulebooks tested up to about 10,000 tokens; text is read 256 tokens at a time (longer texts are split into windows automatically); each span is at most 16 tokens |
 | Model size | 0.8B parameters, shipped as one 0.77 GB int8 file |
-| Speed, CPU | About 0.5 s per sentence on a laptop once a rulebook is loaded (Apple M2) |
+| Speed, CPU | About 0.4–0.7 s per sentence once the rulebook is loaded (Apple M2, and a 4-core Linux server) |
 | Speed, GPU | About 0.05 s per text, or 0.38 s for 16 texts in one call, with a 2,000-token rulebook (NVIDIA A10) |
-| Memory, CPU | About 1.1 GB peak with a short rulebook, about 2 GB with a 2,000-token rulebook (Apple M2) |
+| Memory, CPU | About 2–2.6 GB at peak, with rulebooks of up to about 1,400 tokens and 16 texts in one call (Apple M2, and a 4-core Linux server) |
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Licence | Apache-2.0 |
 | Release | 1.0 · October 2026 |

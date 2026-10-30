@@ -20,6 +20,8 @@ Two layouts are read:
   uniform  the layout above; a type's section ends at the next [TYPE] or [RULES] line.
   compact  no [RULES] line: free text, then the [TYPE] sections, optionally followed by a "[NOT_AN_ENTITY]" section;
            a type's section ends at the next [TYPE] or [NOT_AN_ENTITY] line.
+A rulebook with a "[RULES]" line of its own (or "[TYPE] NOT_AN_ENTITY") is read as uniform; one that also has a
+"[NOT_AN_ENTITY]" line mixes the two and is an error. Windows line endings and a byte-order mark are removed first.
 
 Input layout (one rulebook pass, then one short pass per query):
   prefix  <|im_start|>system\\n RULES <|im_end|>\\n            RULES has a marker after each type's section
@@ -31,8 +33,10 @@ import hashlib
 import re
 from dataclasses import dataclass
 
-TYPE_HEADER = re.compile(r"^\[TYPE\]\s+([A-Za-z0-9_]+)\s*$", re.M)
-UNIFORM_MARK = re.compile(r"^(\[RULES\]|\[TYPE\] NOT_AN_ENTITY)[ \t]*$", re.M)
+TYPE_HEADER = re.compile(r"^\[TYPE\][ \t]+([A-Za-z0-9_]+)[ \t]*$", re.M)
+TYPE_LINE = re.compile(r"^[ \t]*\[type\].*$", re.M | re.I)   # any line written as a type header
+UNIFORM_MARK = re.compile(r"^(\[RULES\]|\[TYPE\][ \t]+NOT_AN_ENTITY)[ \t]*$", re.M)
+COMPACT_NEVER = re.compile(r"^\[NOT_AN_ENTITY\]", re.M)
 SECTION_END = {"uniform": re.compile(r"^\[(TYPE|RULES)\]", re.M),
                "compact": re.compile(r"^\[(TYPE|NOT_AN_ENTITY)\]", re.M)}
 MARKER = "\x00MARKER\x00"
@@ -42,18 +46,31 @@ QUERY_HEAD = "<|im_start|>user\n"
 QUERY_MID = "<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
 
 
+def normalize(text: str) -> str:
+    """Rulebook text with Unix line endings and no byte-order mark: a file saved on Windows reads the same."""
+    return text.lstrip("\ufeff").replace("\r\n", "\n").replace("\r", "\n")
+
+
 def to_text(book: str | dict) -> str:
-    """A rulebook dict as rulebook text (text is returned unchanged).
+    """A rulebook dict as rulebook text (text is returned normalized, see `normalize`).
 
     {"general": ["rule for every type", ...],
      "classes": [{"name": "PERSON", "description": "A person's name.", "rules": ["PE1 ...", ...]}, ...],
      "never": ["what is never tagged", ...],      # optional
      "closing": ["rules after the classes", ...]} # optional
+
+    Raises:
+        ValueError: a dict without a "classes" list, or a class without a "name".
     """
     if isinstance(book, str):
-        return book
+        return normalize(book)
+    classes = book.get("classes")
+    if not isinstance(classes, list) or not classes:
+        raise ValueError('a rulebook object needs a "classes" list, e.g. {"classes": [{"name": "PERSON"}]}')
+    if not all(isinstance(c, dict) and c.get("name") for c in classes):
+        raise ValueError('each entry of "classes" needs a "name"')
     sections = ["\n".join(["[RULES]", *book.get("general", [])])]
-    for c in book["classes"]:
+    for c in classes:
         lines = [f"[TYPE] {c['name']}"]
         if c.get("description"):
             lines.append(f"[DESCRIPTION] {c['description']}")
@@ -70,9 +87,19 @@ def parse(text: str) -> tuple[str, list[str]]:
     """The rulebook's layout ("uniform" or "compact") and its type names in rulebook order.
 
     Raises:
-        ValueError: the rulebook has no [TYPE] sections.
+        ValueError: the rulebook has no [TYPE] sections; a line written as a type header is not "[TYPE] NAME" with a
+            name of letters, digits and underscores; or the rulebook mixes the two layouts.
     """
+    text = normalize(text)
+    bad = [m.group(0).strip() for m in TYPE_LINE.finditer(text) if not TYPE_HEADER.fullmatch(m.group(0))]
+    if bad:
+        more = f" (and {len(bad) - 1} more)" if len(bad) > 1 else ""
+        raise ValueError(f'unreadable type line {bad[0]!r}{more}: write "[TYPE] NAME" at the start of the line, with '
+                         f'a name of letters, digits and underscores, e.g. "[TYPE] DATE_OF_BIRTH"')
     layout = "uniform" if UNIFORM_MARK.search(text) else "compact"
+    if layout == "uniform" and COMPACT_NEVER.search(text):
+        raise ValueError('this rulebook mixes two layouts: with a "[RULES]" line of its own, write the never-extract '
+                         'section as "[TYPE] NOT_AN_ENTITY", not "[NOT_AN_ENTITY]"')
     names = []
     for m in TYPE_HEADER.finditer(text):
         name = m.group(1)
@@ -128,6 +155,7 @@ class Encoder:
         return self.tok(text, add_special_tokens=False)["input_ids"]
 
     def rulebook(self, text: str) -> EncodedRulebook:
+        text = normalize(text)
         layout, types = parse(text)
         full = PREFIX_HEAD + with_markers(text, types, layout) + PREFIX_TAIL
         ids, pos = [], []

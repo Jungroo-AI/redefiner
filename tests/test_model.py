@@ -69,6 +69,17 @@ def test_long_text_is_chunked(tagger):
     assert tagger.label(text, [(last, last + len("Marie Curie"))], RULEBOOK)[0]["label"] == "PERSON"
 
 
-def test_hub_download_list_covers_the_release_folder():
+def test_release_files_are_enough(tagger, tmp_path):
+    """The files from_pretrained downloads from the Hub load the model on their own; ./weights may hold more."""
+    from redefiner import Tagger
     from redefiner.api import RELEASE_FILES
-    assert sorted(p.name for p in WEIGHTS.iterdir()) == sorted(RELEASE_FILES)
+    assert not [name for name in RELEASE_FILES if not (WEIGHTS / name).exists()]
+    for name in RELEASE_FILES:
+        (tmp_path / name).symlink_to(WEIGHTS / name)
+    assert Tagger.from_pretrained(tmp_path, device="cpu").extract(TEXT, RULEBOOK) == tagger.extract(TEXT, RULEBOOK)
+
+
+def test_windows_line_endings_give_the_same_output(tagger):
+    from redefiner import to_text
+    windows = "\ufeff" + to_text(RULEBOOK).replace("\n", "\r\n")
+    assert tagger.extract(TEXT, windows) == tagger.extract(TEXT, RULEBOOK)

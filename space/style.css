@@ -387,6 +387,22 @@ mark.bad {
   flex: 1;
 }
 
+/* Phones. A long "NAME · description" title wraps (kept on one line, it set the page's minimum width, up to 611 px),
+   and the note and the NONE checkbox next to Run go under it instead of into a column a word wide. */
+@media (max-width: 640px) {
+  .cls .label-wrap > span:first-child {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .run-row {
+    flex-wrap: wrap !important;
+  }
+  .run-row > *:not(:first-child) {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+  }
+}
+
 .cls-tools {
   gap: 8px !important;
 }

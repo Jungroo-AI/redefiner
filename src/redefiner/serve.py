@@ -11,6 +11,7 @@
     GET  /info     -> the model's config
 
 Requests are served one at a time (the model holds one rulebook cache). Binds to 127.0.0.1 unless --host is given.
+There is no authentication and no limit on request size: put the server behind your own proxy before exposing it.
 """
 
 import argparse
@@ -42,17 +43,46 @@ def _rulebook(req: dict) -> str | dict:
     return rulebook
 
 
+def _flag(req: dict, name: str) -> bool:
+    value = req.get(name, False)
+    if not isinstance(value, bool):
+        raise BadRequest(f'"{name}" must be true or false')
+    return value
+
+
+def _number(req: dict, name: str) -> float | None:
+    value = req.get(name)
+    if value is not None and (isinstance(value, bool) or not isinstance(value, (int, float))):
+        raise BadRequest(f'"{name}" must be a number')
+    return value
+
+
+def _offset(v) -> bool:
+    return isinstance(v, int) and not isinstance(v, bool)
+
+
+def _spans(req: dict, texts: list[str]) -> list:
+    spans = req.get("spans")
+    if not isinstance(spans, list) or len(spans) != len(texts) or not all(isinstance(sp, list) for sp in spans):
+        raise BadRequest('"spans" must be a list with one list of [start, end] pairs per text')
+    for sp in spans:
+        for x in sp:
+            pair = isinstance(x, list) and len(x) == 2 and all(_offset(v) for v in x)
+            if not pair and not (isinstance(x, dict) and _offset(x.get("start")) and _offset(x.get("end"))):
+                raise BadRequest(f'each span must be [start, end] or {{"start": .., "end": ..}} with whole-number '
+                                 f'offsets, not {json.dumps(x)}')
+    return spans
+
+
 def extract(tagger: Tagger, req: dict) -> list:
-    return tagger.extract(_texts(req), _rulebook(req), threshold=req.get("threshold"), none_bias=req.get("none_bias"))
+    return tagger.extract(_texts(req), _rulebook(req), threshold=_number(req, "threshold"),
+                          none_bias=_number(req, "none_bias"))
 
 
 def label(tagger: Tagger, req: dict) -> list:
     texts = _texts(req)
-    spans = req.get("spans")
-    if not isinstance(spans, list) or len(spans) != len(texts):
-        raise BadRequest('"spans" must be a list with one list of [start, end] pairs per text')
-    return tagger.label(texts, spans, _rulebook(req), allow_none=bool(req.get("allow_none")),
-                        snap=bool(req.get("snap")), none_bias=req.get("none_bias"))
+    return tagger.label(texts, _spans(req, texts), _rulebook(req), allow_none=_flag(req, "allow_none"),
+                        snap=_flag(req, "snap"), none_bias=_number(req, "none_bias"))
 
 
 ROUTES = {"/extract": extract, "/label": label}

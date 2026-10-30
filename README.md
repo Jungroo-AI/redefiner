@@ -10,7 +10,7 @@ A generalist 0.8B model for entity extraction and span labeling, guided by the r
 
 [![CI](https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml/badge.svg)](https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml)
 
-[Quickstart](#quickstart) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [Weights](https://huggingface.co/jungroo-ai/redefiner-0.8b) · [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
+[Quickstart](#quickstart) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [HTTP server](#http-server) · [Limitations](#limitations) · [Weights](https://huggingface.co/jungroo-ai/redefiner-0.8b) · [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
 
 </div>
 
@@ -77,9 +77,9 @@ Output: Zoom `PRODUCT` · 6.2.5 `VERSION` · MacBook Air `DEVICE` · 1132 `ERROR
 | Benchmarks | 59.8 F1 on the 13 GoLLIE zero-shot NER sets, with GoLLIE's own guidelines (GoLLIE 34B: 58.1); 63.1 on 7 CrossNER and MIT sets with one-line type descriptions (GLiNER large: 61.7, or 62.2 with a dev-tuned threshold). It trails with type names only, on BUSTER and on S1MB labeling: [all results](#benchmarks) |
 | Limits | Rulebooks tested up to about 10,000 tokens; text is read 256 tokens at a time (longer texts are split into windows automatically); each span is at most 16 tokens |
 | Model size | 0.8B parameters, shipped as one 0.77 GB int8 file |
-| Speed, CPU | About 0.5 s per sentence on a laptop once a rulebook is loaded (Apple M2) |
+| Speed, CPU | About 0.4–0.7 s per sentence once the rulebook is loaded (Apple M2, and a 4-core Linux server) |
 | Speed, GPU | About 0.05 s per text, or 0.38 s for 16 texts in one call, with a 2,000-token rulebook (NVIDIA A10) |
-| Memory, CPU | About 1.1 GB peak with a short rulebook, about 2 GB with a 2,000-token rulebook (Apple M2) |
+| Memory, CPU | About 2–2.6 GB at peak, with rulebooks of up to about 1,400 tokens and 16 texts in one call (Apple M2, and a 4-core Linux server) |
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Licence | Apache-2.0 |
 | Release | 1.0 · October 2026 |
@@ -591,6 +591,17 @@ rulebook = {
 }
 ```
 
+Type names use letters, digits and underscores (`DATE_OF_BIRTH`, not `DATE-OF-BIRTH`), on a line of their own:
+`[TYPE] NAME`. A line that starts with `[TYPE]` but is written any other way is an error, so a type is never dropped
+silently. To see what was read, `parse(to_text(rulebook))` (both from `redefiner.rulebook`) returns the layout and the
+type names, e.g. `("uniform", ["PERSON", "ORGANIZATION"])`.
+
+**Two layouts.** The layout above has `[RULES]` on a line of its own and `[TYPE] NOT_AN_ENTITY` for what is never
+tagged. The other, used by [`hard-rules.txt`](docs/templates/hard-rules.txt) and the travel-desk example, has text on
+the `[RULES]` line, `[PRECEDENCE]` rules before the types, and a final `[NOT_AN_ENTITY]` section. Use one or the other;
+a rulebook that mixes them (a `[RULES]` line of its own and a `[NOT_AN_ENTITY]` section) is an error. Windows line
+endings are fine.
+
 Templates to copy are in [`docs/templates/`](docs/templates/).
 
 What works, from the benchmarks (see [How to write rules that work](docs/writing-rules.md)):
@@ -599,7 +610,8 @@ What works, from the benchmarks (see [How to write rules that work](docs/writing
 - **Boundary, exclusion and convention rules work.** "The span includes the @ of a Twitter handle" took BroadTwitter
   from 45.5 to 70.6 F1. "Never label Houston, Texas or Harvey" cut those false positives from 389 to 5 on HarveyNER.
 - **Rules that fight a strong prior don't.** Asking it to label a person's name as something other than a person, or to
-  label pronouns and common nouns as entities, mostly has no effect. See [Limitations](#limitations).
+  label common nouns as entities, mostly has no effect. Pronouns are the exception: listed under the type, they are
+  labelled (the "Count pronouns as people" card above). See [Limitations](#limitations).
 
 ## Label mode
 
@@ -629,21 +641,31 @@ If consistency matters, label each distinct string once with `label` and apply t
 
 ## Speed
 
-Measured on an Apple M2 (8 cores), CPU, int8, with a 4,300-character rulebook (14 types with descriptions, rules and
-examples):
+CPU, int8 weights, on CrossNER AI test sentences (about 32 tokens each). A rulebook is encoded with the first text and
+then cached (the last 8 rulebooks are kept), so each later text only pays for itself.
 
-| | Seconds |
-|---|---:|
-| First text after loading or editing a rulebook | ~3.5 |
-| Each further text, one at a time | 0.5–0.7 |
-| 16 texts in one call | ~6.8 |
-| Loading the model | ~1 |
+Apple M2 (8 cores):
 
-The rulebook is encoded once and cached (the last 8 rulebooks are kept), so switching between rulebooks you've already
-used is fast. On CPU the package replaces one slow PyTorch operation (a depthwise convolution with no MKLDNN fast
-path) with an exact equivalent; that alone is a 7–14× speedup on Macs.
+| Rulebook | Tokens | Load the model | First text | Each later text | 16 texts in one call | Peak memory |
+|---|---:|---:|---:|---:|---:|---:|
+| Quickstart, 2 types | 82 | 2.2 s | 0.7 s | 0.39 s | 4.6 s | 2.0 GB |
+| Travel desk, 11 types | 972 | 2.3 s | 3.4 s | 0.71 s | 5.1 s | 2.1 GB |
+| GoLLIE MIT Movie, 12 types | 1,376 | 2.3 s | 4.8 s | 0.67 s | 4.9 s | 2.2 GB |
 
-On one NVIDIA A10 (int8 weights, fp32 compute), with a 7,700-character rulebook of 16 types (about 2,000 tokens),
+Linux cloud server (Ubuntu 24.04, Intel Xeon 2.3 GHz, 4 cores, no GPU, Python 3.13), measured by a tester:
+
+| Rulebook | Tokens | Load the model | First text | Each later text | 16 texts in one call | Peak memory |
+|---|---:|---:|---:|---:|---:|---:|
+| Quickstart, 2 types | 62 | 2.0 s | 0.9 s | 0.40 s | 6.8 s | 2.2 GB |
+| Travel desk, 11 types | 972 | 1.9 s | 4.5 s | 0.37 s | 6.2 s | 2.6 GB |
+| GoLLIE MIT Movie, 12 types | 1,376 | 2.0 s | 5.2 s | 0.37 s | 6.7 s | 2.6 GB |
+
+Peak memory is reached with 16 texts in one call; on the Linux server the process used 1.1 GB right after loading
+and 1.4 GB after the first text. Sending texts in one call is faster than one at a time on the M2 and on a GPU, but
+saves little on the 4-core server. On CPU the package replaces one slow PyTorch operation (a depthwise convolution
+with no MKLDNN fast path) with an exact equivalent; that alone is a 7–14× speedup on Macs.
+
+On one NVIDIA A10 (int8 weights, fp32 compute, flash-linear-attention 0.5.2 installed, as `redefiner[gpu]` does), with a 7,700-character rulebook of 16 types (about 2,000 tokens),
 measured through our benchmark server, HTTP included:
 
 | | Seconds |
@@ -685,6 +707,9 @@ curl -s localhost:8000/label -d "{\"rulebook\": $RULEBOOK, \"texts\": [\"Ada Lov
 
 A span that can't be labelled comes back with an `unsupported` reason in place of a label (see
 [Label mode](#label-mode)). A malformed request gets HTTP 400 and an `error` message.
+
+The server has no authentication and no limit on request size. Keep it on 127.0.0.1, or put it behind your own proxy
+if it has to be reachable from other machines.
 
 ## Limitations
 

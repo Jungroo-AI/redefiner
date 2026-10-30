@@ -70,3 +70,20 @@ def test_bad_json_and_unknown_paths(url):
     assert err.value.code == 400
     assert call(url, "/nope", {})[0] == 404
     assert call(url, "/info") == (200, {"format": "int8"})
+
+
+def test_malformed_span_is_a_bad_request(url):
+    for span in ([0], [0, 1, 2], ["a", "b"], {"start": 0}, [True, 1]):
+        code, res = call(url, "/label", {"rulebook": "[TYPE] X", "texts": ["ab"], "spans": [[span]]})
+        assert code == 400 and "span" in res["error"], span
+
+
+@pytest.mark.parametrize("field", ["allow_none", "snap"])
+def test_flags_must_be_true_or_false(url, field):
+    code, res = call(url, "/label", {"rulebook": "[TYPE] X", "texts": ["ab"], "spans": [[[0, 1]]], field: "false"})
+    assert code == 400 and field in res["error"]
+
+
+def test_numbers_must_be_numbers(url):
+    code, res = call(url, "/extract", {"rulebook": "[TYPE] X", "texts": ["ab"], "threshold": "0.5"})
+    assert code == 400 and "threshold" in res["error"]

@@ -1,0 +1,28 @@
+name: Model tests
+
+# The end-to-end tests and one reproduced benchmark number, with the released weights. CI skips these because it has
+# no weights; this runs them weekly and on demand.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"
+
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install (CPU-only torch)
+        run: pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Download the weights, as in the README's Development section
+        run: hf download jungroo-ai/redefiner-0.8b --local-dir weights
+      - name: Tests, end-to-end included
+        run: pytest -q
+      - name: S1MB Few-NERD (label mode) gives the A10 run's labels
+        run: |
+          python benchmarks/reproduce/reproduce.py --model weights --only label --out label.json
+          python -c "import json, sys; r = json.load(open('label.json'))['label']; sys.exit(r['same_label_as_a10'] != r['spans'])"
