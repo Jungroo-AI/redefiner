@@ -13,8 +13,9 @@ A rulebook is text with one section per type:
     [DESCRIPTION] A company or brand name.
 
 The [RULES] section holds rules for every type; each [TYPE] section has a one-line [DESCRIPTION] and any number of
-rule lines. An optional "[TYPE] NOT_AN_ENTITY" section lists what is never tagged, and a second [RULES] section after
-the types holds closing rules. The same rulebook can be given as a dict (see `to_text`).
+rule lines, and each type has exactly one section. An optional "[TYPE] NOT_AN_ENTITY" section lists what is never
+tagged, and a second [RULES] section after the types holds closing rules. The same rulebook can be given as a dict
+(see `to_text`).
 
 Two layouts are read:
   uniform  the layout above; a type's section ends at the next [TYPE] or [RULES] line.
@@ -88,7 +89,8 @@ def parse(text: str) -> tuple[str, list[str]]:
 
     Raises:
         ValueError: the rulebook has no [TYPE] sections; a line written as a type header is not "[TYPE] NAME" with a
-            name of letters, digits and underscores; or the rulebook mixes the two layouts.
+            name of letters, digits and underscores; a type has more than one section; or the rulebook mixes the two
+            layouts.
     """
     text = normalize(text)
     bad = [m.group(0).strip() for m in TYPE_LINE.finditer(text) if not TYPE_HEADER.fullmatch(m.group(0))]
@@ -100,26 +102,40 @@ def parse(text: str) -> tuple[str, list[str]]:
     if layout == "uniform" and COMPACT_NEVER.search(text):
         raise ValueError('this rulebook mixes two layouts: with a "[RULES]" line of its own, write the never-extract '
                          'section as "[TYPE] NOT_AN_ENTITY", not "[NOT_AN_ENTITY]"')
-    names = []
+    names, lines = [], {}
     for m in TYPE_HEADER.finditer(text):
         name = m.group(1)
-        if name not in names and not (layout == "uniform" and name == "NOT_AN_ENTITY"):
+        if layout == "uniform" and name == "NOT_AN_ENTITY":
+            continue
+        lines.setdefault(name, []).append(text.count("\n", 0, m.start()) + 1)
+        if len(lines[name]) == 1:
             names.append(name)
+    # a type is read from the marker after its section, so a second section would leave one type without a marker
+    # and shift the labels of the types between the two
+    dups = [n for n in names if len(lines[n]) > 1]
+    if dups:
+        at = " and ".join(map(str, lines[dups[0]]))
+        more = f" (and {len(dups) - 1} more type{'s' if len(dups) > 2 else ''})" if len(dups) > 1 else ""
+        raise ValueError(f'type {dups[0]} is defined more than once (lines {at}){more}: put its description and all '
+                         f'its rules in one "[TYPE] {dups[0]}" section')
     if not names:
         raise ValueError('no types found: the rulebook needs a "[TYPE] NAME" line per type')
     return layout, names
 
 
 def with_markers(text: str, types: list[str], layout: str) -> str:
-    """The rulebook with MARKER after each type's section, in the order of `types`."""
+    """The rulebook with MARKER after each type's section; `types` are the rulebook's types in rulebook order, as
+    `parse` returns them, so the n-th marker belongs to the n-th type."""
     end = SECTION_END[layout]
     found = {m.group(1): m for m in TYPE_HEADER.finditer(text)}
     cuts = []
     for t in types:
         nxt = end.search(text, found[t].end())
         cuts.append(nxt.start() if nxt else len(text))
+    if cuts != sorted(set(cuts)):
+        raise ValueError(f"types {types} are not the rulebook's types in rulebook order, one section each")
     out, last = [], 0
-    for c in sorted(cuts):
+    for c in cuts:
         out += [text[last:c].rstrip("\n"), "\n", MARKER, "\n"]
         last = c
     out.append(text[last:].lstrip("\n"))

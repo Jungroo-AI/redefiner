@@ -116,6 +116,7 @@ CUDA build, a download of several GB.
 from redefiner import Tagger
 
 tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # GPU if available, else CPU; device="cpu" forces CPU
+print(tagger.device)   # cpu or cuda:0; a warning says so when an NVIDIA GPU is present but PyTorch can't use it
 
 rulebook = """[RULES]
 Extract every entity of the supplied types. Return exact spans from the text.

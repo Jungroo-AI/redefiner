@@ -14,9 +14,12 @@ own, so the same string can get different labels in different windows of one doc
 """
 
 import collections
+import itertools
 import json
 import logging
+import shutil
 import sys
+import warnings
 from pathlib import Path
 from typing import TypedDict
 
@@ -34,6 +37,26 @@ RELEASE_FILES = ["config.json", "model.safetensors", "tokenizer.json", "tokenize
                  "merges.txt", "chat_template.jinja", "LICENSE", "NOTICE"]
 
 Rulebook = str | dict
+log = logging.getLogger("redefiner")
+
+
+def _nvidia_driver_present() -> bool:
+    """Whether this machine has an NVIDIA driver installed, whatever PyTorch can use."""
+    return shutil.which("nvidia-smi") is not None or Path("/proc/driver/nvidia/version").exists()
+
+
+def _warn_if_gpu_unused() -> None:
+    """Warn when the default device falls back to CPU on a machine with an NVIDIA GPU."""
+    if torch.cuda.is_available() or not _nvidia_driver_present():
+        return
+    if torch.version.cuda is None:
+        why = f"this PyTorch build ({torch.__version__}) has no CUDA support"
+        fix = "install a CUDA build of PyTorch (https://pytorch.org/get-started/locally/)"
+    else:
+        why = f"PyTorch {torch.__version__} (CUDA {torch.version.cuda}) can't use it"
+        fix = "check that the NVIDIA driver supports this CUDA version"
+    warnings.warn(f"an NVIDIA GPU driver is installed, but {why}, so the model runs on CPU; to use the GPU, {fix}. "
+                  f'Pass device="cpu" to silence this.', RuntimeWarning, stacklevel=3)
 
 
 class _CpuFallbackFilter(logging.Filter):
@@ -84,6 +107,14 @@ class Tagger:
         self.cache_size = cache_size
         self._cache = collections.OrderedDict()   # rulebook key -> (encoded rulebook, markers, states, prefix length)
 
+    @property
+    def device(self) -> torch.device:
+        """The device the model runs on, e.g. device(type='cpu') or device(type='cuda', index=0)."""
+        return next(itertools.chain(self.model.parameters(), self.model.buffers())).device
+
+    def __repr__(self) -> str:
+        return f"Tagger(device='{self.device}', cache_size={self.cache_size})"
+
     @classmethod
     def from_pretrained(cls, path: str | Path, device: str | None = None, revision: str | None = None,
                         cache_size: int = 8, cpu_fast_conv: bool = True) -> "Tagger":
@@ -91,7 +122,9 @@ class Tagger:
 
         Args:
             path: a local folder, or a Hugging Face repo id to download.
-            device: "cpu", "cuda", "cuda:1", ... Defaults to "cuda" when a GPU is available, else "cpu".
+            device: "cpu", "cuda", "cuda:1", ... Defaults to "cuda" when PyTorch can use a GPU, else "cpu"; the
+                default warns when it falls back to "cpu" on a machine with an NVIDIA driver (for example a CPU-only
+                PyTorch build). `Tagger.device` is the device chosen.
             revision: the Hugging Face revision to download (ignored for a local folder).
             cache_size: how many encoded rulebooks to keep.
             cpu_fast_conv: on devices other than CUDA, replace the depthwise convolution used by transformers'
@@ -121,6 +154,8 @@ class Tagger:
         config.update(json.loads((root / "config.json").read_text()))
         if config.get("format") != "int8":
             raise ValueError(f"{root} is not an int8 release folder (config.json format != 'int8')")
+        if device is None:
+            _warn_if_gpu_unused()
         device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
         if device.type != "cuda":
             sys.modules.setdefault("fla", None)
@@ -135,7 +170,9 @@ class Tagger:
         model = build_int8(config["text_config"], load_file(str(root / "model.safetensors")),
                            d_span=config["d_span"], max_width=config["max_width"])
         model.to(device).eval()
-        return cls(model, tok, config, cache_size=cache_size)
+        tagger = cls(model, tok, config, cache_size=cache_size)
+        log.info("loaded %s on %s", path, tagger.device)
+        return tagger
 
     # ---------------------------------------------------------------- shared steps
     def _rulebook(self, rulebook: Rulebook):

@@ -83,3 +83,18 @@ def test_windows_line_endings_give_the_same_output(tagger):
     from redefiner import to_text
     windows = "\ufeff" + to_text(RULEBOOK).replace("\n", "\r\n")
     assert tagger.extract(TEXT, windows) == tagger.extract(TEXT, RULEBOOK)
+
+
+def test_device_is_reported(tagger):
+    import torch
+    assert tagger.device == torch.device("cpu")
+    assert repr(tagger) == "Tagger(device='cpu', cache_size=8)"
+
+
+def test_duplicate_type_is_an_error_in_both_modes(tagger):
+    book = {"classes": [{"name": "PERSON", "description": "A person's name."}, {"name": "CITY"},
+                        {"name": "PERSON", "description": "A full name."}]}
+    with pytest.raises(ValueError, match="type PERSON is defined more than once"):
+        tagger.extract(TEXT, book)
+    with pytest.raises(ValueError, match="type PERSON is defined more than once"):
+        tagger.label(TEXT, [(0, 12)], book)

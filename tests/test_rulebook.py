@@ -75,3 +75,25 @@ def test_rulebook_object_needs_classes_with_names():
         to_text({"general": ["Extract every entity."]})
     with pytest.raises(ValueError, match='"name"'):
         to_text({"classes": [{"description": "A city."}]})
+
+
+def test_duplicate_type_is_an_error():
+    # PERSON's second section sits after CITY: reading it would give CITY's marker to PERSON and the other way round
+    uniform = ("[RULES]\nExtract every entity.\n\n[TYPE] PERSON\n[DESCRIPTION] A name.\n\n[TYPE] CITY\n"
+               "[DESCRIPTION] A city.\n\n[TYPE] PERSON\n[DESCRIPTION] A full name.\n")
+    with pytest.raises(ValueError, match=r"type PERSON is defined more than once \(lines 4 and 10\)"):
+        parse(uniform)
+    with pytest.raises(ValueError, match="type CITY is defined more than once"):
+        parse("Find the entities.\n\n[TYPE] CITY\nA city.\n\n[TYPE] CITY\nA town.\n")
+    with pytest.raises(ValueError, match="type PERSON is defined more than once"):
+        parse(to_text({"classes": [{"name": "PERSON"}, {"name": "PERSON", "description": "A full name."}]}))
+
+
+def test_several_never_extract_sections_are_not_types():
+    text = to_text(BOOK) + "\n[TYPE] NOT_AN_ENTITY\nPlaceholders.\n"
+    assert parse(text) == ("uniform", ["PERSON", "CITY"])
+
+
+def test_markers_need_types_in_rulebook_order():
+    with pytest.raises(ValueError, match="rulebook order"):
+        with_markers(to_text(BOOK), ["CITY", "PERSON"], "uniform")

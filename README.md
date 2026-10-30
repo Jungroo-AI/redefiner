@@ -100,6 +100,7 @@ CUDA build, a download of several GB.
 from redefiner import Tagger
 
 tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # GPU if available, else CPU; device="cpu" forces CPU
+print(tagger.device)   # cpu or cuda:0; a warning says so when an NVIDIA GPU is present but PyTorch can't use it
 
 rulebook = """[RULES]
 Extract every entity of the supplied types. Return exact spans from the text.
@@ -576,8 +577,8 @@ Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1
 ## Rulebooks
 
 A rulebook has an optional `[RULES]` section with rules for every type, then one `[TYPE]` section per type: a one-line
-`[DESCRIPTION]` and any number of rule lines. An optional `[TYPE] NOT_AN_ENTITY` section lists what is never tagged.
-The same rulebook can be passed as a dict:
+`[DESCRIPTION]` and any number of rule lines (a type with two sections is an error). An optional
+`[TYPE] NOT_AN_ENTITY` section lists what is never tagged. The same rulebook can be passed as a dict:
 
 ```python
 rulebook = {

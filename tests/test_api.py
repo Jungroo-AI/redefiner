@@ -16,3 +16,25 @@ def test_span_offsets():
 def test_missing_local_folder_is_not_sent_to_the_hub(path):
     with pytest.raises(FileNotFoundError, match="no folder at"):
         Tagger.from_pretrained(path)
+
+
+@pytest.mark.parametrize("cuda_build", [None, "12.8"])
+def test_warns_when_an_nvidia_gpu_goes_unused(monkeypatch, cuda_build):
+    import torch
+
+    from redefiner import api
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    monkeypatch.setattr(torch.version, "cuda", cuda_build)
+    monkeypatch.setattr(api, "_nvidia_driver_present", lambda: True)
+    with pytest.warns(RuntimeWarning, match="the model runs on CPU"):
+        api._warn_if_gpu_unused()
+
+
+def test_no_warning_without_an_nvidia_gpu(monkeypatch, recwarn):
+    import torch
+
+    from redefiner import api
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    monkeypatch.setattr(api, "_nvidia_driver_present", lambda: False)
+    api._warn_if_gpu_unused()
+    assert not recwarn.list

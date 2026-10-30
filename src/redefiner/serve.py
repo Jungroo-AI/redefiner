@@ -108,7 +108,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/info":
-            self.send(200, self.server.tagger.config)
+            self.send(200, {**self.server.tagger.config, "device": str(self.server.tagger.device)})
         else:
             self.send(404, {"error": "GET /info, POST /extract or POST /label"})
 
@@ -145,7 +145,7 @@ def main() -> None:
     s.add_argument("--port", type=int, default=8000)
     args = ap.parse_args()
     tagger = Tagger.from_pretrained(args.model, device=args.device)
-    print(f"serving /extract and /label on http://{args.host}:{args.port}", flush=True)
+    print(f"serving /extract and /label on http://{args.host}:{args.port} (model on {tagger.device})", flush=True)
     Server((args.host, args.port), tagger).serve_forever()
 
 

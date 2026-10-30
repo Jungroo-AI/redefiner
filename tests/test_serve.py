@@ -11,6 +11,7 @@ from redefiner.serve import Server
 
 class FakeTagger:
     config = {"format": "int8"}
+    device = "cpu"
 
     def extract(self, texts, rulebook, threshold=None, none_bias=None):
         return [[{"start": 0, "end": len(t), "text": t, "label": "X", "confidence": 1.0}] for t in texts]
@@ -69,7 +70,7 @@ def test_bad_json_and_unknown_paths(url):
         urllib.request.urlopen(req)
     assert err.value.code == 400
     assert call(url, "/nope", {})[0] == 404
-    assert call(url, "/info") == (200, {"format": "int8"})
+    assert call(url, "/info") == (200, {"format": "int8", "device": "cpu"})
 
 
 def test_malformed_span_is_a_bad_request(url):
