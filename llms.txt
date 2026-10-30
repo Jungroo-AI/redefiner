@@ -1,0 +1,77 @@
+# ReDefiNER
+
+> A generalist 0.8B model for entity extraction and span labeling, guided by the rulebook you write. You describe the
+> entity types, with one-line descriptions and rules, in a plain-English rulebook; the model returns spans of your text
+> with a type and a confidence. Non-generative, English only, runs on CPU. Python package `redefiner`, weights
+> `jungroo-ai/redefiner-0.8b` on Hugging Face, Apache-2.0.
+
+Install: `pip install redefiner` (Python 3.10+). On Linux with an NVIDIA GPU, `pip install "redefiner[gpu]"`.
+
+```python
+from redefiner import Tagger
+
+tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # GPU if PyTorch can use one, else CPU; device="cpu" forces CPU
+print(tagger.device)
+
+rulebook = """[RULES]
+Extract every entity of the supplied types. Return exact spans from the text.
+
+[TYPE] PERSON
+[DESCRIPTION] A person's name.
+PE1 Label the full name; leave out titles such as "Dr" or "Prof".
+
+[TYPE] ORGANIZATION
+[DESCRIPTION] A company, university or other institution.
+"""
+
+# Extract: find and label spans
+tagger.extract("Prof Ada Lovelace corresponded with the Royal Society.", rulebook)
+# [{'start': 5, 'end': 17, 'text': 'Ada Lovelace', 'label': 'PERSON', 'confidence': 0.977},
+#  {'start': 40, 'end': 53, 'text': 'Royal Society', 'label': 'ORGANIZATION', 'confidence': 0.489}]
+
+# Label: you supply the spans (character offsets, start inclusive, end exclusive)
+tagger.label("Ada Lovelace corresponded with the Royal Society.", [(0, 12), (35, 48)], rulebook)
+# [{'start': 0, 'end': 12, 'text': 'Ada Lovelace', 'label': 'PERSON', 'confidence': 1.0, 'alternatives': [...]}, ...]
+```
+
+Key facts for writing code against it:
+
+- `extract(texts, rulebook, threshold=0.5, none_bias=2)` and `label(texts, spans, rulebook, allow_none=False,
+  snap=False)` take one text or a list of texts (and, for `label`, one list of spans per text); with a list they
+  return one result list per text.
+- Offsets are character offsets into the original text, start inclusive, end exclusive.
+- `label` never drops or silently changes a span: a span it can't read (not on token boundaries, longer than 16 tokens,
+  invalid offsets) comes back with `"unsupported": reason`. `snap=True` widens a span to whole tokens and marks it
+  `"snapped": True`. `allow_none=True` lets it answer `"NONE"`.
+- The rulebook is text or a dict: `{"general": [...], "classes": [{"name", "description", "rules": [...]}, ...],
+  "never": [...], "closing": [...]}`. `redefiner.to_text(dict)` gives the text form.
+- Rulebook text: an optional `[RULES]` section, then one `[TYPE] NAME` section per type (names use letters, digits and
+  underscores, are case-sensitive and come back exactly as written), each with a one-line `[DESCRIPTION]` and rule
+  lines. An optional `[TYPE] NOT_AN_ENTITY` section lists what is never tagged; closing rules go under a second
+  `[RULES]` line at the end. A malformed type line, a type defined twice or a rulebook with no types raises
+  `ValueError`.
+- Rule lines: one rule per line (wrapping a rule onto continuation lines lowers accuracy), starting with a short ID
+  such as `G1`, `PE1`, `NE1` (optional; `to_text` doesn't add them). A rule belongs to the section it sits in. Quoted
+  strings under a type are read as examples of that type, so put exclusions in `[RULES]` or `NOT_AN_ENTITY`.
+- Each distinct rulebook is encoded once and cached (`cache_size=8`); later calls with the same rulebook only pay for
+  the text. A `Tagger` is not thread-safe: one call at a time.
+- Text is read 256 tokens at a time; longer texts are split into overlapping windows automatically.
+- `redefiner serve --model jungroo-ai/redefiner-0.8b --port 8000` runs a local HTTP server: `POST /extract`,
+  `POST /label`, `GET /info`. No authentication; keep it on 127.0.0.1.
+
+What works and what doesn't: one-line descriptions add about 7 F1 over type names alone; boundary, exclusion and
+convention rules work; rules that relabel against a strong prior (a person's name as something else) are mostly
+ignored, and the model abstains poorly when a type's condition isn't clearly met.
+
+## Docs
+
+- [README](https://github.com/jungroo-ai/redefiner/blob/main/README.md): quickstart, rulebook format, label mode, long texts, HTTP server, limitations
+- [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md): patterns from the benchmark rulebooks
+- [Rulebook templates](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates): blank, PII, news, product reviews, scientific text, hard rules
+- [Benchmarks](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md): GoLLIE zero-shot sets, open NER vs GLiNER, S1MB labeling, BUSTER, with every rulebook
+
+## Optional
+
+- [Model weights and card](https://huggingface.co/jungroo-ai/redefiner-0.8b)
+- [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
+- [PyPI](https://pypi.org/project/redefiner/)

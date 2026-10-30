@@ -1,7 +1,7 @@
 # ReDefiNER demo
 
-ReDefiNER is a 0.8B generalist model for rule-defined named entity recognition: you describe the entity types and the
-rules in a plain-English rulebook, and it finds and labels the spans. Define what to extract. In plain English.
+ReDefiNER is a generalist 0.8B model for entity extraction and span labeling, guided by the rulebook you write: you
+describe the entity types and the rules in plain English, and it finds and labels the spans.
 
 - **Edit a rule:** a support ticket, a job application and a clinical note written for the demo, and three benchmark
   test sentences, each with its full rulebook. Edit any rule, as a form or as text, and run it again.

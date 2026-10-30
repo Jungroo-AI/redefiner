@@ -4,6 +4,7 @@ base_model: Qwen/Qwen3.5-0.8B
 language:
 - en
 pipeline_tag: token-classification
+library_name: redefiner
 tags:
 - named-entity-recognition
 - ner
