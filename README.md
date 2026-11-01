@@ -848,7 +848,7 @@ types, document fields, search-query slots, and research on rule-following extra
 git clone https://github.com/jungroo-ai/redefiner && cd redefiner
 pip install -e ".[dev]"
 # optional, for the end-to-end tests: the model files without the benchmark outputs and images
-hf download jungroo-ai/redefiner-0.8b --exclude "benchmarks/*" "docs/*" --local-dir weights
+hf download jungroo-ai/redefiner-0.8b --exclude "benchmarks/*" --exclude "docs/*" --local-dir weights
 pytest
 ruff check .
 ```

@@ -29,7 +29,7 @@ jobs:
           pip install --upgrade transformers
           python -c "import transformers; print('transformers', transformers.__version__)"
       - name: Download the weights, as in the README's Development section
-        run: hf download jungroo-ai/redefiner-0.8b --exclude "benchmarks/*" "docs/*" --local-dir weights
+        run: hf download jungroo-ai/redefiner-0.8b --exclude "benchmarks/*" --exclude "docs/*" --local-dir weights
       - name: Tests, end-to-end included
         run: pytest -q
       - name: S1MB Few-NERD (label mode) gives the A10 run's labels

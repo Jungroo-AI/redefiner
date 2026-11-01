@@ -3,6 +3,11 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
+## Unreleased
+
+- The Development section's download command works. In 1.0.6 it gave two patterns to one `--exclude`, and
+  `hf download` read the second one as a filename.
+
 ## 1.0.6 (2026-11-02)
 
 - `label(..., snap=True)` trims spaces from both ends of a span before widening it to whole tokens. Before, a span
