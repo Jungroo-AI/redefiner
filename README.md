@@ -6,7 +6,7 @@
 
 A 0.8B model that extracts and labels exact spans using your plain-English rulebook.
 
-<sub>On CrossNER AI it scores 68.1 F1 on a CPU server, within 5 F1 of Gemini 3.1 Pro (72.4) and Claude Haiku 5.5 (73.1) given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
+<sub>On CrossNER AI it scores 68.1 F1 on a CPU server, about 5 F1 behind Claude Haiku 5.5 (73.1) and 4.3 behind Gemini 3.1 Pro (72.4), given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
 
 [![CI](https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml/badge.svg)](https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml)
 
@@ -83,7 +83,7 @@ such as banks, hospitals and government. Free for commercial use under Apache 2.
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
 | Licence | Apache-2.0: free to use, change and share, including in commercial products |
-| Release | 1.0 · October 2026 |
+| Release | Weights 1.0 (October 2026), package 1.0.6 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
 
 ## Quickstart
 
@@ -698,10 +698,15 @@ What works, from the benchmarks (see [How to write rules that work](https://gith
   `"NONE"` for a span that isn't any of them.
 - A span the model can't read comes back with `"unsupported": reason` instead of a label, never dropped and never
   changed silently:
-  - it doesn't start and end on token boundaries ("would be snapped"), e.g. part of a word. Pass `snap=True` to label
-    it widened to whole tokens; the result then carries the widened offsets and `"snapped": True`;
+  - it doesn't start and end on token boundaries ("would be snapped"), such as "Ada Lo", which ends inside the token
+    "Lov", or a span with a space at either end;
   - it is longer than 16 tokens;
   - its offsets are invalid.
+- `snap=True` labels a span that isn't on token boundaries instead: it trims spaces from both ends, widens the span to
+  whole tokens and returns the new offsets with `"snapped": True`. Tokens are not words, so a snapped span can still
+  end inside a word ("Ada Lo" becomes "Ada Lov") or take in a hyphen ("French" in "Anglo-French" becomes "-French").
+- Space-separated words almost always start and end on token boundaries. Part of a word can too, and is then labeled
+  as given, with no flag: "Ada Lov" gets PERSON. Check your offsets if they might cut words.
 
 ## Long texts
 
@@ -842,7 +847,8 @@ types, document fields, search-query slots, and research on rule-following extra
 ```bash
 git clone https://github.com/jungroo-ai/redefiner && cd redefiner
 pip install -e ".[dev]"
-hf download jungroo-ai/redefiner-0.8b --local-dir weights   # optional: enables the end-to-end tests
+# optional, for the end-to-end tests: the model files without the benchmark outputs and images
+hf download jungroo-ai/redefiner-0.8b --exclude "benchmarks/*" "docs/*" --local-dir weights
 pytest
 ruff check .
 ```

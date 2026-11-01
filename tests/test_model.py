@@ -38,6 +38,13 @@ def test_label_contract(tagger):
     assert snapped["snapped"] and snapped["text"] == "Ada" and snapped["label"] == "PERSON"
 
 
+def test_snap_trims_spaces_first(tagger):
+    assert tagger.label(TEXT, [(0, 13)], RULEBOOK)[0]["unsupported"].startswith("would be snapped")   # "Ada Lovelace "
+    trimmed, blank = tagger.label(TEXT, [(0, 13), (12, 13)], RULEBOOK, snap=True)
+    assert (trimmed["text"], trimmed["label"], trimmed["snapped"]) == ("Ada Lovelace", "PERSON", True)   # not "... was"
+    assert blank["unsupported"] == "span is only whitespace"
+
+
 def test_label_none(tagger):
     forced = tagger.label(TEXT, [(13, 16)], RULEBOOK)[0]   # "was"
     assert forced["label"] in ("PERSON", "CITY")

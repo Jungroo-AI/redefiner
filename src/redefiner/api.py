@@ -85,7 +85,7 @@ class LabelResult(TypedDict, total=False):
     label: str
     confidence: float
     alternatives: list[tuple[str, float]]
-    snapped: bool        # present (True) when snap=True widened the span to whole tokens
+    snapped: bool        # present (True) when snap=True trimmed the span or widened it to whole tokens
     unsupported: str     # present instead of label/confidence/alternatives when the span can't be labelled
 
 
@@ -281,8 +281,9 @@ class Tagger:
                 strings, one such list per text.
             rulebook: rulebook text, or a dict (see `to_text`).
             allow_none: False forces a choice among the rulebook's types; True lets the model answer "NONE".
-            snap: label a span that does not start and end on token boundaries as the span widened to whole tokens
-                (returning the widened offsets and "snapped": True), instead of reporting it unsupported.
+            snap: label a span that does not start and end on token boundaries instead of reporting it unsupported:
+                trim spaces from its ends, widen it to whole tokens and return the new offsets with "snapped": True.
+                Tokens are not words, so a snapped span can still end inside a word.
             none_bias: with allow_none, subtracted from the NONE logit first (default from config.json, 2.0).
             batch_size: queries per forward pass.
 
@@ -290,7 +291,8 @@ class Tagger:
             Per text, one result per span in the given order; a single list when `texts` is a string. A label's
             confidence is its probability among the rulebook's types (and NONE, with allow_none). A span is
             unsupported (an "unsupported" reason instead of a label) when its offsets are invalid, when it is longer
-            than `max_width` model tokens, or when it does not start and end on token boundaries and snap is False.
+            than `max_width` model tokens, when it does not start and end on token boundaries and snap is False, or
+            when snap is True and it is only whitespace.
 
         Raises:
             ValueError: the rulebook has no [TYPE] sections, or `spans` does not match `texts`.
@@ -338,6 +340,11 @@ class Tagger:
     def _label_span(self, text, q, c0, s, e, where, logits, names, allow_none, snap, none_bias) -> LabelResult:
         """The result for span s..e of `text`, read from query `q`, which starts at character c0 of the text."""
         item = LabelResult(start=s, end=e, text=text[s:e])
+        if snap:   # tokens start with the space before a word, so an edge space would widen the span into the next one
+            span = text[s:e]
+            s, e = s + len(span) - len(span.lstrip()), s + len(span.rstrip())
+            if s >= e:
+                return {**item, "unsupported": "span is only whitespace"}
         ls, le = s - c0, e - c0   # offsets inside this query
         first = next((t for t, (_, b) in enumerate(q.offsets) if b > ls), None)
         last = max((t for t, (a, _) in enumerate(q.offsets) if a < le), default=None)
@@ -348,7 +355,7 @@ class Tagger:
         if (first, last) not in where:
             return {**item, "unsupported": "span is not available"}
         cs, ce = Encoder.char_span(q, first, last)
-        if (cs, ce) != (ls, le):
+        if (c0 + cs, c0 + ce) != (item["start"], item["end"]):
             if not snap:
                 return {**item, "unsupported": "would be snapped: the span does not start and end on token boundaries"}
             item.update(start=c0 + cs, end=c0 + ce, text=text[c0 + cs:c0 + ce], snapped=True)

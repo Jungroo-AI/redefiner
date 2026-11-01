@@ -22,7 +22,7 @@ tags:
 
 A 0.8B model that extracts and labels exact spans using your plain-English rulebook.
 
-<sub>On CrossNER AI it scores 68.1 F1 on a CPU server, within 5 F1 of Gemini 3.1 Pro (72.4) and Claude Haiku 5.5 (73.1) given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
+<sub>On CrossNER AI it scores 68.1 F1 on a CPU server, about 5 F1 behind Claude Haiku 5.5 (73.1) and 4.3 behind Gemini 3.1 Pro (72.4), given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
 
 [Quickstart](#quickstart) · [Label mode](https://github.com/jungroo-ai/redefiner#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [Code](https://github.com/jungroo-ai/redefiner) · [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
 
@@ -97,7 +97,7 @@ such as banks, hospitals and government. Free for commercial use under Apache 2.
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
 | Licence | Apache-2.0: free to use, change and share, including in commercial products |
-| Release | 1.0 · October 2026 |
+| Release | Weights 1.0 (October 2026), package 1.0.6 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
 
 ## Quickstart
 

@@ -41,8 +41,9 @@ Key facts for writing code against it:
   return one result list per text.
 - Offsets are character offsets into the original text, start inclusive, end exclusive.
 - `label` never drops or silently changes a span: a span it can't read (not on token boundaries, longer than 16 tokens,
-  invalid offsets) comes back with `"unsupported": reason`. `snap=True` widens a span to whole tokens and marks it
-  `"snapped": True`. `allow_none=True` lets it answer `"NONE"`.
+  invalid offsets) comes back with `"unsupported": reason`. `snap=True` trims spaces from a span's ends, widens it to
+  whole tokens (not words: it can still end inside a word) and marks it `"snapped": True`. Part of a word that starts
+  and ends on token boundaries is labeled as given, with no flag. `allow_none=True` lets it answer `"NONE"`.
 - The rulebook is text or a dict: `{"general": [...], "classes": [{"name", "description", "rules": [...]}, ...],
   "never": [...], "closing": [...]}`. `redefiner.to_text(dict)` gives the text form.
 - Rulebook text: an optional `[RULES]` section, then one `[TYPE] NAME` section per type (names use letters, digits and
