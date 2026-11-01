@@ -85,7 +85,7 @@ such as banks, hospitals and government. Free for commercial use under Apache 2.
 
 ## At a glance
 
-| | |
+| Property | Details |
 |---|---|
 | Does | Extract mode finds and labels spans; label mode types spans you supply. English text |
 | Controlled by | A plain-English rulebook of types, one-line descriptions and rules; no retraining |

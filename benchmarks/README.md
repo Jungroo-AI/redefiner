@@ -44,7 +44,7 @@ ReDefiNER benefits from descriptions and rules in the rulebook. Remaining weakne
 
 ## Size and speed
 
-| | |
+| Property | Details |
 |---|---|
 | Parameters | 0.8B: Qwen3.5-0.8B fine-tuned with LoRA (rank 32, merged into the base) plus span and label heads. |
 | Download | One 0.77 GB int8 file with the LoRA already merged. It is bit-identical to the int8 weights every benchmark on this page ran with. |

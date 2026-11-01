@@ -14,7 +14,7 @@ A 0.8B model that extracts and labels exact spans using your plain-English ruleb
 
 </div>
 
-<p align="center"><img src="docs/assets/rules/two-teams.png" width="780" alt="One support ticket read with a privacy rulebook (person, account, email, phone) and a product rulebook (product, version, device, error code)"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/two-teams.png" width="780" alt="One support ticket read with a privacy rulebook (person, account, email, phone) and a product rulebook (product, version, device, error code)"></p>
 
 <details>
 <summary>Same model, same ticket, two different jobs: the rulebooks and output as text</summary>
@@ -71,7 +71,7 @@ such as banks, hospitals and government. Free for commercial use under Apache 2.
 
 ## At a glance
 
-| | |
+| Property | Details |
 |---|---|
 | Does | Extract mode finds and labels spans; label mode types spans you supply. English text |
 | Controlled by | A plain-English rulebook of types, one-line descriptions and rules; no retraining |
@@ -165,7 +165,7 @@ mode, `confidence` is the probability of the chosen type among the rulebook's ty
 
 </details>
 
-**Writing your own rulebook:** start from a [template](docs/templates/) (a blank layout; PII, news, product reviews and scientific text; and a skeleton for types that depend on context), and see [How to write rules that work](docs/writing-rules.md).
+**Writing your own rulebook:** start from a [template](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates) (a blank layout; PII, news, product reviews and scientific text; and a skeleton for types that depend on context), and see [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md).
 
 ## See a rule at work
 
@@ -173,7 +173,7 @@ Every card on this page is real output: the released int8 model on a laptop CPU,
 Only the rulebook changes. Green lines were added to the rulebook; spans outlined in red disappear, spans outlined
 in green are new or changed. [Try your own text and rules in the demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo).
 
-<p align="center"><img src="docs/assets/rules/price-limit.png" width="780" alt="Adding one rule makes the price span 'under $120' instead of '$120'"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/price-limit.png" width="780" alt="Adding one rule makes the price span 'under $120' instead of '$120'"></p>
 
 <details>
 <summary>Keep "under" with the price: the rulebook and output as text</summary>
@@ -229,7 +229,7 @@ Output: red `COLOR` · nike `BRAND` · air max `PRODUCT` · 10 `SIZE` · under $
 
 </details>
 
-<p align="center"><img src="docs/assets/rules/own-brand.png" width="780" alt="A NOT_AN_ENTITY rule removes the company's own name and product from the output"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/own-brand.png" width="780" alt="A NOT_AN_ENTITY rule removes the company's own name and product from the output"></p>
 
 <details>
 <summary>Ignore your own company and products: the rulebook and output as text</summary>
@@ -273,15 +273,15 @@ The next card uses an example rulebook for a travel desk, with 11 types, written
 general rules, precedence rules that settle conflicts, numbered type rules with `"query" -> span` examples, and what
 never to extract. "Before" is the same rulebook with only its types and descriptions.
 
-<p align="center"><img src="docs/assets/rules/who-flies.png" width="780" alt="With the full rulebook, Hannah is BOOKER and her parents Omar and Leila are TRAVELLER; with descriptions only all three are BOOKER"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/who-flies.png" width="780" alt="With the full rulebook, Hannah is BOOKER and her parents Omar and Leila are TRAVELLER; with descriptions only all three are BOOKER"></p>
 
 On 21 test queries the full rulebook got 19 exactly right, against 11 with types and descriptions only and 9 with type
 names only. Both misses came from one rule: a single code with the wrong name ("my ticket number is ZK48TQ") keeps the
 type of its name; the format rule works when both kinds of code appear together.
-The layout is explained in [Structure for hard rules](docs/writing-rules.md#7-structure-for-hard-rules), and [`docs/templates/hard-rules.txt`](docs/templates/hard-rules.txt) is a blank copy to fill in.
+The layout is explained in [Structure for hard rules](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#7-structure-for-hard-rules), and [`docs/templates/hard-rules.txt`](https://github.com/jungroo-ai/redefiner/blob/main/docs/templates/hard-rules.txt) is a blank copy to fill in.
 
 <details>
-<summary>The travel-desk rulebook (<a href="docs/examples/travel-desk-rulebook.txt">docs/examples/travel-desk-rulebook.txt</a>)</summary>
+<summary>The travel-desk rulebook (<a href="https://github.com/jungroo-ai/redefiner/blob/main/docs/examples/travel-desk-rulebook.txt">docs/examples/travel-desk-rulebook.txt</a>)</summary>
 
 ```text
 [RULES] Travel desk rulebook. Label each entity in the traveller's message with one of the types below.
@@ -341,7 +341,7 @@ NE2 Request phrases ("can you", "please") and generic words ("flight", "seat", "
 
 **Hard rules.** Rules that overrule the words in the text, or ask for something the model leaves out by default.
 
-<p align="center"><img src="docs/assets/rules/format-decides.png" width="780" alt="A rule makes the reference format decide the type: INV-7731 becomes INVOICE_ID and #D-55102 becomes ORDER_ID, against the words around them"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/format-decides.png" width="780" alt="A rule makes the reference format decide the type: INV-7731 becomes INVOICE_ID and #D-55102 becomes ORDER_ID, against the words around them"></p>
 
 <details>
 <summary>The reference format decides, not what the customer calls it: the rulebook and output as text</summary>
@@ -380,7 +380,7 @@ Output: INV-7731 `INVOICE_ID` · #D-55102 `ORDER_ID`
 
 </details>
 
-<p align="center"><img src="docs/assets/rules/pronouns.png" width="780" alt="A rule makes the model label She and her as PERSON"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/pronouns.png" width="780" alt="A rule makes the model label She and her as PERSON"></p>
 
 <details>
 <summary>Count pronouns as people: the rulebook and output as text</summary>
@@ -414,7 +414,7 @@ Output: Maria `PERSON` · She `PERSON` · her `PERSON` · her `PERSON`
 
 **More everyday edits**
 
-<p align="center"><img src="docs/assets/rules/split-type.png" width="780" alt="Adding a LANGUAGE type moves Python and Go out of SKILL"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/split-type.png" width="780" alt="Adding a LANGUAGE type moves Python and Go out of SKILL"></p>
 
 <details>
 <summary>Separate programming languages from other skills: the rulebook and output as text</summary>
@@ -449,7 +449,7 @@ Output: Python `LANGUAGE` · Go `LANGUAGE` · AWS `SKILL` · Kubernetes `SKILL` 
 
 </details>
 
-<p align="center"><img src="docs/assets/rules/new-type.png" width="780" alt="Adding a TICKER type finds AAPL"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/new-type.png" width="780" alt="Adding a TICKER type finds AAPL"></p>
 
 <details>
 <summary>Add a type in two lines: the rulebook and output as text</summary>
@@ -503,9 +503,9 @@ Output: Apple `COMPANY` · AAPL `TICKER` · Tim Cook `PERSON` · iPhone `PRODUCT
 
 **More from the travel-desk rulebook** (the same rulebook as above)
 
-<p align="center"><img src="docs/assets/rules/avoid-stopover.png" width="780" alt="With the full rulebook, Dubai in 'not via Dubai' is no longer labelled as a destination"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/avoid-stopover.png" width="780" alt="With the full rulebook, Dubai in 'not via Dubai' is no longer labelled as a destination"></p>
 
-<p align="center"><img src="docs/assets/rules/out-and-back.png" width="780" alt="With the full rulebook, the date after 'fly home' becomes RETURN_DATE"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/out-and-back.png" width="780" alt="With the full rulebook, the date after 'fly home' becomes RETURN_DATE"></p>
 
 </details>
 
@@ -537,7 +537,7 @@ less than Claude Haiku 5.5 on an RTX A5000 GPU, and about 9 times less on a 2-vC
   GoLLIE's CrossNER AI guidelines as a rulebook, instructions and one sentence, about 2,000 tokens. Labeling: the 358
   S1MB Few-NERD spans, accuracy.
 - **68.1 here, 66.7 below.** Every model here got the rulebook with its types in seed-0 order (the one in
-  [`benchmarks/reproduce/`](benchmarks/reproduce/)), on which ReDefiNER scores 68.1. The GoLLIE table below reports
+  [`benchmarks/reproduce/`](https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/reproduce)), on which ReDefiNER scores 68.1. The GoLLIE table below reports
   66.7, the mean over three type orders. Likewise, 71.8 here is Few-NERD alone; the S1MB row below, 72.0, is the mean
   of Few-NERD and Gretel PII.
 - **Seconds per request.** Frontier models: API wall time per extraction request. ReDefiNER on GPU: one text per
@@ -549,13 +549,13 @@ less than Claude Haiku 5.5 on an RTX A5000 GPU, and about 9 times less on a 2-vC
   none is listed). ReDefiNER: seconds per request times the hourly rental price, with the machine kept busy: $0.16 an
   hour for the RTX A5000, $0.0586 for the 2-vCPU server.
 
-Method and limits: [the frontier comparison](benchmarks/frontier/README.md).
+Method and limits: [the frontier comparison](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/frontier/README.md).
 
 ### Against research models
 
 Entity-level F1 (exact boundary and type) unless marked; S1MB is accuracy. Full tables, protocols and caveats are on
-the [benchmark page](benchmarks/README.md), with every rulebook it reports in
-[`benchmarks/rulebooks/`](benchmarks/rulebooks/).
+the [benchmark page](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md), with every rulebook it reports in
+[`benchmarks/rulebooks/`](https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/rulebooks).
 
 | Benchmark | Metric | ReDefiNER 0.8B | Comparison |
 |---|---|---:|---|
@@ -630,7 +630,7 @@ inference, like ReDefiNER, but scores each word on its own, so multi-word names 
 | Liquid AI d1-omni-600M, our run | 0.6B | 31.8 | 30.6 | 31.2 |
 
 Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1MB leaderboard. The d1 decision models got S1MB's records as they are, through their
-`system_one` interface. Settings, prompts and every other caveat are on the [benchmark page](benchmarks/README.md).
+`system_one` interface. Settings, prompts and every other caveat are on the [benchmark page](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md).
 
 ## Rulebooks
 
@@ -666,19 +666,19 @@ what was read, `parse(to_text(rulebook))` (both from `redefiner.rulebook`) retur
 - A rule belongs to the section it sits in, not to its ID. Everything under `[TYPE] X` up to the next `[TYPE]` or
   `[RULES]` line is X's. Put `[DESCRIPTION]` on the line right after `[TYPE]`, and keep it to one line.
 - Quoted strings under a type are read as examples of that type, even inside a "never" sentence, so put exclusions in
-  `[RULES]` or `NOT_AN_ENTITY` ([why](docs/writing-rules.md#6-put-exclusions-in-rules-and-examples-under-their-type)).
+  `[RULES]` or `NOT_AN_ENTITY` ([why](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#6-put-exclusions-in-rules-and-examples-under-their-type)).
 - Rules that apply after all the types, such as which rule wins when two disagree, go under a second `[RULES]` line at
   the end. In the dict form that is the `"closing"` list.
 
 **Two layouts.** The layout above has `[RULES]` on a line of its own and `[TYPE] NOT_AN_ENTITY` for what is never
-tagged. The other, used by [`hard-rules.txt`](docs/templates/hard-rules.txt) and the travel-desk example, has text on
+tagged. The other, used by [`hard-rules.txt`](https://github.com/jungroo-ai/redefiner/blob/main/docs/templates/hard-rules.txt) and the travel-desk example, has text on
 the `[RULES]` line, `[PRECEDENCE]` rules before the types, and a final `[NOT_AN_ENTITY]` section. Use one or the other;
 a rulebook that mixes them (a `[RULES]` line of its own and a `[NOT_AN_ENTITY]` section) is an error. Windows line
 endings are fine.
 
-Templates to copy are in [`docs/templates/`](docs/templates/).
+Templates to copy are in [`docs/templates/`](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates).
 
-What works, from the benchmarks (see [How to write rules that work](docs/writing-rules.md)):
+What works, from the benchmarks (see [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md)):
 - **Descriptions matter.** With a one-line description per type the model scores 7 points higher than with type names
   alone on our open-NER sets; always write them.
 - **Boundary, exclusion and convention rules work.** "The span includes the @ of a Twitter handle" took BroadTwitter
@@ -746,7 +746,7 @@ later text. These are the CPU times in the [frontier comparison](#against-fronti
 On one NVIDIA A10 (int8 weights, fp32 compute, flash-linear-attention 0.5.2 installed, as `redefiner[gpu]` does), with a 7,700-character rulebook of 16 types (about 2,000 tokens),
 measured through our benchmark server, HTTP included:
 
-| | Seconds |
+| Request | Seconds |
 |---|---:|
 | First text after loading a new rulebook | 0.39 |
 | Each further text, one at a time | 0.05 |
@@ -794,7 +794,7 @@ if it has to be reachable from other machines.
 - **Rules against a strong prior are mostly ignored.** Relabelling a person's name as something other than a person,
   asking for common nouns as entities, or "only revenue amounts, not every money amount" mostly has no effect.
   Pronouns do work when they are quoted in a short list under the type.
-- **Types that depend on context need structure.** Precedence rules and numbered rules with worked examples help (see [Structure for hard rules](docs/writing-rules.md#7-structure-for-hard-rules)); rules that need counting or judging what didn't happen are still mostly ignored.
+- **Types that depend on context need structure.** Precedence rules and numbered rules with worked examples help (see [Structure for hard rules](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#7-structure-for-hard-rules)); rules that need counting or judging what didn't happen are still mostly ignored.
 - **Names-only rulebooks are weaker** than descriptive ones; always write a one-line description per type.
 - **Abstaining is weak.** When a type's condition isn't clearly met, the model tends to label anyway.
 - **Spans up to 16 tokens**; text is read 256 tokens at a time, and longer texts are split into overlapping windows.
@@ -830,10 +830,10 @@ types, document fields, search-query slots, and research on rule-following extra
 | Path | What it holds |
 |---|---|
 | `src/redefiner/` | The package: `Tagger` (`api.py`), the model (`model.py`), the rulebook format (`rulebook.py`), long-text windows (`windows.py`), the HTTP server (`serve.py`) and the int8 export (`export.py`) |
-| `benchmarks/` | The [benchmark page](benchmarks/README.md), every rulebook it reports, and `reproduce/` to rerun one number per mode on your machine |
-| `docs/` | [How to write rules that work](docs/writing-rules.md), [rulebook templates](docs/templates/), the example travel-desk rulebook, and the images in "See a rule at work" |
+| `benchmarks/` | The [benchmark page](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md), every rulebook it reports, and `reproduce/` to rerun one number per mode on your machine |
+| `docs/` | [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md), [rulebook templates](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates), the example travel-desk rulebook, and the images in "See a rule at work" |
 | `space/` | The demo app (Gradio) |
-| `scripts/` | The weight export, and the scripts that build the demo's stored outputs ([details](scripts/README.md)) |
+| `scripts/` | The weight export, and the scripts that build the demo's stored outputs ([details](https://github.com/jungroo-ai/redefiner/blob/main/scripts/README.md)) |
 | `tests/` | Unit tests, and end-to-end tests that run when the weights are in `weights/` |
 
 ## Development
@@ -855,7 +855,7 @@ Apache-2.0, for the code and the weights. The weights are a modified version of 
 in the model repo lists the modifications. The GoLLIE guideline text in
 `benchmarks/` comes from [GoLLIE](https://github.com/hitz-zentroa/GoLLIE) (Apache-2.0). The benchmark datasets keep
 their own licences: test sentences and quoted examples from them (in `benchmarks/` and the demo) are covered by those
-licences, not by Apache-2.0; see [Datasets and licences](benchmarks/README.md#datasets-and-licences).
+licences, not by Apache-2.0; see [Datasets and licences](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md#datasets-and-licences).
 
 ## Citation
 
