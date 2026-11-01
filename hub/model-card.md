@@ -93,7 +93,7 @@ such as banks, hospitals and government. Free for commercial use under Apache 2.
 | Size | 0.8B parameters; one 0.77 GB int8 file |
 | Hardware | CPU, with about 2–2.6 GB of memory at peak, or an NVIDIA GPU; works offline once downloaded |
 | Speed | With the rulebook loaded: 0.4–0.7 s per sentence on a 4-core CPU or an Apple M2 (extract mode), 0.05 s per text on an NVIDIA A10 or RTX A5000 ([details](https://github.com/jungroo-ai/redefiner#speed)) |
-| Limits | English only; spans up to 16 tokens; text read 256 tokens at a time, longer texts split automatically; rulebooks tested up to about 10,000 tokens |
+| Limits | English only; spans up to 16 tokens; rulebooks tested up to about 10,000 tokens; in long texts, each part is read on its own, so labels can differ across a document |
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
 | Licence | Apache-2.0: free to use, change and share, including in commercial products |
@@ -657,7 +657,8 @@ Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1
 - **Types that depend on context need structure.** Precedence rules and numbered rules with worked examples help (see [Structure for hard rules](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#7-structure-for-hard-rules)); rules that need counting or judging what didn't happen are still mostly ignored.
 - **Names-only rulebooks are weaker** than descriptive ones; always write a one-line description per type.
 - **Abstaining is weak.** When a type's condition isn't clearly met, the model tends to label anyway.
-- **Spans up to 16 tokens**; text is read 256 tokens at a time, and longer texts are split into overlapping windows.
+- **Spans up to 16 tokens.** Long texts are split into parts that are each read on their own, so the same name can get
+  different labels in different parts of a document.
 - English only; tested on English benchmarks only.
 
 ## Intended use
