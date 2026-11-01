@@ -1,4 +1,7 @@
-"""Entity extraction and span labeling, guided by the rulebook you write. Define what to extract. In plain English."""
+"""Define what counts as an entity. Run it locally.
+
+A 0.8B model that extracts and labels exact spans using your plain-English rulebook.
+"""
 
 from .api import LabelResult, Span, Tagger
 from .rulebook import to_text

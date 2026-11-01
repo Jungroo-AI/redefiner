@@ -18,19 +18,15 @@ tags:
 
 # ReDefiNER
 
-**Define what to extract. In plain English.**
+**Define what counts as an entity. Run it locally.**
 
-A generalist 0.8B model for entity extraction and span labeling, guided by the rulebook you write.
+A 0.8B model that extracts and labels exact spans using your plain-English rulebook.
 
-**0.8B · Runs on CPU · Extract and label · Rulebooks up to 10k tokens · Apache-2.0**
+<sub>On CrossNER AI it scores 68.1 F1 on a CPU server, within 5 F1 of Gemini 3.1 Pro (72.4) and Claude Haiku 5.5 (73.1) given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
 
-[Quickstart](#quickstart) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [Code](https://github.com/jungroo-ai/redefiner) · [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
+[Quickstart](#quickstart) · [Label mode](https://github.com/jungroo-ai/redefiner#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [Code](https://github.com/jungroo-ai/redefiner) · [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
 
 </div>
-
-You describe the entity types you want, in plain English, with any rules about what counts and what doesn't. The model
-finds and labels the spans (extract mode), or labels spans you already have (label mode). To change its behaviour, you
-change the rulebook, not the weights; nothing is retrained.
 
 <p align="center"><img src="https://huggingface.co/jungroo-ai/redefiner-0.8b/resolve/main/docs/assets/rules/two-teams.png" width="780" alt="One support ticket read with a privacy rulebook (person, account, email, phone) and a product rulebook (product, version, device, error code)"></p>
 
@@ -81,21 +77,26 @@ Output: Zoom `PRODUCT` · 6.2.5 `VERSION` · MacBook Air `DEVICE` · 1132 `ERROR
 
 </details>
 
+Each rulebook lists the entity types you want, with a one-line description and any rules about what counts. The model
+finds and labels those spans in your text (extract mode), or types spans you already have (label mode). To change what
+it finds, you edit the rulebook; nothing is retrained. It runs on an ordinary CPU, with no GPU and no per-use fees, and
+once downloaded it works offline, so your text stays on your own servers: a fit for teams that can't send data outside,
+such as banks, hospitals and government. Free for commercial use under Apache 2.0.
+
 ## At a glance
 
 | | |
 |---|---|
-| Task | Entity extraction (find and label spans) and span labeling (label spans you supply), in English |
-| Control | A plain-English rulebook of types, one-line descriptions and rules; edit it to change the output, with no retraining |
-| Output | Spans of your text, each with a type and a confidence; non-generative |
-| Benchmarks | 59.8 F1 on the 13 GoLLIE zero-shot NER sets, with GoLLIE's own guidelines (GoLLIE 34B: 58.1); 63.1 on 7 CrossNER and MIT sets with one-line type descriptions (GLiNER large: 61.7, or 62.2 with a dev-tuned threshold). It trails with type names only, on BUSTER and on S1MB labeling: [all results](#benchmarks) |
-| Limits | Rulebooks tested up to about 10,000 tokens; text is read 256 tokens at a time (longer texts are split into windows automatically); each span is at most 16 tokens |
-| Model size | 0.8B parameters, shipped as one 0.77 GB int8 file |
-| Speed, CPU | About 0.4–0.7 s per sentence once the rulebook is loaded (Apple M2, and a 4-core Linux server) |
-| Speed, GPU | About 0.05 s per text, or 0.38 s for 16 texts in one call, with a 2,000-token rulebook (NVIDIA A10) |
-| Memory, CPU | About 2–2.6 GB at peak, with rulebooks of up to about 1,400 tokens and 16 texts in one call (Apple M2, and a 4-core Linux server) |
+| Does | Extract mode finds and labels spans; label mode types spans you supply. English text |
+| Controlled by | A plain-English rulebook of types, one-line descriptions and rules; no retraining |
+| Returns | Exact character spans, each with a type and a confidence; non-generative |
+| Size | 0.8B parameters; one 0.77 GB int8 file |
+| Hardware | CPU, with about 2–2.6 GB of memory at peak, or an NVIDIA GPU; works offline once downloaded |
+| Speed | With the rulebook loaded: 0.4–0.7 s per sentence on a 4-core CPU or an Apple M2 (extract mode), 0.05 s per text on an NVIDIA A10 or RTX A5000 ([details](https://github.com/jungroo-ai/redefiner#speed)) |
+| Limits | English only; spans up to 16 tokens; text read 256 tokens at a time, longer texts split automatically; rulebooks tested up to about 10,000 tokens |
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
-| Licence | Apache-2.0 |
+| Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
+| Licence | Apache-2.0: free to use, change and share, including in commercial products |
 | Release | 1.0 · October 2026 |
 
 ## Quickstart
@@ -103,21 +104,15 @@ Output: Zoom `PRODUCT` · 6.2.5 `VERSION` · MacBook Air `DEVICE` · 1132 `ERROR
 The model has its own span and label heads, so it loads through the `redefiner` package rather than `transformers`
 alone.
 
+
 ```bash
 pip install redefiner
 ```
 
-Python 3.10 or newer. Runs on CPU, or on an NVIDIA GPU if your PyTorch build has CUDA
-([PyTorch's install selector](https://pytorch.org/get-started/locally/) gives the command for your system). On Linux
-with a GPU, install `"redefiner[gpu]"` instead: it adds flash-linear-attention's kernels, without which the GPU path is
-much slower. On Linux without a GPU, add `--extra-index-url https://download.pytorch.org/whl/cpu` to skip PyTorch's
-CUDA build, a download of several GB.
-
 ```python
 from redefiner import Tagger
 
-tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # GPU if available, else CPU; device="cpu" forces CPU
-print(tagger.device)   # cpu or cuda:0; a warning says so when an NVIDIA GPU is present but PyTorch can't use it
+tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # GPU if available, else CPU
 
 rulebook = """[RULES]
 Extract every entity of the supplied types. Return exact spans from the text.
@@ -133,24 +128,59 @@ PE1 Label the full name; leave out titles such as "Dr" or "Prof".
 tagger.extract("Prof Ada Lovelace corresponded with the Royal Society.", rulebook)
 # [{'start': 5, 'end': 17, 'text': 'Ada Lovelace', 'label': 'PERSON', 'confidence': 0.977},
 #  {'start': 40, 'end': 53, 'text': 'Royal Society', 'label': 'ORGANIZATION', 'confidence': 0.489}]
+```
 
-# Without rule PE1, the same call keeps the title:
+**Label mode**, when you already have the spans (character offsets, end exclusive):
+
+```python
+tagger.label("Ada Lovelace corresponded with the Royal Society.", [(0, 12), (35, 48)], rulebook)
+# [{'start': 0, 'end': 12, 'text': 'Ada Lovelace', 'label': 'PERSON', 'confidence': 1.0,
+#    'alternatives': [('ORGANIZATION', 0.0)]},
+#  {'start': 35, 'end': 48, 'text': 'Royal Society', 'label': 'ORGANIZATION', 'confidence': 0.997,
+#    'alternatives': [('PERSON', 0.003)]}]
+```
+
+Both calls also take a list of texts (and, for `label`, one list of spans per text) and return one result list per
+text. More in [Label mode](https://github.com/jungroo-ai/redefiner#label-mode).
+
+<details>
+<summary>Installing: Python version, NVIDIA GPUs, Linux without a GPU</summary>
+
+Python 3.10 or newer. Runs on CPU, or on an NVIDIA GPU if your PyTorch build has CUDA
+([PyTorch's install selector](https://pytorch.org/get-started/locally/) gives the command for your system). On Linux
+with a GPU, install `"redefiner[gpu]"` instead: it adds flash-linear-attention's kernels, without which the GPU path is
+much slower. On Linux without a GPU, add `--extra-index-url https://download.pytorch.org/whl/cpu` to skip PyTorch's
+CUDA build, a download of several GB.
+
+`Tagger.from_pretrained(..., device="cpu")` forces CPU. `print(tagger.device)` shows where the model runs (`cpu` or
+`cuda:0`); a warning says so when an NVIDIA GPU is present but PyTorch can't use it.
+
+</details>
+
+<details>
+<summary>What rule PE1 does: without it, the same call keeps the title</summary>
+
+```python
 without_pe1 = rulebook.replace('PE1 Label the full name; leave out titles such as "Dr" or "Prof".\n', "")
 tagger.extract("Prof Ada Lovelace corresponded with the Royal Society.", without_pe1)
 # [{'start': 0, 'end': 17, 'text': 'Prof Ada Lovelace', 'label': 'PERSON', 'confidence': 0.606},
 #  {'start': 40, 'end': 53, 'text': 'Royal Society', 'label': 'ORGANIZATION', 'confidence': 0.424}]
-
-tagger.label("Ada Lovelace corresponded with the Royal Society.", [(0, 12), (35, 48)], rulebook)
-# PERSON for "Ada Lovelace" (1.0), ORGANIZATION for "Royal Society" (0.997), each with the other type as an alternative
 ```
 
-Each extracted span's `confidence` is its span probability times its type probability. Two settings decide which
-spans come back: `threshold` (default 0.5) is the minimum span probability, and `none_bias` (default 2) is subtracted
-from the score of "none of these types" before the type is picked, so borderline spans get a type instead of being
-dropped. The confidence is computed without that bias, so a returned span can score below 0.5. Above, "Royal Society"
-is almost certainly a span (0.997), but the model weighs ORGANIZATION (0.491) and none of the types (0.508) about
-equally: 0.997 × 0.491 = 0.489. Filter on `confidence` if you only want the spans the model is sure of. In `label`,
-`confidence` is the probability of the chosen type among the rulebook's types.
+</details>
+
+<details>
+<summary>How confidence works, and why "Royal Society" scores 0.489</summary>
+
+In extract mode, each span's `confidence` is its span probability times its type probability. Two settings decide
+which spans come back: `threshold` (default 0.5) is the minimum span probability, and `none_bias` (default 2) is
+subtracted from the score of "none of these types" before the type is picked, so borderline spans get a type instead
+of being dropped. The confidence is computed without that bias, so a returned span can score below 0.5. Above, "Royal
+Society" is almost certainly a span (0.997), but the model weighs ORGANIZATION (0.491) and none of the types (0.508)
+about equally: 0.997 × 0.491 = 0.489. Filter on `confidence` if you only want the spans the model is sure of. In label
+mode, `confidence` is the probability of the chosen type among the rulebook's types.
+
+</details>
 
 **Writing your own rulebook:** start from a [template](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates) (a blank layout; PII, news, product reviews and scientific text; and a skeleton for types that depend on context), and see [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md).
 
@@ -503,9 +533,46 @@ yet. See [Limitations](#limitations).
 
 ## Benchmarks
 
+### Against frontier models
+
+Five frontier models got the same rulebooks as ReDefiNER, on two of our test sets. ReDefiNER is 4 to 11 F1 behind on
+extraction and 10 to 15 points behind on labeling. It costs far less to run: with the rulebook cached, about 85 times
+less than Claude Haiku 5.5 on an RTX A5000 GPU, and about 9 times less on a 2-vCPU server with no GPU.
+
+| Model | CrossNER AI extract, F1 | S1MB Few-NERD label, accuracy | Cost per 1,000 requests, rulebook cached | Cost per 1,000 requests, new rulebook | Seconds per request |
+|---|---:|---:|---:|---:|---:|
+| Claude Opus 5.5 | **79.4** | **87.2** | $2.42 | $10.02 | 2.2 |
+| Claude Opus 4.8 | 77.1 | 84.4 | $2.92 | $10.65 | 4.2 |
+| GPT-5.4 | 73.5 | 81.3 | $5.32 | $9.41 | 8.6 |
+| Claude Haiku 5.5 | 73.1 | 81.8 | $0.19 | $0.37 | 2.3 |
+| Gemini 3.1 Pro | 72.4 | 81.6 | $17.27 | $20.90 | 16.8 |
+| ReDefiNER 0.8B, RTX A5000 GPU | 68.1 | 71.8 | **$0.0022** | **$0.017** | **0.05** cached, **0.39** new |
+| ReDefiNER 0.8B, 2-vCPU server, no GPU | 68.1 | 71.8 | $0.022 | $0.27 | 1.3 cached, 16.3 new |
+
+- **Tasks.** Extraction: the 431 CrossNER AI test sentences, micro-F1 on exact spans and types. One request is
+  GoLLIE's CrossNER AI guidelines as a rulebook, instructions and one sentence, about 2,000 tokens. Labeling: the 358
+  S1MB Few-NERD spans, accuracy.
+- **68.1 here, 66.7 below.** Every model here got the rulebook with its types in seed-0 order (the one in
+  [`benchmarks/reproduce/`](https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/reproduce)), on which
+  ReDefiNER scores 68.1. The GoLLIE table below reports 66.7, the mean over three type orders. Likewise, 71.8 here is
+  Few-NERD alone; the S1MB row below, 72.0, is the mean of Few-NERD and Gretel PII.
+- **Seconds per request.** Frontier models: API wall time per extraction request. ReDefiNER on GPU: one text per
+  request with a 2,000-token rulebook, measured on an NVIDIA A10 and on an RTX A5000 with the same result. On CPU: one
+  extraction request at a time on a 2-vCPU cloud server, with the CrossNER AI rulebook. "Cached" means the rulebook
+  was already loaded; "new" includes reading it first.
+- **Cost per 1,000 requests.** Frontier models: 2,000 input tokens plus the model's measured output tokens, at its
+  per-token prices; in the cached column the input is billed at the cache-read price (10% of the input price where
+  none is listed). ReDefiNER: seconds per request times the hourly rental price, with the machine kept busy: $0.16 an
+  hour for the RTX A5000, $0.0586 for the 2-vCPU server.
+
+Method and limits: [the frontier comparison](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/frontier/README.md).
+
+### Against research models
+
 Entity-level F1 (exact boundary and type) unless marked; S1MB is accuracy. Full tables, protocols and caveats are on
 the [benchmark page](https://huggingface.co/jungroo-ai/redefiner-0.8b/blob/main/benchmarks/README.md), with every
-rulebook it reports in [`benchmarks/rulebooks/`](https://huggingface.co/jungroo-ai/redefiner-0.8b/tree/main/benchmarks/rulebooks).
+rulebook it reports in
+[`benchmarks/rulebooks/`](https://huggingface.co/jungroo-ai/redefiner-0.8b/tree/main/benchmarks/rulebooks).
 
 | Benchmark | Metric | ReDefiNER 0.8B | Comparison |
 |---|---|---:|---|
@@ -524,7 +591,8 @@ published results unless marked as our run.
 ### The 13 GoLLIE zero-shot NER sets, with GoLLIE's own guidelines
 
 GoLLIE's guideline text and five examples per type, converted into a rulebook with nothing added; scored with GoLLIE's
-code. ReDefiNER scores are the mean over 3 orders of the types in the rulebook; GoLLIE scores are from its paper.
+code. ReDefiNER scores are the mean over 3 orders of the types in the rulebook (for CrossNER AI, the seed-0 order
+alone gives 68.1, the score in the frontier comparison above); GoLLIE scores are from its paper.
 
 | Dataset | ReDefiNER 0.8B | GoLLIE 7B | GoLLIE 13B | GoLLIE 34B |
 |---|---:|---:|---:|---:|

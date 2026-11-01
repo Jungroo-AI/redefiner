@@ -487,10 +487,12 @@ FORCE_LIGHT = """() => {
 }"""
 
 HERO = ('<div class="hero"><h1>ReDefiNER</h1>'
-        '<p><span class="tag">Define what to extract. In plain English.</span> '
-        'A generalist 0.8B model for entity extraction and span labeling, guided by the rulebook you write.</p>'
-        '<div class="badges"><span class="badge">0.8B parameters</span><span class="badge">runs on CPU</span>'
-        '<span class="badge">extract + label</span><span class="badge">Apache-2.0</span>'
+        '<p><span class="tag">Define what counts as an entity. Run it locally.</span> '
+        'A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Try it here, then '
+        'run it yourself on an ordinary computer with no GPU and no per-use fees, and your text never leaves your '
+        'own servers.</p>'
+        '<div class="badges"><span class="badge">no GPU, no per-use fees</span><span class="badge">works offline</span>'
+        '<span class="badge">free for business use (Apache 2.0)</span>'
         '<span class="links">' + "".join(f'<a href="{u}" target="_blank">{k}</a>' for k, u in LINKS.items())
         + '</span></div></div>')
 

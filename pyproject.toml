@@ -5,13 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "redefiner"
 dynamic = ["version"]
-description = "A generalist 0.8B model for entity extraction and span labeling, guided by the rulebook you write."
+description = "Define what counts as an entity. Run it locally. A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Free (Apache 2.0). By Jungroo AI Labs."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
-authors = [{ name = "Cibe", email = "cibe@jungroo.com" }]
+authors = [{ name = "Jungroo AI Labs" }, { name = "Cibe", email = "cibe@jungroo.com" }]
 requires-python = ">=3.10"
-keywords = ["named-entity-recognition", "ner", "information-extraction", "span-labeling", "rulebook", "qwen"]
+keywords = ["named-entity-recognition", "ner", "information-extraction", "span-labeling", "rulebook", "qwen", "pii",
+            "privacy", "on-premise", "cpu"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",

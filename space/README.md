@@ -1,7 +1,7 @@
 # ReDefiNER demo
 
-ReDefiNER is a generalist 0.8B model for entity extraction and span labeling, guided by the rulebook you write: you
-describe the entity types and the rules in plain English, and it finds and labels the spans.
+ReDefiNER is a 0.8B model that extracts and labels exact spans using your plain-English rulebook: you describe the
+entity types and the rules, and it finds and labels the spans.
 
 - **Edit a rule:** a support ticket, a job application and a clinical note written for the demo, and three benchmark
   test sentences, each with its full rulebook. Edit any rule, as a form or as text, and run it again.

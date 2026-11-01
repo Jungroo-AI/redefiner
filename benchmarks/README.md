@@ -6,6 +6,29 @@ ReDefiNER is a 0.8B rule-following model for entity extraction and span labeling
 
 ## Summary
 
+### Against frontier models
+
+Five frontier models got the same rulebooks as ReDefiNER, on two of our test sets. ReDefiNER is 4 to 11 F1 behind on extraction and 10 to 15 points behind on labeling. It costs far less to run: with the rulebook cached, about 85 times less than Claude Haiku 5.5 on an RTX A5000 GPU, and about 9 times less on a 2-vCPU server with no GPU.
+
+| Model | CrossNER AI extract, F1 | S1MB Few-NERD label, accuracy | Cost per 1,000 requests, rulebook cached | Cost per 1,000 requests, new rulebook | Seconds per request |
+|---|---:|---:|---:|---:|---:|
+| Claude Opus 5.5 | **79.4** | **87.2** | $2.42 | $10.02 | 2.2 |
+| Claude Opus 4.8 | 77.1 | 84.4 | $2.92 | $10.65 | 4.2 |
+| GPT-5.4 | 73.5 | 81.3 | $5.32 | $9.41 | 8.6 |
+| Claude Haiku 5.5 | 73.1 | 81.8 | $0.19 | $0.37 | 2.3 |
+| Gemini 3.1 Pro | 72.4 | 81.6 | $17.27 | $20.90 | 16.8 |
+| ReDefiNER 0.8B, RTX A5000 GPU | 68.1 | 71.8 | **$0.0022** | **$0.017** | **0.05** cached, **0.39** new |
+| ReDefiNER 0.8B, 2-vCPU server, no GPU | 68.1 | 71.8 | $0.022 | $0.27 | 1.3 cached, 16.3 new |
+
+- **Tasks.** Extraction: the 431 CrossNER AI test sentences, micro-F1 on exact spans and types. One request is GoLLIE's CrossNER AI guidelines as a rulebook, instructions and one sentence, about 2,000 tokens. Labeling: the 358 S1MB Few-NERD spans, accuracy.
+- **68.1 here, 66.7 below.** Every model here got the rulebook with its types in seed-0 order (the one in [`reproduce/`](reproduce/)), on which ReDefiNER scores 68.1. The GoLLIE table below reports 66.7, the mean over three type orders. Likewise, 71.8 here is Few-NERD alone; the S1MB row below, 72.0, is the mean of Few-NERD and Gretel PII.
+- **Seconds per request.** Frontier models: API wall time per extraction request. ReDefiNER on GPU: one text per request with a 2,000-token rulebook, measured on an NVIDIA A10 and on an RTX A5000 with the same result. On CPU: one extraction request at a time on a 2-vCPU cloud server, with the CrossNER AI rulebook. "Cached" means the rulebook was already loaded; "new" includes reading it first.
+- **Cost per 1,000 requests.** Frontier models: 2,000 input tokens plus the model's measured output tokens, at its per-token prices; in the cached column the input is billed at the cache-read price (10% of the input price where none is listed). ReDefiNER: seconds per request times the hourly rental price, with the machine kept busy: $0.16 an hour for the RTX A5000, $0.0586 for the 2-vCPU server.
+
+Method and limits: [the frontier comparison](frontier/README.md).
+
+### Against research models
+
 | Benchmark | Metric | ReDefiNER 0.8B | Comparison |
 |---|---|---:|---|
 | 13 GoLLIE NER sets, GoLLIE's own guidelines | F1 | **59.8** | GoLLIE 34B 58.1 |
