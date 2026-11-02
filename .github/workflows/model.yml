@@ -1,8 +1,9 @@
 name: Model tests
 
 # The end-to-end tests and one reproduced benchmark number, with the released weights. CI skips these because it has
-# no weights; this runs them weekly and on demand, with the pinned transformers and with the newest release. If only
-# the newest fails, transformers changed something the model code relies on: fix that before widening the pin.
+# no weights; this runs them weekly and on demand with three transformers versions: the lowest and the highest the
+# package allows, and the newest release. If only the newest fails, transformers changed something the model code
+# relies on: fix that before raising the upper bound in pyproject.toml.
 on:
   workflow_dispatch:
   schedule:
@@ -14,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        transformers: [pinned, newest]
+        transformers: [lowest, highest, newest]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -23,11 +24,14 @@ jobs:
           cache: pip
       - name: Install (CPU-only torch)
         run: pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
-      - name: Newest transformers, ignoring the pin
+      - name: Lowest transformers the package allows (the lower bound in pyproject.toml)
+        if: matrix.transformers == 'lowest'
+        run: pip install "transformers==5.19.*"
+      - name: Newest transformers, ignoring the upper bound
         if: matrix.transformers == 'newest'
-        run: |
-          pip install --upgrade transformers
-          python -c "import transformers; print('transformers', transformers.__version__)"
+        run: pip install --upgrade transformers
+      - name: Show the transformers version
+        run: python -c "import transformers; print('transformers', transformers.__version__)"
       - name: Download the weights, as in the README's Development section
         run: hf download jungroo-ai/redefiner-0.8b --exclude "benchmarks/*" --exclude "docs/*" --local-dir weights
       - name: Tests, end-to-end included

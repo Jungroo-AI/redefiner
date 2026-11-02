@@ -31,8 +31,8 @@ class StepCache:
     """The cache interface one Qwen3.5 decoder layer calls, for that layer only, with no in-place updates.
 
     transformers' own cache classes update their tensors in place, which rules out reusing one rulebook's states for
-    many queries. This class follows the interface the Qwen3.5 modeling code calls (an internal of transformers, which
-    is why the package pins its version).
+    many queries. This class follows the interface the Qwen3.5 modeling code calls, an internal of transformers that
+    changes between minor versions, which is why the package caps its transformers version.
     """
 
     def __init__(self, layer_idx, kv=None, conv=None, rec=None):
@@ -49,7 +49,8 @@ class StepCache:
     def get_seq_length(self, layer_idx=0):
         return 0 if self.kv is None else self.kv[0].shape[-2]
 
-    # Gated DeltaNet layers
+    # Gated DeltaNet layers: transformers 5.19 and 5.20 read `layers` and has_previous_state, 5.21 on call the getters.
+    # Recording the past keeps every pass off the single-token kernel, which updates the conv state in place.
     @property
     def layers(self):
         return {self.layer_idx: SimpleNamespace(record_past=True, conv_states=[self.conv],
@@ -57,6 +58,15 @@ class StepCache:
 
     def has_previous_state(self, layer_idx=None, state_idx=None):
         return self.rec is not None
+
+    def get_conv_state(self, layer_idx, state_idx=0):
+        return self.conv
+
+    def get_recurrent_state(self, layer_idx, state_idx=0):
+        return self.rec
+
+    def is_recording_past(self, layer_idx=None):
+        return True
 
     def update_conv_state(self, conv_states, layer_idx, conv_kernel_size=None, **kwargs):
         full = conv_states if self.conv is None else torch.cat([self.conv, conv_states], dim=-1)
@@ -303,7 +313,8 @@ def build_int8(text_config: dict, state: dict, d_span: int = 512, max_width: int
     lm.embed_tokens = Int8Embedding.empty(tuple(lm.embed_tokens.weight.shape), lm.embed_tokens.padding_idx)
     for layer in lm.layers:
         replace_linears(layer, lambda m: Int8Linear.empty(tuple(m.weight.shape), bias=m.bias is not None))
-    lm.rotary_emb = type(lm.rotary_emb)(config=config, device="cpu")
+    with torch.device("cpu"):   # transformers 5.20 dropped the rotary embedding's device argument
+        lm.rotary_emb = type(lm.rotary_emb)(config=config)
     rotary = {k[len(ROTARY):]: v for k, v in state.items() if k.startswith(ROTARY)}
     weights = {k: v for k, v in state.items() if not k.startswith(ROTARY)}
     with torch.device("meta"):

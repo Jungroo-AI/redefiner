@@ -5,6 +5,10 @@ Changes to the `redefiner` package and its documentation. The model weights are 
 
 ## Unreleased
 
+- Works with transformers 5.19 to 5.22 (1.0.6 needed 5.19). transformers 5.20 changed how the rotary embedding is
+  created and 5.21 how the Gated DeltaNet layers read their cache. Outputs are identical to 1.0.6 on each version.
+- The weekly model tests run with the lowest and the highest transformers the package allows, and with the newest
+  release.
 - The Development section's download command works. In 1.0.6 it gave two patterns to one `--exclude`, and
   `hf download` read the second one as a filename.
 

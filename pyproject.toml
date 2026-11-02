@@ -29,8 +29,8 @@ classifiers = [
 dependencies = [
     "torch>=2.9",
     # model.py implements the cache interface of transformers' Qwen3.5 modeling code, which is internal and changes
-    # between minor versions; widen this range only after testing
-    "transformers>=5.19,<5.20",
+    # between minor versions; raise the upper bound only after the model tests (model.yml) pass on the new version
+    "transformers>=5.19,<5.23",
     "safetensors",
     "huggingface_hub",
 ]
