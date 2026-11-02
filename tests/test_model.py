@@ -18,6 +18,16 @@ def test_extract_offsets_are_exact(tagger):
         assert TEXT[s["start"]:s["end"]] == s["text"]
 
 
+@pytest.mark.parametrize("call, message", [
+    (lambda t: t.extract(None, RULEBOOK), "texts must be a string or a list of strings, not NoneType"),
+    (lambda t: t.extract(TEXT, None), "a rulebook must be rulebook text or a dict, not NoneType"),
+    (lambda t: t.label(TEXT, None, RULEBOOK), r"spans must be a list of \(start, end\) pairs, not NoneType"),
+])
+def test_wrong_input_types_say_what_is_expected(tagger, call, message):
+    with pytest.raises(TypeError, match=message):
+        call(tagger)
+
+
 def test_extract_batch_matches_single(tagger):
     texts = [TEXT, "Marie Curie moved to Paris.", "", "No names here."]
     assert tagger.extract(texts, RULEBOOK) == [tagger.extract(t, RULEBOOK) for t in texts]

@@ -20,6 +20,7 @@ import logging
 import shutil
 import sys
 import warnings
+from collections.abc import Iterable
 from pathlib import Path
 from typing import TypedDict
 
@@ -227,10 +228,10 @@ class Tagger:
             `threshold`.
 
         Raises:
+            TypeError: `texts` is not a string or a list of strings, or the rulebook is neither text nor a dict.
             ValueError: the rulebook has no [TYPE] sections.
         """
-        single = isinstance(texts, str)
-        texts = [texts] if single else list(texts)
+        texts, single = _text_list(texts)
         threshold = self.config["threshold"] if threshold is None else threshold
         none_bias = self.config["none_bias"] if none_bias is None else none_bias
         entry = self._rulebook(rulebook)
@@ -295,13 +296,11 @@ class Tagger:
             when snap is True and it is only whitespace.
 
         Raises:
+            TypeError: `texts`, `spans` or the rulebook is of the wrong type.
             ValueError: the rulebook has no [TYPE] sections, or `spans` does not match `texts`.
         """
-        single = isinstance(texts, str)
-        if single:
-            texts, spans = [texts], [spans]
-        if len(texts) != len(spans):
-            raise ValueError("label() needs one list of spans per text")
+        texts, single = _text_list(texts)
+        spans = _span_lists(spans, len(texts), single)
         none_bias = self.config["none_bias"] if none_bias is None else none_bias
         entry = self._rulebook(rulebook)
         names = entry[0].types
@@ -372,6 +371,49 @@ class Tagger:
         ranked = [(choices[k], round(p, 3)) for k, p in zip(top.indices.tolist(), top.values.tolist())]
         item.update(label=ranked[0][0], confidence=ranked[0][1], alternatives=ranked[1:])
         return item
+
+
+def _is_list(x) -> bool:
+    """True for a list, tuple or other iterable that is not a string, bytes or a dict."""
+    return isinstance(x, Iterable) and not isinstance(x, (str, bytes, bytearray, dict))
+
+
+def _text_list(texts) -> tuple[list[str], bool]:
+    """`texts` as a list of strings, and whether it was a single string.
+
+    Raises:
+        TypeError: `texts` is not a string or a list of strings.
+    """
+    if isinstance(texts, str):
+        return [texts], True
+    if not _is_list(texts):
+        raise TypeError(f"texts must be a string or a list of strings, not {type(texts).__name__}")
+    texts = list(texts)
+    bad = next((i for i, t in enumerate(texts) if not isinstance(t, str)), None)
+    if bad is not None:
+        raise TypeError(f"texts must be a string or a list of strings: item {bad} is {type(texts[bad]).__name__}")
+    return texts, False
+
+
+def _span_lists(spans, n_texts: int, single: bool) -> list[list]:
+    """One list of spans per text: `spans` itself for a single text, else its entries (spans are checked later).
+
+    Raises:
+        TypeError: `spans`, or for a list of texts one of its entries, is not a list.
+        ValueError: for a list of texts, `spans` does not have one entry per text.
+    """
+    want = "a list of (start, end) pairs" if single else "a list with one list of (start, end) pairs per text"
+    if not _is_list(spans):
+        raise TypeError(f"spans must be {want}, not {type(spans).__name__}")
+    if single:
+        return [list(spans)]
+    spans = list(spans)
+    bad = next((i for i, sp in enumerate(spans) if not _is_list(sp)), None)
+    if bad is not None:
+        raise TypeError(f"spans must be {want}: item {bad} is {type(spans[bad]).__name__}")
+    if len(spans) != n_texts:
+        raise ValueError("label() needs one list of spans per text")
+    return [list(sp) for sp in spans]
 
 
 def _offsets(span) -> tuple[int, int]:

@@ -40,6 +40,9 @@ Key facts for writing code against it:
   snap=False)` take one text or a list of texts (and, for `label`, one list of spans per text); with a list they
   return one result list per text.
 - Offsets are character offsets into the original text, start inclusive, end exclusive.
+- In `extract`, `threshold` filters on the span probability only; `confidence` is span probability times type
+  probability, so spans below 0.5 confidence are returned. Choose a `confidence` cutoff (and `threshold`, `none_bias`)
+  on a few dozen labelled texts from the user's own data rather than relying on the defaults.
 - `label` never drops or silently changes a span: a span it can't read (not on token boundaries, longer than 16 tokens,
   invalid offsets) comes back with `"unsupported": reason`. `snap=True` trims spaces from a span's ends, widens it to
   whole tokens (not words: it can still end inside a word) and marks it `"snapped": True`. Part of a word that starts

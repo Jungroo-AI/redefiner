@@ -3,10 +3,19 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
-## Unreleased
+## 1.0.7 (2026-11-02)
+
+Same weights, and the same outputs as 1.0.6 for every valid input.
 
 - Works with transformers 5.19 to 5.22 (1.0.6 needed 5.19). transformers 5.20 changed how the rotary embedding is
   created and 5.21 how the Gated DeltaNet layers read their cache. Outputs are identical to 1.0.6 on each version.
+- Wrong input types raise a `TypeError` that says what was expected: texts that aren't a string or a list of strings,
+  a rulebook that is neither text nor a dict, and `label` spans that aren't lists. Before, `extract(None, rulebook)`
+  and `extract(text, None)` failed with Python's own errors from inside the package.
+- An empty rulebook is reported as empty, not as "no types found".
+- `python -m redefiner` runs the command line, like `redefiner`.
+- The Quickstart explains `threshold` and `confidence` up front, outside the collapsed section, and suggests choosing
+  a confidence cutoff on 20 to 50 labelled texts of your own.
 - The weekly model tests run with the lowest and the highest transformers the package allows, and with the newest
   release.
 - The Development section's download command works. In 1.0.6 it gave two patterns to one `--exclude`, and

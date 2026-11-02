@@ -1,11 +1,14 @@
 """The HTTP server's request handling, with a stand-in for the model."""
 import json
+import subprocess
+import sys
 import threading
 import urllib.error
 import urllib.request
 
 import pytest
 
+from redefiner import __version__
 from redefiner.serve import Server
 
 
@@ -88,3 +91,8 @@ def test_flags_must_be_true_or_false(url, field):
 def test_numbers_must_be_numbers(url):
     code, res = call(url, "/extract", {"rulebook": "[TYPE] X", "texts": ["ab"], "threshold": "0.5"})
     assert code == 400 and "threshold" in res["error"]
+
+
+def test_python_m_runs_the_command_line():
+    out = subprocess.run([sys.executable, "-m", "redefiner", "--version"], capture_output=True, text=True, check=True)
+    assert out.stdout.strip() == f"redefiner {__version__}"

@@ -63,10 +63,13 @@ def to_text(book: str | dict) -> str:
 Each list item is one rule line, written as given (rules are not numbered).
 
     Raises:
+        TypeError: `book` is neither text nor a dict.
         ValueError: a dict without a "classes" list, or a class without a "name".
     """
     if isinstance(book, str):
         return normalize(book)
+    if not isinstance(book, dict):
+        raise TypeError(f"a rulebook must be rulebook text or a dict, not {type(book).__name__}")
     classes = book.get("classes")
     if not isinstance(classes, list) or not classes:
         raise ValueError('a rulebook object needs a "classes" list, e.g. {"classes": [{"name": "PERSON"}]}')
@@ -121,6 +124,8 @@ def parse(text: str) -> tuple[str, list[str]]:
         raise ValueError(f'type {dups[0]} is defined more than once (lines {at}){more}: put its description and all '
                          f'its rules in one "[TYPE] {dups[0]}" section')
     if not names:
+        if not text.strip():
+            raise ValueError('the rulebook is empty: it needs a "[TYPE] NAME" line per type')
         raise ValueError('no types found: the rulebook needs a "[TYPE] NAME" line per type')
     return layout, names
 

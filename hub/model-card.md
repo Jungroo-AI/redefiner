@@ -97,7 +97,7 @@ such as banks, hospitals and government. Free for commercial use under Apache 2.
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
 | Licence | Apache-2.0: free to use, change and share, including in commercial products |
-| Release | Weights 1.0 (October 2026), package 1.0.6 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
+| Release | Weights 1.0 (October 2026), package 1.0.7 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
 
 ## Quickstart
 
@@ -142,6 +142,13 @@ tagger.label("Ada Lovelace corresponded with the Royal Society.", [(0, 12), (35,
 
 Both calls also take a list of texts (and, for `label`, one list of spans per text) and return one result list per
 text. More in [Label mode](https://github.com/jungroo-ai/redefiner#label-mode).
+
+**Threshold and confidence.** `threshold` (default 0.5) decides whether a piece of text counts as an entity at all. A
+span's `confidence` is that probability times the probability of its type, so spans below 0.5 confidence still come
+back, like "Royal Society" (0.489) above. The defaults are the setting every benchmark here uses, not one tuned to
+your data: label 20 to 50 of your own texts, run them, and choose the cutoff that scores best on them:
+`[s for s in spans if s["confidence"] >= cutoff]`. A higher cutoff or `threshold` gives fewer, surer spans; a higher
+`none_bias` (default 2) keeps more borderline ones.
 
 <details>
 <summary>Installing: Python version, NVIDIA GPUs, Linux without a GPU</summary>

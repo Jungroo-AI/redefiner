@@ -28,8 +28,17 @@ def test_parse_compact():
 
 
 def test_parse_without_types():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="no types found"):
         parse("[RULES]\nno types here")
+    for empty in ("", " \n\n", "\ufeff\r\n"):
+        with pytest.raises(ValueError, match="the rulebook is empty"):
+            parse(empty)
+
+
+def test_rulebook_must_be_text_or_a_dict():
+    for bad in (None, ["[TYPE] PERSON"], b"[TYPE] PERSON"):
+        with pytest.raises(TypeError, match="a rulebook must be rulebook text or a dict"):
+            to_text(bad)
 
 
 def test_markers_close_each_type_section():
