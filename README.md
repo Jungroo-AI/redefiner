@@ -14,6 +14,9 @@ A 0.8B model that extracts and labels exact spans using your plain-English ruleb
 
 </div>
 
+<p align="center"><a href="https://huggingface.co/jungroo-ai/redefiner-0.8b/resolve/main/docs/assets/video/redefiner-promo.mp4"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/video/redefiner-promo-thumb.png" width="780" alt="Play the 98-second demo video"></a></p>
+<p align="center"><sub>98 seconds: one support ticket, three rulebook edits, then the benchmarks. Every span in it is real output from this model.</sub></p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/two-teams.png" width="780" alt="One support ticket read with a privacy rulebook (person, account, email, phone) and a product rulebook (product, version, device, error code)"></p>
 
 <details>
