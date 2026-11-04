@@ -731,7 +731,7 @@ covered by those licences, not by Apache-2.0; see
 ```bibtex
 @misc{redefiner2026,
   title  = {ReDefiNER: Rule-Defined Named Entity Recognition},
-  author = {{Jungroo AI Labs}},
+  author = {{Cibe Hariharan K} and {Sethuraman T A} and {Jungroo AI Labs}},
   year   = {2026},
   url    = {https://huggingface.co/jungroo-ai/redefiner-0.8b},
   note   = {Release 1.0}

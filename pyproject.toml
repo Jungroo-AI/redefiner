@@ -9,7 +9,7 @@ description = "A 0.8B model that extracts the entities you define in a plain-Eng
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
-authors = [{ name = "Jungroo AI Labs" }, { name = "Cibe", email = "cibe@jungroo.com" }]
+authors = [{ name = "Cibe Hariharan K", email = "cibe@jungroo.com" }, { name = "Sethuraman T A" }, { name = "Jungroo AI Labs" }]
 requires-python = ">=3.10"
 keywords = ["named-entity-recognition", "ner", "information-extraction", "span-labeling", "rulebook", "qwen", "pii",
             "privacy", "on-premise", "cpu"]

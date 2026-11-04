@@ -11,6 +11,7 @@ Docs and package metadata only. Same weights, and the same outputs as 1.0.7 for 
 - Links to jungroo.com/redefiner, for help with your own data, in the README, the model card and the demo.
 - A training-data section in the README and the model card.
 - PyPI's project links include the company page.
+- The citation names the authors.
 
 ## 1.0.7 (2026-11-02)
 
