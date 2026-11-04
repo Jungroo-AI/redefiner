@@ -673,6 +673,15 @@ Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1
   different labels in different parts of a document.
 - English only; tested on English benchmarks only.
 
+## Training data
+
+ReDefiNER was trained on synthetic rule-following data across many domains: each example pairs a text with a
+rulebook and the spans that rulebook implies, and many examples come in pairs that differ in only one rule. Labels
+come from existing annotations, some of them written by language models; a larger teacher model wrote parts of the
+rulebook text and audited the labels before training. The data is not released. No benchmark test set was used in
+training. Benchmark dev splits were used only to write and select the rulebooks of the rows marked "tuned on dev";
+CrossNER, MIT and S1MB test scores were tracked during development and informed the choice of the released checkpoint (see [Disclosures](https://huggingface.co/jungroo-ai/redefiner-0.8b/blob/main/benchmarks/README.md#disclosures) on the benchmark page).
+
 ## Intended use
 
 ReDefiNER is meant for extracting entities from English text when you need control over what counts: your own entity
