@@ -1,9 +1,9 @@
 # ReDefiNER
 
-> Define what counts as an entity. Run it locally. ReDefiNER is a 0.8B model that extracts and labels exact spans of
-> English text using a rulebook you write in plain English: entity types, one-line descriptions and rules. It returns
-> each span with a type and a confidence. Non-generative; runs on CPU or an NVIDIA GPU. Python package `redefiner`,
-> weights `jungroo-ai/redefiner-0.8b` on Hugging Face, Apache-2.0.
+> Pull out the entities you define, using a plain-English rulebook, on your own CPU. ReDefiNER is a 0.8B model that
+> extracts and labels exact spans of English text using a rulebook you write in plain English: entity types, one-line
+> descriptions and rules. It returns each span with a type and a confidence. Non-generative; runs on CPU or an NVIDIA
+> GPU. Python package `redefiner`, weights `jungroo-ai/redefiner-0.8b` on Hugging Face, Apache-2.0.
 
 Install: `pip install redefiner` (Python 3.10+). On Linux with an NVIDIA GPU, `pip install "redefiner[gpu]"`.
 

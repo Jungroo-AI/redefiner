@@ -9,14 +9,14 @@ fullWidth: true
 header: mini
 pinned: false
 license: apache-2.0
-short_description: Define what counts as an entity. Run it locally.
+short_description: Edit a plain-English rule and see the extraction change
 models:
 - jungroo-ai/redefiner-0.8b
 ---
 
 # ReDefiNER demo
 
-**Define what counts as an entity. Run it locally.**
+**Pull out the entities you define, using a plain-English rulebook, on your own CPU.**
 
 A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Edit a rule, run it, and see the output change, with
 no retraining.

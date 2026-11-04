@@ -33,7 +33,8 @@ DEMO = json.loads((HERE / "demo_examples.json").read_text())
 HF_REPO = MODEL if not Path(MODEL).exists() else "jungroo-ai/redefiner-0.8b"
 LINKS = {"Model": f"https://huggingface.co/{HF_REPO}", "Code": "https://github.com/jungroo-ai/redefiner",
          "Benchmarks": "https://github.com/jungroo-ai/redefiner/tree/main/benchmarks",
-         "How to write rules": "https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md"}
+         "How to write rules": "https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md",
+         "Talk to us": "https://jungroo.com/redefiner/"}
 
 # ---------------------------------------------------------------- rulebook sections
 HEADER = re.compile(r"^(\[RULES\]|\[TYPE\][ \t]+[A-Za-z0-9_]+)[ \t]*$")
@@ -487,7 +488,8 @@ FORCE_LIGHT = """() => {
 }"""
 
 HERO = ('<div class="hero"><h1>ReDefiNER</h1>'
-        '<p><span class="tag">Define what counts as an entity. Run it locally.</span> '
+        '<p><span class="tag">Pull out the entities you define, using a plain-English rulebook, on your own CPU.'
+        '</span> '
         'A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Try it here, then '
         'run it yourself on an ordinary computer with no GPU and no per-use fees, and your text never leaves your '
         'own servers.</p>'

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "redefiner"
 dynamic = ["version"]
-description = "Define what counts as an entity. Run it locally. A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Free (Apache 2.0). By Jungroo AI Labs."
+description = "A 0.8B model that extracts the entities you define in a plain-English rulebook. It runs on a CPU and is free under Apache 2.0."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
@@ -46,6 +46,7 @@ Model = "https://huggingface.co/jungroo-ai/redefiner-0.8b"
 Demo = "https://huggingface.co/spaces/jungroo-ai/redefiner-demo"
 Issues = "https://github.com/jungroo-ai/redefiner/issues"
 Changelog = "https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md"
+Company = "https://jungroo.com/redefiner/"
 
 [project.scripts]
 redefiner = "redefiner.serve:main"

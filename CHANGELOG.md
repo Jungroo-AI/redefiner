@@ -3,6 +3,15 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
+## 1.0.8 (2026-11-05)
+
+Docs and package metadata only. Same weights, and the same outputs as 1.0.7 for every valid input.
+
+- A one-sentence description on PyPI, GitHub and the model card.
+- Links to jungroo.com/redefiner, for help with your own data, in the README, the model card and the demo.
+- A training-data section in the README and the model card.
+- PyPI's project links include the company page.
+
 ## 1.0.7 (2026-11-02)
 
 Same weights, and the same outputs as 1.0.6 for every valid input.

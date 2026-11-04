@@ -18,7 +18,7 @@ tags:
 
 # ReDefiNER
 
-**Define what counts as an entity. Run it locally.**
+**Pull out the entities you define, using a plain-English rulebook, on your own CPU.**
 
 A 0.8B model that extracts and labels exact spans using your plain-English rulebook.
 
@@ -85,6 +85,8 @@ finds and labels those spans in your text (extract mode), or types spans you alr
 it finds, you edit the rulebook; nothing is retrained. It runs on an ordinary CPU, with no GPU and no per-use fees, and
 once downloaded it works offline, so your text stays on your own servers: a fit for teams that can't send data outside,
 such as banks, hospitals and government. Free for commercial use under Apache 2.0.
+
+Need it on your own data? We write and test rulebooks with you and run ReDefiNER on your own servers: [jungroo.com/redefiner](https://jungroo.com/redefiner/) or hello@jungroo.com.
 
 ## At a glance
 
@@ -729,4 +731,4 @@ covered by those licences, not by Apache-2.0; see
 
 ## Credits
 
-Created by [Jungroo AI Labs](https://huggingface.co/jungroo-ai).
+Created by [Jungroo AI Labs](https://jungroo.com). For help putting it to work on your own data, see [jungroo.com/redefiner](https://jungroo.com/redefiner/) or write to hello@jungroo.com.
