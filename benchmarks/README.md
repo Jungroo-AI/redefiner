@@ -283,7 +283,7 @@ If you are a dataset author and want an excerpt removed, open an issue and we wi
 
 ## Disclosures
 
-- **Model selection:** CrossNER and MIT test scores were tracked during development alongside internal benchmarks; the final checkpoint was chosen on dev sets only.
+- **Model selection:** CrossNER, MIT and S1MB test scores were tracked during development alongside internal benchmarks and informed the choice of the released checkpoint over its predecessor; the final training run and NONE bias were chosen on dev data only.
 - **Baselines:** GoLLIE, SLIMER, KnowCoder, B2NER, GNER, UniNER, InstructUIE and S1MB numbers are published results, not reruns; the GLiNER, NuNER and Policy-Linter rows in the Open NER table, and the two d1 rows in the S1MB table, are our runs. GoLLIE's guideline errors (CrossNER Music Song/Band reusing the genre definition, Award reusing the instrument definition, MIT "Tittle") are kept verbatim, as GoLLIE was scored with them.
 - **Limits:** spans over 16 tokens can't be predicted; text is read 256 tokens at a time.
 - **Reproducibility:** every rulebook on this page is in `rulebooks/`, and the two spot checks, with their inputs, predictions and scoring, are in `reproduce/`. The Policy-Linter and d1 runs are in `liquid/`, the NuNER and GLiNER reruns in `gliner-family/`.
