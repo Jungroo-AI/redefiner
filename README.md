@@ -88,7 +88,7 @@ Need it on your own data? We write and test rulebooks with you and run ReDefiNER
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
 | Licence | Apache-2.0: free to use, change and share, including in commercial products |
-| Release | Weights 1.0 (October 2026), package 1.0.7 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
+| Release | Weights 1.0 (October 2026), package 1.0.8 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
 
 ## Quickstart
 
