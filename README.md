@@ -4,7 +4,7 @@
 
 **Pull out the entities you define, using a plain-English rulebook, on your own CPU.**
 
-A 0.8B model that extracts and labels exact spans using your plain-English rulebook.
+A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Created by [Jungroo AI Labs](https://jungroo.com).
 
 <sub>On CrossNER AI it scores 68.1 F1 on a CPU server, about 5 F1 behind Claude Haiku 5.5 (73.1) and 4.3 behind Gemini 3.1 Pro (72.4), given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
 
