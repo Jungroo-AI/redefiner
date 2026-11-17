@@ -7,9 +7,19 @@ REPO_FILE = re.compile(r"https://(?:github\.com/jungroo-ai/redefiner/(?:blob|tre
                        r"raw\.githubusercontent\.com/jungroo-ai/redefiner/main)/([^#?]+)", re.I)
 
 
+def readme_text():
+    return re.sub(r"```.*?```", "", (ROOT / "README.md").read_text(), flags=re.S)
+
+
 def readme_links():
-    text = re.sub(r"```.*?```", "", (ROOT / "README.md").read_text(), flags=re.S)
-    return re.findall(r"\]\(([^)\s]+)\)", text) + re.findall(r'(?:src|href)="([^"]+)"', text)
+    text = readme_text()
+    return (re.findall(r"\]\(([^)\s]+)\)", text) + re.findall(r'(?:src|href)="([^"]+)"', text)
+            + re.findall(r"^\[[^\]]+\]:\s*(\S+)", text, flags=re.M))
+
+
+def test_readme_full_urls_are_reference_style():
+    # Tools that read the raw text take a URL up to the next space, so an inline link ending "...md)." becomes a 404.
+    assert not re.findall(r"\]\((https?://[^)\s]+)\)", readme_text())
 
 
 def test_readme_links_are_absolute():

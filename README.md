@@ -4,13 +4,13 @@
 
 **Pull out the entities you define, using a plain-English rulebook, on your own CPU.**
 
-A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Created by [Jungroo AI Labs](https://jungroo.com).
+A 0.8B model that extracts and labels exact spans using your plain-English rulebook. Created by [Jungroo AI Labs][jungroo].
 
 <sub>On CrossNER AI it scores 68.1 F1 on a CPU server, about 5 F1 behind Claude Haiku 5.5 (73.1) and 4.3 behind Gemini 3.1 Pro (72.4), given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
 
-[![CI](https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml/badge.svg)](https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml)
+[![CI][ci-badge]][ci]
 
-[Quickstart](#quickstart) · [Label mode](#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [HTTP server](#http-server) · [Limitations](#limitations) · [Weights](https://huggingface.co/jungroo-ai/redefiner-0.8b) · [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
+[Quickstart](#quickstart) · [Label mode](#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [HTTP server](#http-server) · [Limitations](#limitations) · [Weights][weights] · [Demo][demo]
 
 </div>
 
@@ -72,7 +72,7 @@ it finds, you edit the rulebook; nothing is retrained. It runs on an ordinary CP
 once downloaded it works offline, so your text stays on your own servers: a fit for teams that can't send data outside,
 such as banks, hospitals and government. Free for commercial use under Apache 2.0.
 
-Need it on your own data? We write and test rulebooks with you and run ReDefiNER on your own servers: [jungroo.com/redefiner](https://jungroo.com/redefiner/) or hello@jungroo.com.
+Need it on your own data? We write and test rulebooks with you and run ReDefiNER on your own servers: [jungroo.com/redefiner][jungroo-redefiner] or hello@jungroo.com.
 
 ## At a glance
 
@@ -88,8 +88,8 @@ Need it on your own data? We write and test rulebooks with you and run ReDefiNER
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
 | Licence | Apache-2.0: free to use, change and share, including in commercial products |
-| Release | Weights 1.0 (October 2026), package 1.0.8 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
-| Made by | [Jungroo AI Labs](https://jungroo.com); authors Cibe Hariharan K and Sethuraman T A |
+| Release | Weights 1.0 (October 2026), package 1.0.8 ([changes][changelog]) |
+| Made by | [Jungroo AI Labs][jungroo]; authors Cibe Hariharan K and Sethuraman T A |
 
 ## Quickstart
 
@@ -143,7 +143,7 @@ your data: label 20 to 50 of your own texts, run them, and choose the cutoff tha
 <summary>Installing: Python version, NVIDIA GPUs, Linux without a GPU</summary>
 
 Python 3.10 or newer. Runs on CPU, or on an NVIDIA GPU if your PyTorch build has CUDA
-([PyTorch's install selector](https://pytorch.org/get-started/locally/) gives the command for your system). On Linux
+([PyTorch's install selector][pytorch-install] gives the command for your system). On Linux
 with a GPU, install `"redefiner[gpu]"` instead: it adds flash-linear-attention's kernels, without which the GPU path is
 much slower. On Linux without a GPU, add `--extra-index-url https://download.pytorch.org/whl/cpu` to skip PyTorch's
 CUDA build, a download of several GB.
@@ -178,13 +178,13 @@ mode, `confidence` is the probability of the chosen type among the rulebook's ty
 
 </details>
 
-**Writing your own rulebook:** start from a [template](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates) (a blank layout; PII, news, product reviews and scientific text; and a skeleton for types that depend on context), and see [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md).
+**Writing your own rulebook:** start from a [template][templates] (a blank layout; PII, news, product reviews and scientific text; and a skeleton for types that depend on context), and see [How to write rules that work][writing-rules].
 
 ## See a rule at work
 
 Every card on this page is real output: the released int8 model on a laptop CPU, with nothing retrained between runs.
 Only the rulebook changes. Green lines were added to the rulebook; spans outlined in red disappear, spans outlined
-in green are new or changed. [Try your own text and rules in the demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo).
+in green are new or changed. [Try your own text and rules in the demo][demo].
 
 <p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/price-limit.png" width="780" alt="Adding one rule makes the price span 'under $120' instead of '$120'"></p>
 
@@ -291,7 +291,7 @@ never to extract. "Before" is the same rulebook with only its types and descript
 On 21 test queries the full rulebook got 19 exactly right, against 11 with types and descriptions only and 9 with type
 names only. Both misses came from one rule: a single code with the wrong name ("my ticket number is ZK48TQ") keeps the
 type of its name; the format rule works when both kinds of code appear together.
-The layout is explained in [Structure for hard rules](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#7-structure-for-hard-rules), and [`docs/templates/hard-rules.txt`](https://github.com/jungroo-ai/redefiner/blob/main/docs/templates/hard-rules.txt) is a blank copy to fill in.
+The layout is explained in [Structure for hard rules][writing-rules-hard-rules], and [`docs/templates/hard-rules.txt`][hard-rules-template] is a blank copy to fill in.
 
 <details>
 <summary>The travel-desk rulebook (<a href="https://github.com/jungroo-ai/redefiner/blob/main/docs/examples/travel-desk-rulebook.txt">docs/examples/travel-desk-rulebook.txt</a>)</summary>
@@ -550,7 +550,7 @@ less than Claude Haiku 5.5 on an RTX A5000 GPU, and about 9 times less on a 2-vC
   GoLLIE's CrossNER AI guidelines as a rulebook, instructions and one sentence, about 2,000 tokens. Labeling: the 358
   S1MB Few-NERD spans, accuracy.
 - **68.1 here, 66.7 below.** Every model here got the rulebook with its types in seed-0 order (the one in
-  [`benchmarks/reproduce/`](https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/reproduce)), on which ReDefiNER scores 68.1. The GoLLIE table below reports
+  [`benchmarks/reproduce/`][benchmark-reproduce]), on which ReDefiNER scores 68.1. The GoLLIE table below reports
   66.7, the mean over three type orders. Likewise, 71.8 here is Few-NERD alone; the S1MB row below, 72.0, is the mean
   of Few-NERD and Gretel PII.
 - **Seconds per request.** Frontier models: API wall time per extraction request. ReDefiNER on GPU: one text per
@@ -562,13 +562,13 @@ less than Claude Haiku 5.5 on an RTX A5000 GPU, and about 9 times less on a 2-vC
   none is listed). ReDefiNER: seconds per request times the hourly rental price, with the machine kept busy: $0.16 an
   hour for the RTX A5000, $0.0586 for the 2-vCPU server.
 
-Method and limits: [the frontier comparison](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/frontier/README.md).
+Method and limits: [the frontier comparison][frontier-comparison].
 
 ### Against research models
 
 Entity-level F1 (exact boundary and type) unless marked; S1MB is accuracy. Full tables, protocols and caveats are on
-the [benchmark page](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md), with every rulebook it reports in
-[`benchmarks/rulebooks/`](https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/rulebooks).
+the [benchmark page][benchmark-page], with every rulebook it reports in
+[`benchmarks/rulebooks/`][benchmark-rulebooks].
 
 | Benchmark | Metric | ReDefiNER 0.8B | Comparison |
 |---|---|---:|---|
@@ -643,7 +643,7 @@ inference, like ReDefiNER, but scores each word on its own, so multi-word names 
 | Liquid AI d1-omni-600M, our run | 0.6B | 31.8 | 30.6 | 31.2 |
 
 Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1MB leaderboard. The d1 decision models got S1MB's records as they are, through their
-`system_one` interface. Settings, prompts and every other caveat are on the [benchmark page](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md).
+`system_one` interface. Settings, prompts and every other caveat are on the [benchmark page][benchmark-page].
 
 ## Rulebooks
 
@@ -679,19 +679,19 @@ what was read, `parse(to_text(rulebook))` (both from `redefiner.rulebook`) retur
 - A rule belongs to the section it sits in, not to its ID. Everything under `[TYPE] X` up to the next `[TYPE]` or
   `[RULES]` line is X's. Put `[DESCRIPTION]` on the line right after `[TYPE]`, and keep it to one line.
 - Quoted strings under a type are read as examples of that type, even inside a "never" sentence, so put exclusions in
-  `[RULES]` or `NOT_AN_ENTITY` ([why](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#6-put-exclusions-in-rules-and-examples-under-their-type)).
+  `[RULES]` or `NOT_AN_ENTITY` ([why][writing-rules-exclusions]).
 - Rules that apply after all the types, such as which rule wins when two disagree, go under a second `[RULES]` line at
   the end. In the dict form that is the `"closing"` list.
 
 **Two layouts.** The layout above has `[RULES]` on a line of its own and `[TYPE] NOT_AN_ENTITY` for what is never
-tagged. The other, used by [`hard-rules.txt`](https://github.com/jungroo-ai/redefiner/blob/main/docs/templates/hard-rules.txt) and the travel-desk example, has text on
+tagged. The other, used by [`hard-rules.txt`][hard-rules-template] and the travel-desk example, has text on
 the `[RULES]` line, `[PRECEDENCE]` rules before the types, and a final `[NOT_AN_ENTITY]` section. Use one or the other;
 a rulebook that mixes them (a `[RULES]` line of its own and a `[NOT_AN_ENTITY]` section) is an error. Windows line
 endings are fine.
 
-Templates to copy are in [`docs/templates/`](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates).
+Templates to copy are in [`docs/templates/`][templates].
 
-What works, from the benchmarks (see [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md)):
+What works, from the benchmarks (see [How to write rules that work][writing-rules]):
 - **Descriptions matter.** With a one-line description per type the model scores 7 points higher than with type names
   alone on our open-NER sets; always write them.
 - **Boundary, exclusion and convention rules work.** "The span includes the @ of a Twitter handle" took BroadTwitter
@@ -812,7 +812,7 @@ if it has to be reachable from other machines.
 - **Rules against a strong prior are mostly ignored.** Relabelling a person's name as something other than a person,
   asking for common nouns as entities, or "only revenue amounts, not every money amount" mostly has no effect.
   Pronouns do work when they are quoted in a short list under the type.
-- **Types that depend on context need structure.** Precedence rules and numbered rules with worked examples help (see [Structure for hard rules](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#7-structure-for-hard-rules)); rules that need counting or judging what didn't happen are still mostly ignored.
+- **Types that depend on context need structure.** Precedence rules and numbered rules with worked examples help (see [Structure for hard rules][writing-rules-hard-rules]); rules that need counting or judging what didn't happen are still mostly ignored.
 - **Names-only rulebooks are weaker** than descriptive ones; always write a one-line description per type.
 - **Abstaining is weak.** When a type's condition isn't clearly met, the model tends to label anyway.
 - **Spans up to 16 tokens.** Long texts are split into parts that are each read on their own, so the same name can get
@@ -826,7 +826,7 @@ rulebook and the spans that rulebook implies, and many examples come in pairs th
 come from existing annotations, some of them written by language models; a larger teacher model wrote parts of the
 rulebook text and audited the labels before training. The data is not released. No benchmark test set was used in
 training. Benchmark dev splits were used only to write and select the rulebooks of the rows marked "tuned on dev";
-CrossNER, MIT and S1MB test scores were tracked during development and informed the choice of the released checkpoint (see [Disclosures](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md#disclosures) on the benchmark page).
+CrossNER, MIT and S1MB test scores were tracked during development and informed the choice of the released checkpoint (see [Disclosures][benchmark-disclosures] on the benchmark page).
 
 ## Intended use
 
@@ -843,7 +843,7 @@ types, document fields, search-query slots, and research on rule-following extra
 
 | Component | Description |
 |---|---|
-| Backbone | [Qwen3.5-0.8B](https://huggingface.co/Qwen/Qwen3.5-0.8B): 24 layers (18 linear-attention, 6 full-attention), hidden size 1,024. LoRA of rank 32 on the attention and MLP projections, merged into the weights |
+| Backbone | [Qwen3.5-0.8B][qwen-backbone]: 24 layers (18 linear-attention, 6 full-attention), hidden size 1,024. LoRA of rank 32 on the attention and MLP projections, merged into the weights |
 | Rulebook encoding | The rulebook runs once through the backbone, with a marker after each type's section. Its states are cached, so each new text costs only the text |
 | Span head | Scores every span of up to 16 tokens from its start and end states and a width embedding |
 | Label head | Matches each span against the marker vectors of the rulebook's types, plus a learned "none" |
@@ -858,10 +858,10 @@ types, document fields, search-query slots, and research on rule-following extra
 | Path | What it holds |
 |---|---|
 | `src/redefiner/` | The package: `Tagger` (`api.py`), the model (`model.py`), the rulebook format (`rulebook.py`), long-text windows (`windows.py`), the HTTP server (`serve.py`) and the int8 export (`export.py`) |
-| `benchmarks/` | The [benchmark page](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md), every rulebook it reports, and `reproduce/` to rerun one number per mode on your machine |
-| `docs/` | [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md), [rulebook templates](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates), the example travel-desk rulebook, and the images in "See a rule at work" |
+| `benchmarks/` | The [benchmark page][benchmark-page], every rulebook it reports, and `reproduce/` to rerun one number per mode on your machine |
+| `docs/` | [How to write rules that work][writing-rules], [rulebook templates][templates], the example travel-desk rulebook, and the images in "See a rule at work" |
 | `space/` | The demo app (Gradio) |
-| `scripts/` | The weight export, and the scripts that build the demo's stored outputs ([details](https://github.com/jungroo-ai/redefiner/blob/main/scripts/README.md)) |
+| `scripts/` | The weight export, and the scripts that build the demo's stored outputs ([details][scripts]) |
 | `tests/` | Unit tests, and end-to-end tests that run when the weights are in `weights/` |
 
 ## Development
@@ -882,9 +882,9 @@ for extract mode, S1MB Few-NERD for label mode, each compared with the A10 run).
 
 Apache-2.0, for the code and the weights. The weights are a modified version of Qwen3.5-0.8B (Apache-2.0); `NOTICE`
 in the model repo lists the modifications. The GoLLIE guideline text in
-`benchmarks/` comes from [GoLLIE](https://github.com/hitz-zentroa/GoLLIE) (Apache-2.0). The benchmark datasets keep
+`benchmarks/` comes from [GoLLIE][gollie] (Apache-2.0). The benchmark datasets keep
 their own licences: test sentences and quoted examples from them (in `benchmarks/` and the demo) are covered by those
-licences, not by Apache-2.0; see [Datasets and licences](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md#datasets-and-licences).
+licences, not by Apache-2.0; see [Datasets and licences][benchmark-licences].
 
 ## Citation
 
@@ -900,4 +900,28 @@ licences, not by Apache-2.0; see [Datasets and licences](https://github.com/jung
 
 ## Credits
 
-Created by [Jungroo AI Labs](https://jungroo.com). For help putting it to work on your own data, see [jungroo.com/redefiner](https://jungroo.com/redefiner/) or write to hello@jungroo.com.
+Created by [Jungroo AI Labs][jungroo]. For help putting it to work on your own data, see [jungroo.com/redefiner][jungroo-redefiner] or write to hello@jungroo.com.
+
+<!-- Links are reference-style so tools that read the raw text get clean URLs, not ones ending in ")." -->
+[jungroo]: https://jungroo.com
+[ci-badge]: https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml/badge.svg
+[weights]: https://huggingface.co/jungroo-ai/redefiner-0.8b
+[demo]: https://huggingface.co/spaces/jungroo-ai/redefiner-demo
+[ci]: https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml
+[jungroo-redefiner]: https://jungroo.com/redefiner/
+[changelog]: https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md
+[pytorch-install]: https://pytorch.org/get-started/locally/
+[templates]: https://github.com/jungroo-ai/redefiner/tree/main/docs/templates
+[writing-rules]: https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md
+[writing-rules-hard-rules]: https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#7-structure-for-hard-rules
+[hard-rules-template]: https://github.com/jungroo-ai/redefiner/blob/main/docs/templates/hard-rules.txt
+[benchmark-reproduce]: https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/reproduce
+[frontier-comparison]: https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/frontier/README.md
+[benchmark-page]: https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md
+[benchmark-rulebooks]: https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/rulebooks
+[writing-rules-exclusions]: https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#6-put-exclusions-in-rules-and-examples-under-their-type
+[benchmark-disclosures]: https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md#disclosures
+[qwen-backbone]: https://huggingface.co/Qwen/Qwen3.5-0.8B
+[scripts]: https://github.com/jungroo-ai/redefiner/blob/main/scripts/README.md
+[gollie]: https://github.com/hitz-zentroa/GoLLIE
+[benchmark-licences]: https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md#datasets-and-licences
