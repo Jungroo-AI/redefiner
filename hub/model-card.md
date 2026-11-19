@@ -661,6 +661,9 @@ inference, like ReDefiNER, but scores each word on its own, so multi-word names 
 Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1MB leaderboard. The d1 decision models got S1MB's records as they are, through their
 `system_one` interface. Settings, prompts and every other caveat are on the [benchmark page](https://huggingface.co/jungroo-ai/redefiner-0.8b/blob/main/benchmarks/README.md).
 
+Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner),
+[GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives) and [guideline-following NER: ReDefiNER vs GoLLIE](https://jungroo.com/redefiner/guideline-following-ner).
+
 ## Limitations
 
 - **Rules against a strong prior are mostly ignored.** Relabelling a person's name as something other than a person,

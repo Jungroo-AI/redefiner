@@ -76,6 +76,9 @@ ignored, and the model abstains poorly when a type's condition isn't clearly met
 - [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md): patterns from the benchmark rulebooks
 - [Rulebook templates](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates): blank, PII, news, product reviews, scientific text, hard rules
 - [Benchmarks](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md): GoLLIE zero-shot sets, open NER vs GLiNER, S1MB labeling, BUSTER, with every rulebook
+- [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner): when to use each, with scores on the same test sets
+- [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives): eight options for custom entity extraction, compared
+- [Guideline-following NER](https://jungroo.com/redefiner/guideline-following-ner): ReDefiNER vs GoLLIE and frontier models when following annotation guidelines
 
 ## Optional
 

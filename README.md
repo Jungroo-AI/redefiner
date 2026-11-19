@@ -645,6 +645,9 @@ inference, like ReDefiNER, but scores each word on its own, so multi-word names 
 Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1MB leaderboard. The d1 decision models got S1MB's records as they are, through their
 `system_one` interface. Settings, prompts and every other caveat are on the [benchmark page][benchmark-page].
 
+Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER][compare-gliner],
+[GLiNER alternatives][gliner-alternatives] and [guideline-following NER: ReDefiNER vs GoLLIE][compare-gollie].
+
 ## Rulebooks
 
 A rulebook has an optional `[RULES]` section with rules for every type, then one `[TYPE]` section per type: a one-line
@@ -909,6 +912,9 @@ Created by [Jungroo AI Labs][jungroo]. For help putting it to work on your own d
 [demo]: https://huggingface.co/spaces/jungroo-ai/redefiner-demo
 [ci]: https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml
 [jungroo-redefiner]: https://jungroo.com/redefiner/
+[compare-gliner]: https://jungroo.com/redefiner/vs-gliner
+[gliner-alternatives]: https://jungroo.com/redefiner/gliner-alternatives
+[compare-gollie]: https://jungroo.com/redefiner/guideline-following-ner
 [changelog]: https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md
 [pytorch-install]: https://pytorch.org/get-started/locally/
 [templates]: https://github.com/jungroo-ai/redefiner/tree/main/docs/templates
