@@ -17,8 +17,10 @@ import threading
 from pathlib import Path
 
 import gradio as gr
+from starlette.middleware import Middleware
 
 from form import form_to_text, text_to_form, type_name
+from page_meta import PageMeta, head_tags, noscript
 from redefiner import Tagger
 from templates import TEMPLATES
 from templates import text as template_text
@@ -35,6 +37,20 @@ LINKS = {"Model": f"https://huggingface.co/{HF_REPO}", "Code": "https://github.c
          "Benchmarks": "https://github.com/jungroo-ai/redefiner/tree/main/benchmarks",
          "How to write rules": "https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md",
          "Talk to us": "https://jungroo.com/redefiner/"}
+
+# what search engines, AI assistants and link previews see (page_meta.py); the image is the README's two-teams.png on a
+# 1200x630 card
+PUBLIC_URL = os.environ.get("PUBLIC_URL", "https://redefiner-demo.centralindia.cloudapp.azure.com/")
+TITLE = "ReDefiNER demo: entity extraction with a plain-English rulebook"
+DESCRIPTION = ("Try ReDefiNER, a free 0.8B model that extracts the entities you define in a plain-English rulebook. "
+               "Edit a rule and see the extraction change. Runs on a CPU.")
+CARD = "https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/social/demo-card.png"
+CARD_ALT = ("One support ticket read with a privacy rulebook (person, account, email, phone) and a product rulebook "
+            "(product, version, device, error code)")
+META_LINKS = {"About ReDefiNER": "https://jungroo.com/redefiner/",
+              "Code on GitHub": "https://github.com/Jungroo-AI/redefiner",
+              "Weights on Hugging Face": f"https://huggingface.co/{HF_REPO}",
+              "Python package on PyPI": "https://pypi.org/project/redefiner/"}
 
 # ---------------------------------------------------------------- rulebook sections
 HEADER = re.compile(r"^(\[RULES\]|\[TYPE\][ \t]+[A-Za-z0-9_]+)[ \t]*$")
@@ -498,7 +514,7 @@ HERO = ('<div class="hero"><h1>ReDefiNER</h1>'
         '<span class="links">' + "".join(f'<a href="{u}" target="_blank">{k}</a>' for k, u in LINKS.items())
         + '</span></div></div>')
 
-with gr.Blocks(title="ReDefiNER") as demo:
+with gr.Blocks(title=TITLE) as demo:
     gr.HTML(HERO)
     with gr.Tabs(selected=os.environ.get("DEMO_TAB", "edit")):
         # ------------------------------------------------ tab 1
@@ -593,4 +609,7 @@ if __name__ == "__main__":
     threading.Thread(target=warm, daemon=True).start()
     # a bounded queue: past QUEUE_SIZE waiting runs, visitors are told it is busy instead of waiting minutes
     demo.queue(max_size=int(os.environ.get("QUEUE_SIZE", "40")))
-    demo.launch(css=(HERE / "style.css").read_text(), theme=THEME, js=FORCE_LIGHT)
+    page_meta = Middleware(PageMeta, head=head_tags(PUBLIC_URL, TITLE, DESCRIPTION, CARD, CARD_ALT, META_LINKS),
+                           body=noscript(TITLE, DESCRIPTION, META_LINKS))
+    demo.launch(css=(HERE / "style.css").read_text(), theme=THEME, js=FORCE_LIGHT,
+                app_kwargs={"middleware": [page_meta]})
