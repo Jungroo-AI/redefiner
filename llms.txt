@@ -90,4 +90,6 @@ ignored, and the model abstains poorly when a type's condition isn't clearly met
 - [Model weights and card](https://huggingface.co/jungroo-ai/redefiner-0.8b)
 - [PII setup](https://huggingface.co/jungroo-ai/redefiner-pii): the PII rulebooks and settings, loaded by name
 - [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
+- [PII demo](https://huggingface.co/spaces/jungroo-ai/redefiner-redact): mask a text in the browser with the PII rulebook or a written policy
+- [PII video](https://huggingface.co/jungroo-ai/redefiner-pii/resolve/main/docs/assets/video/redefiner-pii.mp4): 30 seconds, with a voiceover; a clinic note masked by the PII rulebook, then by the clinic's own policy (real model output)
 - [PyPI](https://pypi.org/project/redefiner/)

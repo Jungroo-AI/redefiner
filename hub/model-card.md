@@ -690,6 +690,10 @@ six systems tested, ReDefiNER scored highest on every policy that depends on who
 Results, both PII rulebooks, redaction by a written policy and the limits, on one page: [PII redaction with
 ReDefiNER](https://jungroo.com/redefiner/pii-redaction).
 
+See it work: a [30-second video](https://huggingface.co/jungroo-ai/redefiner-pii/resolve/main/docs/assets/video/redefiner-pii.mp4)
+masks a clinic note by the clinic's own policy, and the [PII demo](https://huggingface.co/spaces/jungroo-ai/redefiner-redact)
+lets you try it in your browser.
+
 Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner),
 [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives) and [guideline-following NER: ReDefiNER vs GoLLIE](https://jungroo.com/redefiner/guideline-following-ner).
 
