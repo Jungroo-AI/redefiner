@@ -1,0 +1,180 @@
+[RULES]
+G1 Extract every piece of personal or sensitive information of the supplied types. Return exact spans from the text.
+G2 Label the values only, never the field labels in front of them such as "Email:" or "Date of Birth:".
+
+[TYPE] name
+[DESCRIPTION] A person's full name, with a middle name or title if written, such as "Martyn Karl Edwards" or "Mx. Richard Farrell".
+NA1 "Full Name: Joseph Arden Raj" -> "Joseph Arden Raj".
+
+[TYPE] first_name
+[DESCRIPTION] A person's first name written on its own.
+FN1 "First Name: Imani" -> "Imani".
+
+[TYPE] last_name
+[DESCRIPTION] A person's last name written on its own.
+LN1 "Last Name: Okafor" -> "Okafor".
+
+[TYPE] user_name
+[DESCRIPTION] A username or login handle, such as "marc.camacho" or "simpson88".
+UN1 "Username: t.okafor92" -> "t.okafor92".
+
+[TYPE] email
+[DESCRIPTION] An email address, with its @ sign.
+EA1 "Email: rosa.diaz@example.org" -> "rosa.diaz@example.org".
+
+[TYPE] phone_number
+[DESCRIPTION] The digits of a phone or fax number, with its extension if written.
+PH1 "Phone Number: +44 20 7946 0321" -> "+44 20 7946 0321".
+
+[TYPE] address
+[DESCRIPTION] A full postal address with street, town and country, written as one span.
+AD1 "Address: 14 Mill Lane, Derby, United Kingdom" -> "14 Mill Lane, Derby, United Kingdom".
+
+[TYPE] street_address
+[DESCRIPTION] A street address: house number and street, with a flat, town or postcode if written next to it.
+SA1 "Street Address: 48 Harbour Road, Flat 2" -> "48 Harbour Road, Flat 2".
+
+[TYPE] city
+[DESCRIPTION] A city or town.
+CI1 "City: Leeds" -> "Leeds".
+
+[TYPE] state
+[DESCRIPTION] A state, province or region.
+ST1 "State: Ohio" -> "Ohio".
+
+[TYPE] country
+[DESCRIPTION] A country.
+CO1 "Country: Portugal" -> "Portugal".
+
+[TYPE] postcode
+[DESCRIPTION] A postcode or ZIP code.
+PC1 "Postcode: LS6 2QX" -> "LS6 2QX".
+
+[TYPE] coordinate
+[DESCRIPTION] A latitude and longitude pair, with its "Latitude:" and "Longitude:" words if written.
+CD1 "Location: Latitude: 53.8008, Longitude: -1.5491" -> "Latitude: 53.8008, Longitude: -1.5491".
+
+[TYPE] company_name
+[DESCRIPTION] A company or organization name, such as "Klein-Pacheco" or "Pope, Jones and Begum".
+CN1 "Employer: Hartwell & Finch Ltd" -> "Hartwell & Finch Ltd".
+
+[TYPE] date_of_birth
+[DESCRIPTION] The date on which a person was born, written as a date.
+DB1 "Date of Birth: 1984-03-09" -> "1984-03-09".
+DB2 "Rosa Diaz, DOB 03/09/1984, called" -> "03/09/1984".
+
+[TYPE] date
+[DESCRIPTION] Any other calendar date, including a weekday written with it.
+DA1 "Incident Date: 2019-11-04" -> "2019-11-04".
+
+[TYPE] date_time
+[DESCRIPTION] A date with a time, such as a timestamp.
+DT1 "Created at: 2021-06-30T08:15:00Z" -> "2021-06-30T08:15:00Z".
+
+[TYPE] time
+[DESCRIPTION] A time of day.
+TI1 "Time: 14:45" -> "14:45".
+
+[TYPE] ssn
+[DESCRIPTION] The digits of a social security or national insurance number.
+SS1 "Social Security Number: 512-44-9087" -> "512-44-9087".
+SS2 "the employee's SSN, 512 449 087, was used" -> "512 449 087".
+
+[TYPE] national_id
+[DESCRIPTION] A national identity number.
+NI1 "National ID: 84021577316" -> "84021577316".
+
+[TYPE] tax_id
+[DESCRIPTION] A tax identification number.
+TX1 "Tax ID: 93-4471820" -> "93-4471820".
+
+[TYPE] medical_record_number
+[DESCRIPTION] The record code itself, made of letters and digits, such as "MRN-440914" or "MED98988418".
+MR1 "Medical Record Number: MRN-552118" -> "MRN-552118".
+MR2 "her medical record number MED70114523 was updated" -> "MED70114523".
+
+[TYPE] health_plan_beneficiary_number
+[DESCRIPTION] A health plan or insurance member number.
+HP1 "Health Plan Beneficiary Number: HPB-30917745" -> "HPB-30917745".
+
+[TYPE] biometric_identifier
+[DESCRIPTION] A biometric record code, such as "BIO-7080689846".
+BI1 "Biometric Identifier: BIO-5512093374" -> "BIO-5512093374".
+
+[TYPE] employee_id
+[DESCRIPTION] The ID code of an employee or staff member.
+EM1 "Employee ID: EMP318204" -> "EMP318204".
+
+[TYPE] customer_id
+[DESCRIPTION] The ID code of a customer, client, student, patient or order.
+CU1 "Customer ID: CID-208815" -> "CID-208815".
+
+[TYPE] unique_identifier
+[DESCRIPTION] Any other identifier code for a person or record, made of letters and digits.
+UI1 "Unique Identifier: QX7-PLM204" -> "QX7-PLM204".
+
+[TYPE] account_number
+[DESCRIPTION] The digits of a bank or customer account number.
+AC1 "Account Number: 30481177265" -> "30481177265".
+
+[TYPE] bank_routing_number
+[DESCRIPTION] The digits of a bank routing number.
+BR1 "Bank Routing Number: 021000322" -> "021000322".
+
+[TYPE] swift_bic
+[DESCRIPTION] A SWIFT or BIC bank code.
+SW1 "SWIFT: HRTWGB2L" -> "HRTWGB2L".
+
+[TYPE] credit_card_number
+[DESCRIPTION] The digits of a credit or debit card number.
+CC1 "Credit card number 4556 7375 8689 9855 was charged" -> "4556 7375 8689 9855".
+
+[TYPE] cvv
+[DESCRIPTION] A card security code.
+CV1 "CVV: 318" -> "318".
+
+[TYPE] pin
+[DESCRIPTION] A PIN code.
+PI1 "PIN: 7042" -> "7042".
+
+[TYPE] password
+[DESCRIPTION] A password.
+PW1 "Password: tR7!vexQ92" -> "tR7!vexQ92".
+
+[TYPE] api_key
+[DESCRIPTION] An API key, access token or secret key.
+AK1 "API Key: sk-9fQ2xLm7Tz40aBcD" -> "sk-9fQ2xLm7Tz40aBcD".
+
+[TYPE] certificate_license_number
+[DESCRIPTION] The code of a certificate or professional license, such as "CERT-70185508" or "LIC-V2576855".
+CL1 "License Number: LIC-R4418207" -> "LIC-R4418207".
+
+[TYPE] license_plate
+[DESCRIPTION] The plate code of a vehicle, letters and digits.
+LP1 "License Plate: KDL-4471" -> "KDL-4471".
+
+[TYPE] vehicle_identifier
+[DESCRIPTION] A vehicle identification number (VIN).
+VI1 "VIN: 2HGFA16598H304417" -> "2HGFA16598H304417".
+
+[TYPE] device_identifier
+[DESCRIPTION] A device identifier such as an IMEI or serial number.
+DI1 "Device Identifier: IMEI 356938035643809" -> "356938035643809".
+
+[TYPE] ipv4
+[DESCRIPTION] An IPv4 address: four numbers joined by dots.
+IP1 "the IP address 192.0.2.14 was blocked" -> "192.0.2.14".
+
+[TYPE] ipv6
+[DESCRIPTION] An IPv6 address.
+I61 "IPv6 Address: 2001:db8:85a3::8a2e:370:7334" -> "2001:db8:85a3::8a2e:370:7334".
+
+[TYPE] url
+[DESCRIPTION] A web address.
+UR1 "Website: https://portal.hartwell.example/login" -> "https://portal.hartwell.example/login".
+
+[TYPE] NOT_AN_ENTITY
+NE1 Field labels, column headings and the names of data types, with or without a colon: "Medical Record Number", "Date of Birth", "DOB", "Social Security Number", "SSN", "Credit Card Number", "Customer ID", "Employee ID", "Account Number", "Bank Routing Number", "License Plate", "IP address", "Phone Number", "Email", "Address", "First Name", "Unique Identifier", "Biometric Identifier".
+
+[RULES]
+G3 A field label is never an entity; only the value written after it is. In "Medical Record Number: MRN-552118" label "MRN-552118" and nothing else. This overrides everything above.

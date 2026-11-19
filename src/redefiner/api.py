@@ -107,6 +107,20 @@ class Tagger:
         self.max_width = config["max_width"]
         self.cache_size = cache_size
         self._cache = collections.OrderedDict()   # rulebook key -> (encoded rulebook, markers, states, prefix length)
+        self.default_rulebook: str | None = None   # used when extract() or label() gets no rulebook
+
+    def set_max_span_tokens(self, width: int) -> None:
+        """Let extract() and label() handle spans of up to `width` model tokens (the trained limit is 16).
+
+        Digits are one token each, so a spaced card number or an IBAN is longer than 16 tokens. Above 16, spans reuse
+        the trained width-16 row; no weights change, and spans of up to 16 tokens score as before. Values above 16
+        were checked on PII benchmarks (64 is the setting of the redefiner-pii page); see the CHANGELOG.
+        """
+        if not isinstance(width, int) or isinstance(width, bool) or not 1 <= width <= self.max_q:
+            raise ValueError(f"the span limit must be a whole number of tokens from 1 to {self.max_q}")
+        self.model.set_max_width(width)
+        self.max_width = width
+        self.config = {**self.config, "max_span_tokens": width}
 
     @property
     def device(self) -> torch.device:
@@ -118,8 +132,19 @@ class Tagger:
 
     @classmethod
     def from_pretrained(cls, path: str | Path, device: str | None = None, revision: str | None = None,
-                        cache_size: int = 8, cpu_fast_conv: bool = True) -> "Tagger":
+                        cache_size: int = 8, cpu_fast_conv: bool = True,
+                        max_span_tokens: int | None = None) -> "Tagger":
         """Load a release folder: config.json, model.safetensors (weight-only int8) and the tokenizer files.
+
+        `path` can also be a pointer: a folder or repo whose config.json has "format": "pointer" and names the
+        release to take the weights from, plus optional settings that make it a ready-made setup, such as
+        jungroo-ai/redefiner-pii:
+
+            {"format": "pointer", "base_model": "jungroo-ai/redefiner-0.8b", "base_revision": "...",   (optional)
+             "rulebook": "pii.txt", "max_span_tokens": 64, "none_bias": 2.0, "threshold": 0.5}
+
+        A pointer's rulebook becomes the default rulebook, used when extract() or label() get none. Its "none_bias"
+        and "threshold" become the defaults of extract() and label(); an argument passed to them still wins.
 
         Args:
             path: a local folder, or a Hugging Face repo id to download.
@@ -131,6 +156,8 @@ class Tagger:
             cpu_fast_conv: on devices other than CUDA, replace the depthwise convolution used by transformers'
                 Qwen3.5 module with an equivalent that is 7-14x faster on CPU builds of torch without MKLDNN
                 (see fastconv.py).
+            max_span_tokens: the longest span in model tokens (default: the pointer's setting, else the trained 16).
+                See `set_max_span_tokens`.
 
         Off CUDA this also sets sys.modules["fla"] = None, so transformers uses its torch implementation instead of
         flash-linear-attention's GPU kernels, and silences transformers' warnings recommending those kernels. These
@@ -146,6 +173,14 @@ class Tagger:
         root = Path(path).expanduser()
         if not root.exists() and _looks_local(str(path)):
             raise FileNotFoundError(f"no folder at {path}")
+        if root.exists():
+            pointer = _pointer(root / "config.json")
+        else:   # a Hugging Face repo: read its config.json first, to tell a pointer from a release
+            from huggingface_hub import hf_hub_download
+            pointer = _pointer(Path(hf_hub_download(str(path), "config.json", revision=revision)))
+        if pointer is not None:
+            return cls._from_pointer(path, root, pointer, revision=revision, device=device, cache_size=cache_size,
+                                     cpu_fast_conv=cpu_fast_conv, max_span_tokens=max_span_tokens)
         from safetensors.torch import load_file
         from transformers.models.qwen3_5.tokenization_qwen3_5 import Qwen3_5Tokenizer
         if not root.exists():
@@ -172,10 +207,47 @@ class Tagger:
                            d_span=config["d_span"], max_width=config["max_width"])
         model.to(device).eval()
         tagger = cls(model, tok, config, cache_size=cache_size)
+        if max_span_tokens is not None:
+            tagger.set_max_span_tokens(max_span_tokens)
         log.info("loaded %s on %s", path, tagger.device)
         return tagger
 
+    @classmethod
+    def _from_pointer(cls, path, root: Path, pointer: dict, revision, device, cache_size, cpu_fast_conv,
+                      max_span_tokens) -> "Tagger":
+        """Load the pointer's base model, then apply its rulebook and settings (see from_pretrained)."""
+        rulebook_text = None
+        if pointer.get("rulebook"):
+            name = pointer["rulebook"]
+            if root.exists():
+                rulebook_text = (root / name).read_text()
+            else:
+                from huggingface_hub import hf_hub_download
+                rulebook_text = Path(hf_hub_download(str(path), name, revision=revision)).read_text()
+        settings = {}
+        for key in ("none_bias", "threshold"):
+            if key in pointer:
+                value = pointer[key]
+                if isinstance(value, bool) or not isinstance(value, (int, float)):
+                    raise ValueError(f"{path}: {key} in config.json must be a number, not {value!r}")
+                settings[key] = float(value)
+        width = max_span_tokens if max_span_tokens is not None else pointer.get("max_span_tokens")
+        tagger = cls.from_pretrained(pointer["base_model"], device=device, revision=pointer.get("base_revision"),
+                                     cache_size=cache_size, cpu_fast_conv=cpu_fast_conv, max_span_tokens=width)
+        if rulebook_text is not None:
+            tagger.encoder.rulebook(rulebook_text)   # raises ValueError for an unreadable rulebook
+            tagger.default_rulebook = rulebook_text
+        tagger.config = {**tagger.config, **settings, "pointer": str(path),
+                         **{k: v for k, v in pointer.items() if k in ("base_model", "base_revision", "rulebook")}}
+        return tagger
+
     # ---------------------------------------------------------------- shared steps
+    def _resolve(self, rulebook):
+        """The rulebook to use: the one given, else the default rulebook of a pointer."""
+        if rulebook is None and self.default_rulebook is not None:
+            return self.default_rulebook
+        return rulebook
+
     def _rulebook(self, rulebook: Rulebook):
         rb = self.encoder.rulebook(to_text(rulebook))
         if rb.key in self._cache:
@@ -210,13 +282,14 @@ class Tagger:
 
     # ---------------------------------------------------------------- extract
     @torch.no_grad()
-    def extract(self, texts: str | list[str], rulebook: Rulebook, threshold: float | None = None,
+    def extract(self, texts: str | list[str], rulebook: Rulebook | None = None, threshold: float | None = None,
                 none_bias: float | None = None, batch_size: int = 16) -> list[Span] | list[list[Span]]:
         """Find and label the spans the rulebook asks for.
 
         Args:
             texts: a string, or a list of strings.
-            rulebook: rulebook text, or a dict (see `to_text`).
+            rulebook: rulebook text, or a dict (see `to_text`); None uses the default rulebook of a pointer such as
+                jungroo-ai/redefiner-pii (see from_pretrained).
             threshold: minimum span probability (default from config.json, 0.5).
             none_bias: subtracted from the NONE logit before a type is chosen (default from config.json, 2.0).
             batch_size: queries per forward pass.
@@ -234,6 +307,7 @@ class Tagger:
         texts, single = _text_list(texts)
         threshold = self.config["threshold"] if threshold is None else threshold
         none_bias = self.config["none_bias"] if none_bias is None else none_bias
+        rulebook = self._resolve(rulebook)
         entry = self._rulebook(rulebook)
         rb: EncodedRulebook = entry[0]
         queries, meta = [], []   # meta: (text index, char offset, window starts the text, window ends the text)
@@ -271,7 +345,7 @@ class Tagger:
 
     # ---------------------------------------------------------------- label
     @torch.no_grad()
-    def label(self, texts: str | list[str], spans: list, rulebook: Rulebook, allow_none: bool = False,
+    def label(self, texts: str | list[str], spans: list, rulebook: Rulebook | None = None, allow_none: bool = False,
               snap: bool = False, none_bias: float | None = None,
               batch_size: int = 16) -> list[LabelResult] | list[list[LabelResult]]:
         """The type of each given span (label head only, no extraction).
@@ -280,7 +354,7 @@ class Tagger:
             texts: a string, or a list of strings.
             spans: for a single string, a list of (start, end) or {"start", "end"} character offsets; for a list of
                 strings, one such list per text.
-            rulebook: rulebook text, or a dict (see `to_text`).
+            rulebook: rulebook text, or a dict (see `to_text`); None uses a pointer's default rulebook.
             allow_none: False forces a choice among the rulebook's types; True lets the model answer "NONE".
             snap: label a span that does not start and end on token boundaries instead of reporting it unsupported:
                 trim spaces from its ends, widen it to whole tokens and return the new offsets with "snapped": True.
@@ -302,6 +376,7 @@ class Tagger:
         texts, single = _text_list(texts)
         spans = _span_lists(spans, len(texts), single)
         none_bias = self.config["none_bias"] if none_bias is None else none_bias
+        rulebook = self._resolve(rulebook)
         entry = self._rulebook(rulebook)
         names = entry[0].types
         results = [[None] * len(sp) for sp in spans]
@@ -429,6 +504,18 @@ def _offsets(span) -> tuple[int, int]:
         return int(start), int(end)
     except (KeyError, TypeError, ValueError):
         raise ValueError(f'a span must be a (start, end) pair or a {{"start", "end"}} dict, not {span!r}') from None
+
+
+def _pointer(config_file: Path) -> dict | None:
+    """A pointer's config (see from_pretrained), or None for a release folder or a folder without config.json."""
+    if not config_file.exists():
+        return None
+    config = json.loads(config_file.read_text())
+    if config.get("format") != "pointer":
+        return None
+    if not isinstance(config.get("base_model"), str):
+        raise ValueError(f'{config_file}: a pointer needs "base_model", the release to load the weights from')
+    return config
 
 
 def _looks_local(path: str) -> bool:

@@ -1,0 +1,203 @@
+[RULES]
+G1 Extract every piece of personal or sensitive information of the supplied types. Return exact spans from the text.
+G2 Label the values only, never the field labels in front of them such as "Email:" or "Date of Birth:".
+
+[TYPE] first_name
+[DESCRIPTION] A person's first name.
+FN1 "First Name: Imani" -> "Imani".
+
+[TYPE] last_name
+[DESCRIPTION] A person's last name.
+LN1 "Last Name: Okafor" -> "Okafor".
+
+[TYPE] user_name
+[DESCRIPTION] A username or login handle.
+
+[TYPE] email
+[DESCRIPTION] An email address.
+EM1 "Email: t.okafor@example.org" -> "t.okafor@example.org".
+
+[TYPE] phone_number
+[DESCRIPTION] A phone number.
+PH1 "Phone Number: +44 20 7946 0321" -> "+44 20 7946 0321".
+
+[TYPE] fax_number
+[DESCRIPTION] A fax number.
+
+[TYPE] street_address
+[DESCRIPTION] A street address: house number and street, with a flat or unit if written.
+SA1 "lives at 48 Harbour Road" -> "48 Harbour Road".
+
+[TYPE] city
+[DESCRIPTION] A city or town.
+
+[TYPE] county
+[DESCRIPTION] A county or district.
+
+[TYPE] state
+[DESCRIPTION] A state, province or region.
+
+[TYPE] country
+[DESCRIPTION] A country.
+
+[TYPE] postcode
+[DESCRIPTION] A postcode or ZIP code.
+
+[TYPE] coordinate
+[DESCRIPTION] A latitude and longitude.
+
+[TYPE] company_name
+[DESCRIPTION] A company or organization name.
+CN1 "an engineer at Hartwell & Finch Ltd" -> "Hartwell & Finch Ltd".
+
+[TYPE] date_of_birth
+[DESCRIPTION] A person's date of birth.
+DB1 "Date of Birth: 1984-03-09" -> "1984-03-09".
+
+[TYPE] date
+[DESCRIPTION] Any other calendar date.
+
+[TYPE] date_time
+[DESCRIPTION] A date with a time, such as a timestamp.
+
+[TYPE] time
+[DESCRIPTION] A time of day.
+TI1 "open 09:00 - 17:30" -> "09:00 - 17:30".
+
+[TYPE] age
+[DESCRIPTION] A person's age.
+AG1 "a 47 year old patient" -> "47".
+
+[TYPE] gender
+[DESCRIPTION] A person's gender.
+
+[TYPE] sexuality
+[DESCRIPTION] A person's sexual orientation.
+
+[TYPE] race_ethnicity
+[DESCRIPTION] A person's race or ethnicity.
+RE1 "identifies as Hispanic" -> "Hispanic".
+
+[TYPE] religious_belief
+[DESCRIPTION] A person's religion or religious belief.
+
+[TYPE] political_view
+[DESCRIPTION] A person's political view or party.
+
+[TYPE] language
+[DESCRIPTION] A language a person speaks.
+
+[TYPE] education_level
+[DESCRIPTION] A person's level of education, such as a degree.
+ED1 "holds a Master's degree" -> "Master's degree".
+
+[TYPE] occupation
+[DESCRIPTION] A person's job or occupation.
+OC1 "works as a dental hygienist" -> "dental hygienist".
+
+[TYPE] employment_status
+[DESCRIPTION] A person's employment status, such as employed, unemployed or retired.
+ES1 "currently self-employed" -> "self-employed".
+
+[TYPE] blood_type
+[DESCRIPTION] A blood type.
+
+[TYPE] ssn
+[DESCRIPTION] A social security number.
+SS1 "Social Security Number: 512-44-9087" -> "512-44-9087".
+
+[TYPE] national_id
+[DESCRIPTION] A national identity number.
+
+[TYPE] tax_id
+[DESCRIPTION] A tax identification number.
+
+[TYPE] medical_record_number
+[DESCRIPTION] A medical record number.
+MR1 "medical record number MRN-552118" -> "MRN-552118".
+
+[TYPE] health_plan_beneficiary_number
+[DESCRIPTION] A health plan or insurance member number.
+HP1 "health plan beneficiary number HPB-30917745" -> "HPB-30917745".
+
+[TYPE] biometric_identifier
+[DESCRIPTION] A biometric record identifier.
+BI1 "biometric identifier BIO-5512093374" -> "BIO-5512093374".
+
+[TYPE] employee_id
+[DESCRIPTION] An employee or staff ID.
+EI1 "Employee ID EMP318204" -> "EMP318204".
+
+[TYPE] customer_id
+[DESCRIPTION] A customer, client or account holder ID.
+CU1 "Customer ID: CID-208815" -> "CID-208815".
+
+[TYPE] unique_id
+[DESCRIPTION] Any other identifier code for a person or record.
+
+[TYPE] account_number
+[DESCRIPTION] A bank or customer account number.
+AC1 "Account Number: 30481177265" -> "30481177265".
+
+[TYPE] bank_routing_number
+[DESCRIPTION] A bank routing number.
+BR1 "bank routing number 021000322" -> "021000322".
+
+[TYPE] swift_bic
+[DESCRIPTION] A SWIFT or BIC bank code.
+
+[TYPE] credit_debit_card
+[DESCRIPTION] A credit or debit card number.
+CC1 "credit debit card 4556 7375 8689 9855" -> "4556 7375 8689 9855".
+
+[TYPE] cvv
+[DESCRIPTION] A card security code.
+
+[TYPE] pin
+[DESCRIPTION] A PIN code.
+
+[TYPE] password
+[DESCRIPTION] A password.
+PW1 "password: tR7!vexQ92" -> "tR7!vexQ92".
+
+[TYPE] api_key
+[DESCRIPTION] An API key, access token or secret key.
+AK1 "API key sk-9fQ2xLm7Tz40aBcD" -> "sk-9fQ2xLm7Tz40aBcD".
+
+[TYPE] http_cookie
+[DESCRIPTION] An HTTP cookie or session token.
+
+[TYPE] certificate_license_number
+[DESCRIPTION] A certificate or professional license number.
+CL1 "certificate license number LIC-R4418207" -> "LIC-R4418207".
+
+[TYPE] license_plate
+[DESCRIPTION] A vehicle license plate.
+LP1 "License Plate: KDL-4471" -> "KDL-4471".
+
+[TYPE] vehicle_identifier
+[DESCRIPTION] A vehicle identification number (VIN).
+VI1 "Vehicle Identifier: 2HGFA16598H304417" -> "2HGFA16598H304417".
+
+[TYPE] device_identifier
+[DESCRIPTION] A device identifier such as an IMEI or serial number.
+
+[TYPE] ipv4
+[DESCRIPTION] An IPv4 address.
+
+[TYPE] ipv6
+[DESCRIPTION] An IPv6 address.
+
+[TYPE] mac_address
+[DESCRIPTION] A MAC address.
+
+[TYPE] url
+[DESCRIPTION] A web address.
+UR1 "see https://portal.hartwell.example/reports?id=7&lang=en" -> "https://portal.hartwell.example/reports?id=7&lang=en".
+
+[TYPE] NOT_AN_ENTITY
+NE1 Field labels and names of data types, with or without a colon: "certificate license number", "health plan beneficiary number", "medical record number", "Date of Birth", "Vehicle Identifier", "phone number", "Email", "Account Number", "First Name", "Last Name", "employee id", "credit debit card", "employment status", "biometric identifier", "password", "Social Security Number", "bank routing number", "education level", "API key", "Customer ID", "License Plate", "race ethnicity".
+NE2 General words for groups of people, such as "employees", "patients", "customers" or "staff".
+
+[RULES]
+G3 A field label is never an entity; only the value written after it is. In "Customer ID: CID-208815" label "CID-208815" and nothing else. This overrides everything above.

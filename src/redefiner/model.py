@@ -186,8 +186,17 @@ class SpanModel(nn.Module):
         keep = ends < n
         starts, ends = starts[keep], ends[keep]
         hs, he = self.start(h.float()), self.end(h.float())
-        v = self.span_mlp(torch.cat([hs[starts], he[ends], self.width(ends - starts)], dim=-1))
+        # spans longer than the trained widths reuse the last trained width row (see set_max_width)
+        width = (ends - starts).clamp(max=self.width.num_embeddings - 1)
+        v = self.span_mlp(torch.cat([hs[starts], he[ends], self.width(width)], dim=-1))
         return starts, ends, v, self.exists(v).squeeze(-1)
+
+    def set_max_width(self, width: int) -> None:
+        """Score spans of up to `width` tokens. The width embedding was trained for 1..16 tokens; longer spans reuse
+        the row for the longest trained width. No weights change, and up to the trained width nothing changes."""
+        if width < 1:
+            raise ValueError("the span limit must be at least 1 token")
+        self.max_width = width
 
     def label_logits(self, v, markers):
         keys = torch.cat([self.label_proj(markers.float()), self.none[None]], dim=0)

@@ -3,6 +3,24 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
+## 1.0.9 (2026-11-19)
+
+Same weights. With default settings, the same outputs as 1.0.8 for every valid input.
+
+- `max_span_tokens`: let extract() and label() return spans longer than the trained 16 tokens, such as spaced card
+  numbers and IBANs (`Tagger.from_pretrained(..., max_span_tokens=64)` or `tagger.set_max_span_tokens(64)`). Longer
+  spans reuse the trained width-16 setting; no weights change. On the release's reproduce sets, limits of 32, 48 and 64
+  gave the same predictions as 16.
+- Pointer folders and repos: a config.json with `"format": "pointer"` names the release to load the weights from,
+  plus a default rulebook and its settings (span limit, `none_bias`, `threshold`). `jungroo-ai/redefiner-pii` is one.
+- `extract()` and `label()` take no rulebook when the Tagger has a default one (from a pointer).
+- `redefiner redact FILE`: masks what a rulebook defines in text files and writes an audit file of what was masked.
+  `--rules`, `--none-bias`, `--min-confidence` and `--max-span-tokens` change the rulebook and settings.
+- Docs: `benchmarks/pii/` (PII Masking Benchmark and RedactionBench results, both PII rulebooks, a rerun script)
+  and a PII section in the README and model card.
+- Docs: the README says what the name means (ReDefine + NER) and that the model is non-generative, and the span
+  limit is described as 16 tokens by default, longer with `max_span_tokens`.
+
 ## 1.0.8 (2026-11-05)
 
 Docs and package metadata only. Same weights, and the same outputs as 1.0.7 for every valid input.

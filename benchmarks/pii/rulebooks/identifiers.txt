@@ -1,0 +1,47 @@
+[RULES]
+G1 Extract every piece of personal data of the supplied types. Return exact spans from the text.
+G2 Label the value only, never the field label in front of it: in "Date of Birth: 1984-03-09" label "1984-03-09".
+
+[TYPE] PERSON
+[DESCRIPTION] A person's name: first, last or full name, without titles such as "Dr." or "Ms".
+PE1 "Signed by Dr. Maria L. Okafor" -> "Maria L. Okafor".
+
+[TYPE] EMAIL
+[DESCRIPTION] An email address.
+EM1 "Email: t.okafor@example.org" -> "t.okafor@example.org".
+
+[TYPE] PHONE
+[DESCRIPTION] A phone or fax number, with its country code and separators.
+PH1 "call +44 20 7946 0321" -> "+44 20 7946 0321".
+
+[TYPE] ADDRESS
+[DESCRIPTION] A postal address: house number, street, town and postcode as one span.
+AD1 "lives at 48 Harbour Road, Leeds LS6 2QX" -> "48 Harbour Road, Leeds LS6 2QX".
+
+[TYPE] DATE_OF_BIRTH
+[DESCRIPTION] A person's date of birth.
+DB1 "DOB 03/09/1984" -> "03/09/1984".
+
+[TYPE] ID_NUMBER
+[DESCRIPTION] A number that identifies a person or their records: social security, national ID, tax, passport, driver's licence, medical record, patient, employee or customer number.
+ID1 "SSN 512-44-9087" -> "512-44-9087".
+ID2 "medical record number MRN-552118" -> "MRN-552118".
+
+[TYPE] CARD_NUMBER
+[DESCRIPTION] A credit or debit card number, every digit with its spaces or dashes.
+CC1 "card 4556 7375 8689 9855" -> "4556 7375 8689 9855".
+
+[TYPE] ACCOUNT_NUMBER
+[DESCRIPTION] A bank account number, IBAN or routing number.
+AC1 "IBAN GB82 WEST 1234 5698 7654 32" -> "GB82 WEST 1234 5698 7654 32".
+
+[TYPE] IP_ADDRESS
+[DESCRIPTION] An IPv4 or IPv6 address.
+IP1 "from 192.0.2.14" -> "192.0.2.14".
+
+[TYPE] CREDENTIAL
+[DESCRIPTION] A password, PIN, API key, access token or other secret.
+CR1 "password: tR7!vexQ92" -> "tR7!vexQ92".
+
+[TYPE] NOT_AN_ENTITY
+NE1 Field labels and names of data types, such as "Name", "Date of Birth", "SSN", "Phone Number", "Account Number", "Password".

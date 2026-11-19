@@ -42,6 +42,13 @@ Method and limits: [the frontier comparison](frontier/README.md).
 
 ReDefiNER benefits from descriptions and rules in the rulebook. Remaining weaknesses include pronoun and common-noun mentions, clinical text, transaction roles and extraction with type names only.
 
+### Masking personal data
+
+With a PII rulebook, ReDefiNER scores a mean F2 of 87.2 on the four English tasks of the PII Masking Benchmark, which
+would place it 8th among the 36 models with published results; it was not trained on any personal-data dataset. On
+RedactionBench a narrower identifiers-only rulebook scores 0.520 (11th of 45). Tables, both rulebooks, the method
+and a rerun script: [pii/](pii/README.md).
+
 ## Size and speed
 
 | Property | Details |

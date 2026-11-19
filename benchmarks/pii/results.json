@@ -1,0 +1,159 @@
+{
+ "metric": "PIIMB character-level masking, F2 (labels ignored), full English test splits, scored by row position",
+ "piimb_dataset": {
+  "repo": "piimb/pii-masking-benchmark",
+  "revision": "72ea3393522295a680dd46f2f37caf9856d01a7c",
+  "subset": "sentences"
+ },
+ "model": "jungroo-ai/redefiner-0.8b",
+ "threshold": 0.5,
+ "runs": {
+  "default": {
+   "rulebook": "rulebooks/default.txt (the redefiner-pii default)",
+   "mean_f2": 87.18,
+   "rank_of_37_on_the_four_task_mean": 8,
+   "tasks": {
+    "privy": {
+     "f2": 73.44,
+     "precision": 42.9,
+     "recall": 89.4,
+     "rank_of_37_on_this_task": 5,
+     "none_bias": 2.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "77531ba3d10ff5275470b54920fdf508c2cee89924cffac9a100be58888245a6"
+    },
+    "gretel": {
+     "f2": 94.07,
+     "precision": 83.7,
+     "recall": 97.1,
+     "rank_of_37_on_this_task": 9,
+     "none_bias": 2.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "77531ba3d10ff5275470b54920fdf508c2cee89924cffac9a100be58888245a6"
+    },
+    "ai4privacy-en": {
+     "f2": 96.44,
+     "precision": 89.2,
+     "recall": 98.4,
+     "rank_of_37_on_this_task": 3,
+     "none_bias": 2.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "77531ba3d10ff5275470b54920fdf508c2cee89924cffac9a100be58888245a6"
+    },
+    "nemotron-pii": {
+     "f2": 84.77,
+     "precision": 88.8,
+     "recall": 83.8,
+     "rank_of_37_on_this_task": 13,
+     "none_bias": 2.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "77531ba3d10ff5275470b54920fdf508c2cee89924cffac9a100be58888245a6"
+    }
+   }
+  },
+  "identifiers": {
+   "rulebook": "rulebooks/identifiers.txt",
+   "mean_f2": 72.37,
+   "rank_of_37_on_the_four_task_mean": 23,
+   "tasks": {
+    "privy": {
+     "f2": 51.94,
+     "precision": 26.4,
+     "recall": 68.5,
+     "rank_of_37_on_this_task": 26,
+     "none_bias": 4.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "c7d48da1320df4b641a73b7aad8a5d78b8c1cde910b22d9f2c56cd21ee2ab7b9"
+    },
+    "gretel": {
+     "f2": 88.25,
+     "precision": 70.5,
+     "recall": 94.2,
+     "rank_of_37_on_this_task": 21,
+     "none_bias": 4.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "c7d48da1320df4b641a73b7aad8a5d78b8c1cde910b22d9f2c56cd21ee2ab7b9"
+    },
+    "ai4privacy-en": {
+     "f2": 90.49,
+     "precision": 84.4,
+     "recall": 92.2,
+     "rank_of_37_on_this_task": 16,
+     "none_bias": 4.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "c7d48da1320df4b641a73b7aad8a5d78b8c1cde910b22d9f2c56cd21ee2ab7b9"
+    },
+    "nemotron-pii": {
+     "f2": 58.81,
+     "precision": 74.3,
+     "recall": 55.9,
+     "rank_of_37_on_this_task": 30,
+     "none_bias": 4.0,
+     "max_span_tokens": 64,
+     "rulebook_sha256": "c7d48da1320df4b641a73b7aad8a5d78b8c1cde910b22d9f2c56cd21ee2ab7b9"
+    }
+   }
+  },
+  "per-dataset": {
+   "rulebook": "one rulebook per dataset (rulebooks/<task>.txt)",
+   "mean_f2": 89.5,
+   "rank_of_37_on_the_four_task_mean": 6,
+   "tasks": {
+    "privy": {
+     "f2": 80.45,
+     "precision": 55.9,
+     "recall": 90.4,
+     "rank_of_37_on_this_task": 4,
+     "none_bias": 2.0,
+     "max_span_tokens": 48,
+     "rulebook_sha256": "e71103b79fc53206f1fa0885c1d7256f0baa79d0056d28edd5b1bb6b628a83b6"
+    },
+    "gretel": {
+     "f2": 94.49,
+     "precision": 86.8,
+     "recall": 96.6,
+     "rank_of_37_on_this_task": 8,
+     "none_bias": 2.0,
+     "max_span_tokens": 48,
+     "rulebook_sha256": "5d868f30b1b01c01731595e6ab0d1aaf2723281212563bc448d9fa2e17df2b59"
+    },
+    "ai4privacy-en": {
+     "f2": 97.05,
+     "precision": 94.8,
+     "recall": 97.6,
+     "rank_of_37_on_this_task": 3,
+     "none_bias": 2.0,
+     "max_span_tokens": 48,
+     "rulebook_sha256": "107442f40b1a7c11df4c2148d97dec0bc8c928258028f4297e367db92f20a9b2"
+    },
+    "nemotron-pii": {
+     "f2": 85.99,
+     "precision": 86.0,
+     "recall": 86.0,
+     "rank_of_37_on_this_task": 11,
+     "none_bias": 2.0,
+     "max_span_tokens": 48,
+     "rulebook_sha256": "7307ae69c49b148ae5f8b5f1df61a86997b532d7415f02c055c3b836e349f63a"
+    }
+   }
+  }
+ },
+ "redactionbench": {
+  "dataset": "RedactionBench/RedactionBench (200 documents, its own score.py, mean R-Score)",
+  "default": {
+   "no_cutoff": 0.312,
+   "cutoff": 0.4,
+   "at_cutoff": 0.393,
+   "none_bias": 2.0,
+   "max_span_tokens": 64
+  },
+  "identifiers": {
+   "no_cutoff": 0.329,
+   "cutoff": 0.35,
+   "at_cutoff": 0.52,
+   "none_bias": 4.0,
+   "max_span_tokens": 64
+  },
+  "note": "the cutoff is a confidence threshold tuned on all 200 documents, as the benchmark's leaderboard does for every model"
+ }
+}

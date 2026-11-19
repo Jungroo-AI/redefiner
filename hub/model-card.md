@@ -11,6 +11,10 @@ tags:
 - information-extraction
 - span-labeling
 - rule-following
+- pii
+- pii-detection
+- redaction
+- privacy
 ---
 
 <div align="center">
@@ -97,11 +101,11 @@ Need it on your own data? We write and test rulebooks with you and run ReDefiNER
 | Size | 0.8B parameters; one 0.77 GB int8 file |
 | Hardware | CPU, with about 2–2.6 GB of memory at peak, or an NVIDIA GPU; works offline once downloaded |
 | Speed | With the rulebook loaded: 0.4–0.7 s per sentence on a 4-core CPU or an Apple M2 (extract mode), 0.05 s per text on an NVIDIA A10 or RTX A5000 ([details](https://github.com/jungroo-ai/redefiner#speed)) |
-| Limits | English only; spans up to 16 tokens; rulebooks tested up to about 10,000 tokens; in long texts, each part is read on its own, so labels can differ across a document |
+| Limits | English only; spans up to 16 tokens by default, more with `max_span_tokens` (64 for PII); rulebooks tested up to about 10,000 tokens; in long texts, each part is read on its own, so labels can differ across a document |
 | Interfaces | Python (`Tagger.extract`, `Tagger.label`) and a local HTTP server (`redefiner serve`) |
 | Benchmarks | Against five frontier models and against published research models: [results](#benchmarks) |
 | Licence | Apache-2.0: free to use, change and share, including in commercial products |
-| Release | Weights 1.0 (October 2026), package 1.0.8 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
+| Release | Weights 1.0 (October 2026), package 1.0.9 ([changes](https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md)) |
 | Made by | [Jungroo AI Labs](https://jungroo.com); authors Cibe Hariharan K and Sethuraman T A |
 
 ## Quickstart
@@ -661,6 +665,24 @@ inference, like ReDefiNER, but scores each word on its own, so multi-word names 
 Accuracy on the benchmark's own cases. Rows not marked "our run" are from the S1MB leaderboard. The d1 decision models got S1MB's records as they are, through their
 `system_one` interface. Settings, prompts and every other caveat are on the [benchmark page](https://huggingface.co/jungroo-ai/redefiner-0.8b/blob/main/benchmarks/README.md).
 
+### Masking personal data: PIIMB and RedactionBench
+
+With a PII rulebook and no training on any personal-data dataset, character-level masking F2 on the four English
+tasks of the PII Masking Benchmark (full test splits):
+
+| Setup | Privy | Gretel | AI4Privacy EN | Nemotron-PII | Mean | Place among 37 |
+|---|---:|---:|---:|---:|---:|---:|
+| ReDefiNER, `redefiner-pii` default rulebook | 73.4 | 94.1 | 96.4 | 84.8 | **87.2** | 8th |
+| ReDefiNER, a rulebook written for each dataset | 80.5 | 94.5 | 97.1 | 86.0 | 89.5 | 6th |
+| Fastino gliner2-privacy-filter-PII-multi | 64.6 | 93.6 | 91.4 | 85.4 | 83.7 | |
+| OpenAI Privacy Filter | 53.6 | 86.9 | 84.3 | 60.7 | 71.4 | |
+
+"Place among 37" orders the 36 models with published PIIMB results, plus the row, by the mean of these four tasks
+(PIIMB's leaderboard averages six; we ran the English four). Five of the seven models above the default row declare
+training on PIIMB source datasets. On RedactionBench, which counts dates, places and organisations mostly as
+over-masking, the narrower `identifiers.txt` rulebook scores 0.520 (11th of 45) and the default 0.393. Both
+rulebooks, the method and a rerun script: [benchmarks/pii](https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/pii).
+
 Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner),
 [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives) and [guideline-following NER: ReDefiNER vs GoLLIE](https://jungroo.com/redefiner/guideline-following-ner).
 
@@ -672,8 +694,10 @@ Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://j
 - **Types that depend on context need structure.** Precedence rules and numbered rules with worked examples help (see [Structure for hard rules](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md#7-structure-for-hard-rules)); rules that need counting or judging what didn't happen are still mostly ignored.
 - **Names-only rulebooks are weaker** than descriptive ones; always write a one-line description per type.
 - **Abstaining is weak.** When a type's condition isn't clearly met, the model tends to label anyway.
-- **Spans up to 16 tokens.** Long texts are split into parts that are each read on their own, so the same name can get
-  different labels in different parts of a document.
+- **Spans up to 16 tokens by default.** The model was trained on spans of up to 16 tokens. Longer limits (`max_span_tokens`,
+  from package 1.0.9) reuse that training; very long strings such as full URLs with query strings can still be missed.
+  Long texts are split into parts that are each read on their own, so the same name can get different labels in
+  different parts of a document.
 - English only; tested on English benchmarks only.
 
 ## Training data
@@ -702,7 +726,7 @@ types, document fields, search-query slots, and research on rule-following extra
 |---|---|
 | Backbone | [Qwen3.5-0.8B](https://huggingface.co/Qwen/Qwen3.5-0.8B): 24 layers (18 linear-attention, 6 full-attention), hidden size 1,024. LoRA of rank 32 on the attention and MLP projections, merged into the weights |
 | Rulebook encoding | The rulebook runs once through the backbone, with a marker after each type's section. Its states are cached, so each new text costs only the text |
-| Span head | Scores every span of up to 16 tokens from its start and end states and a width embedding |
+| Span head | Scores every span of up to 16 tokens by default (longer with `max_span_tokens`) from its start and end states and a width embedding |
 | Label head | Matches each span against the marker vectors of the rulebook's types, plus a learned "none" |
 | Weights | int8 weight-only, with one fp32 scale per output channel; fp32 compute |
 | Rulebook length | Works with rulebooks of up to about 10,000 tokens, the longest in our internal tests; the public benchmark rulebooks go up to about 2,000. Longer rulebooks fit in Qwen3.5's 262,144-token context but are untested. The rulebook is encoded in 1,024-token chunks, so memory does not grow with the square of its length; a long one takes longer to encode the first time and uses more memory |

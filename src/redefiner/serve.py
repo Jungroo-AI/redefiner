@@ -21,7 +21,7 @@ import time
 import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from . import __version__
+from . import __version__, redact
 from .api import Tagger
 
 
@@ -143,7 +143,11 @@ def main() -> None:
     s.add_argument("--device", default=None, help="cpu, cuda or cuda:N (default: cuda if available)")
     s.add_argument("--host", default="127.0.0.1")
     s.add_argument("--port", type=int, default=8000)
+    redact.add_parser(sub)
     args = ap.parse_args()
+    if args.cmd == "redact":
+        raise SystemExit(redact.run(args.files, args.model, args.rules, args.device, args.min_confidence,
+                                    args.out_dir, args.max_span_tokens, args.none_bias))
     tagger = Tagger.from_pretrained(args.model, device=args.device)
     print(f"serving /extract and /label on http://{args.host}:{args.port} (model on {tagger.device})", flush=True)
     Server((args.host, args.port), tagger).serve_forever()

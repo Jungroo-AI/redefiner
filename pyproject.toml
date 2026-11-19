@@ -11,8 +11,8 @@ license = "Apache-2.0"
 license-files = ["LICENSE"]
 authors = [{ name = "Cibe Hariharan K", email = "cibe@jungroo.com" }, { name = "Sethuraman T A" }, { name = "Jungroo AI Labs" }]
 requires-python = ">=3.10"
-keywords = ["named-entity-recognition", "ner", "information-extraction", "span-labeling", "rulebook", "qwen", "pii",
-            "privacy", "on-premise", "cpu"]
+keywords = ["named-entity-recognition", "ner", "entity-extraction", "information-extraction", "span-labeling",
+            "rulebook", "qwen", "pii", "pii-detection", "redaction", "privacy", "on-premise", "cpu"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",

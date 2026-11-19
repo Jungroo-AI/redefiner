@@ -46,7 +46,7 @@ Key facts for writing code against it:
 - In `extract`, `threshold` filters on the span probability only; `confidence` is span probability times type
   probability, so spans below 0.5 confidence are returned. Choose a `confidence` cutoff (and `threshold`, `none_bias`)
   on a few dozen labelled texts from the user's own data rather than relying on the defaults.
-- `label` never drops or silently changes a span: a span it can't read (not on token boundaries, longer than 16 tokens,
+- `label` never drops or silently changes a span: a span it can't read (not on token boundaries, longer than the span limit,
   invalid offsets) comes back with `"unsupported": reason`. `snap=True` trims spaces from a span's ends, widens it to
   whole tokens (not words: it can still end inside a word) and marks it `"snapped": True`. Part of a word that starts
   and ends on token boundaries is labeled as given, with no flag. `allow_none=True` lets it answer `"NONE"`.
@@ -65,6 +65,9 @@ Key facts for writing code against it:
 - Text is read 256 tokens at a time; longer texts are split into overlapping windows automatically.
 - `redefiner serve --model jungroo-ai/redefiner-0.8b --port 8000` runs a local HTTP server: `POST /extract`,
   `POST /label`, `GET /info`. No authentication; keep it on 127.0.0.1.
+- PII masking (package 1.0.9+): `Tagger.from_pretrained("jungroo-ai/redefiner-pii")` loads a ready PII rulebook
+  (weights from `jungroo-ai/redefiner-0.8b`); `redefiner redact FILE` writes FILE.redacted.txt and FILE.audit.json.
+  Not trained on any personal-data dataset; PII Masking Benchmark English tasks: mean F2 87.2 with that rulebook.
 
 What works and what doesn't: one-line descriptions add about 7 F1 over type names alone; boundary, exclusion and
 convention rules work; rules that relabel against a strong prior (a person's name as something else) are mostly
@@ -76,6 +79,7 @@ ignored, and the model abstains poorly when a type's condition isn't clearly met
 - [How to write rules that work](https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md): patterns from the benchmark rulebooks
 - [Rulebook templates](https://github.com/jungroo-ai/redefiner/tree/main/docs/templates): blank, PII, news, product reviews, scientific text, hard rules
 - [Benchmarks](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md): GoLLIE zero-shot sets, open NER vs GLiNER, S1MB labeling, BUSTER, with every rulebook
+- [PII benchmarks](https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/pii/README.md): PII Masking Benchmark and RedactionBench, both PII rulebooks, a rerun script
 - [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner): when to use each, with scores on the same test sets
 - [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives): eight options for custom entity extraction, compared
 - [Guideline-following NER](https://jungroo.com/redefiner/guideline-following-ner): ReDefiNER vs GoLLIE and frontier models when following annotation guidelines
@@ -83,5 +87,6 @@ ignored, and the model abstains poorly when a type's condition isn't clearly met
 ## Optional
 
 - [Model weights and card](https://huggingface.co/jungroo-ai/redefiner-0.8b)
+- [PII setup](https://huggingface.co/jungroo-ai/redefiner-pii): the PII rulebooks and settings, loaded by name
 - [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
 - [PyPI](https://pypi.org/project/redefiner/)

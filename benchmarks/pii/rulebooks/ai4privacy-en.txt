@@ -1,0 +1,88 @@
+[RULES]
+G1 Extract every piece of personal information of the supplied types. Return exact spans from the text.
+
+[TYPE] GIVENNAME
+[DESCRIPTION] A person's given name or first names, without the surname.
+GN1 "Dear Ms Imani Okafor" -> "Imani" (and "Okafor" is SURNAME).
+GN2 "signed by Ana Lucia Ferreira Costa" -> "Ana Lucia" (and "Ferreira Costa" is SURNAME).
+
+[TYPE] SURNAME
+[DESCRIPTION] A person's surname or family names, without the given name.
+SN1 "Dear Ms Imani Okafor" -> "Okafor".
+
+[TYPE] TITLE
+[DESCRIPTION] A person's title or honorific alone, such as "Mr", "Ms", "Mx", "Dr" or "Prof".
+TI1 "Dear Dr. Imani Okafor" -> "Dr." only.
+
+[TYPE] GENDER
+[DESCRIPTION] A person's gender, as written, including "Not specified".
+GE1 "Gender: Non-binary" -> "Non-binary".
+
+[TYPE] SEX
+[DESCRIPTION] A person's sex, as written, such as "F", "M", "Female" or "Male".
+SX1 "(Age: 41, Sex: F)" -> "F".
+
+[TYPE] AGE
+[DESCRIPTION] A person's age: the number only.
+AG1 "a 47-year-old applicant" -> "47".
+AG2 "aged 63 years" -> "63".
+
+[TYPE] DATE
+[DESCRIPTION] A calendar date or timestamp, as written.
+DA1 "born on 30th June 1985" -> "30th June 1985".
+DA2 "logged at 2023-04-11T09:15:00" -> "2023-04-11T09:15:00".
+
+[TYPE] EMAIL
+[DESCRIPTION] An email address.
+EM1 "write to t.okafor92@example.org" -> "t.okafor92@example.org".
+
+[TYPE] TELEPHONENUM
+[DESCRIPTION] A telephone number, with its country code and separators.
+TN1 "call +44 20 7946 0321" -> "+44 20 7946 0321".
+
+[TYPE] BUILDINGNUM
+[DESCRIPTION] A building or house number in an address: the number only.
+BN1 "48 Harbour Road" -> "48" (and "Harbour Road" is STREET).
+
+[TYPE] STREET
+[DESCRIPTION] A street name, without the building number.
+ST1 "48 Harbour Road" -> "Harbour Road".
+
+[TYPE] CITY
+[DESCRIPTION] A city, town or village.
+CI1 "Harbour Road, Leeds LS6 2QX" -> "Leeds".
+
+[TYPE] ZIPCODE
+[DESCRIPTION] A postcode or ZIP code.
+ZC1 "Leeds LS6 2QX" -> "LS6 2QX".
+
+[TYPE] IDCARDNUM
+[DESCRIPTION] An identity card number.
+ID1 "ID card: RY2391KQ" -> "RY2391KQ".
+
+[TYPE] PASSPORTNUM
+[DESCRIPTION] A passport number.
+PP1 "passport (C03004786)" -> "C03004786".
+
+[TYPE] DRIVERLICENSENUM
+[DESCRIPTION] A driver's license number.
+DL1 "driver's licence D8112935" -> "D8112935".
+
+[TYPE] SOCIALNUM
+[DESCRIPTION] A social security or social insurance number.
+SO1 "Social security: 512-44-9087" -> "512-44-9087".
+
+[TYPE] TAXNUM
+[DESCRIPTION] A tax identification number.
+TX1 "Tax ID: 8097797891" -> "8097797891".
+
+[TYPE] CREDITCARDNUMBER
+[DESCRIPTION] A credit or debit card number, every digit.
+CC1 "card 4556737586899855" -> "4556737586899855".
+
+[TYPE] NOT_AN_ENTITY
+NE1 Field labels and names of data types, with or without a colon: "tax identification number", "Tax ID", "social security number", "Social Insurance Number", "Date of Birth", "date of birth", "Age", "Gender", "biological sex", "driver's license number", "passport number", "ID card number", "Phone Number", "contact number", "Email Address", "Residential Street", "Building Number".
+NE2 Job titles and roles, such as "compliance officer", "finance lead" or "Data Privacy Officer".
+
+[RULES]
+G2 A field label is never an entity; only the value written after it is. In "Tax ID: 8097797891" label "8097797891" and nothing else. This overrides everything above.

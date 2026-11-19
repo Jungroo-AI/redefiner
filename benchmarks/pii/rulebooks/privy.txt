@@ -1,0 +1,110 @@
+[RULES]
+G1 Extract every piece of personal or sensitive information of the supplied types. Return exact spans from the text.
+G2 The text is often a data record (JSON, SQL, HTML or XML). Label the values only, never the field names, keys, tags or column names.
+G3 Field names, keys and column names are never entities, even when they name a type of data: "accountId", "latitude", "nationality", "nation_plural", "creditcard", "bban", "aba", "amount", "timeout", "prefix_female", "open__date", "device-mac", "age", "agent".
+
+[TYPE] PERSON
+[DESCRIPTION] A person's first, last or full name.
+PE1 "{'given name': 'Imani Okafor'}" -> "Imani Okafor".
+PE2 "<th>name_female</th><td>Rosa Diaz</td>" -> "Rosa Diaz".
+
+[TYPE] LOCATION
+[DESCRIPTION] An address, street, building number, city, state, postcode, country or airport.
+LO1 "'street_address': '48 Harbour Road'" -> "48 Harbour Road".
+LO2 "<th>city</th><td>Leeds</td>" -> "Leeds".
+
+[TYPE] NRP
+[DESCRIPTION] A nationality, religious or political group, such as "japanese", "bosnians" or "American".
+NR1 "'nation_plural': 'portuguese'" -> "portuguese".
+
+[TYPE] DATE_TIME
+[DESCRIPTION] A date, time, year or weekday.
+DT1 "'birth date': '1984-03-09'" -> "1984-03-09".
+
+[TYPE] AGE
+[DESCRIPTION] A person's age.
+AG1 "'age': '47'" -> "47".
+
+[TYPE] TITLE
+[DESCRIPTION] A person's title, job title or gender, such as "Mr.", "Dr.", "HVACR technician" or "female".
+TI1 "<th>prefix_male</th><td>Mr.</td>" -> "Mr.".
+TI2 "'job': 'dental hygienist'" -> "dental hygienist".
+
+[TYPE] ORGANIZATION
+[DESCRIPTION] A company, airline or other organization.
+OR1 "'company-name': 'Hartwell & Finch Ltd'" -> "Hartwell & Finch Ltd".
+
+[TYPE] EMAIL_ADDRESS
+[DESCRIPTION] An email address.
+EM1 "'contact_email': 't.okafor@example.org'" -> "t.okafor@example.org".
+
+[TYPE] PHONE_NUMBER
+[DESCRIPTION] A phone number.
+PH1 "'associate-phone-number': '+44 20 7946 0321'" -> "+44 20 7946 0321".
+
+[TYPE] URL
+[DESCRIPTION] A web address or domain name.
+UR1 "'website': 'https://hartwell.example.com/'" -> "https://hartwell.example.com/".
+
+[TYPE] IP_ADDRESS
+[DESCRIPTION] An IPv4 or IPv6 address.
+IP1 "<userIp type='str'>192.0.2.14</userIp>" -> "192.0.2.14".
+
+[TYPE] MAC_ADDRESS
+[DESCRIPTION] A MAC address.
+MA1 "'device-mac': '3c:22:fb:91:0e:47'" -> "3c:22:fb:91:0e:47".
+
+[TYPE] IMEI
+[DESCRIPTION] A phone's IMEI number.
+IM1 "'imei': '35-209900-176148-1'" -> "35-209900-176148-1".
+
+[TYPE] COORDINATE
+[DESCRIPTION] A latitude or longitude.
+CO1 "<latitude type='str'>53.8008</latitude>" -> "53.8008".
+
+[TYPE] CREDIT_CARD
+[DESCRIPTION] A credit or debit card number.
+CC1 "'creditcard': '4556 7375 8689 9855'" -> "4556 7375 8689 9855".
+
+[TYPE] IBAN_CODE
+[DESCRIPTION] An IBAN bank account code.
+IB1 "'iban': 'GB82 WEST 1234 5698 7654 32'" -> "GB82 WEST 1234 5698 7654 32".
+
+[TYPE] US_BANK_NUMBER
+[DESCRIPTION] A US bank account number.
+UB1 "'bank_account': '30481177265'" -> "30481177265".
+
+[TYPE] FINANCIAL
+[DESCRIPTION] Other financial details: a currency code, SWIFT or BIC code, routing number or account number.
+FI1 "'routing_number': '021000322'" -> "021000322".
+
+[TYPE] PASSWORD
+[DESCRIPTION] A password.
+PW1 "'key store password': 'tR7!vexQ92'" -> "tR7!vexQ92".
+
+[TYPE] US_SSN
+[DESCRIPTION] A US social security number.
+SS1 "'ssn': '512-44-9087'" -> "512-44-9087".
+
+[TYPE] US_ITIN
+[DESCRIPTION] A US individual taxpayer identification number.
+IT1 "'itin': '912-70-3456'" -> "912-70-3456".
+
+[TYPE] US_PASSPORT
+[DESCRIPTION] A US passport number.
+PA1 "'passport': 'C03004786'" -> "C03004786".
+
+[TYPE] US_DRIVER_LICENSE
+[DESCRIPTION] A US driver's license number.
+DL1 "'driver_license': 'D1234567'" -> "D1234567".
+
+[TYPE] US_LICENSE_PLATE
+[DESCRIPTION] A vehicle license plate.
+LP1 "'plate': '7KDL447'" -> "7KDL447".
+
+[TYPE] NOT_AN_ENTITY
+NE1 Random ids, hashes, booleans such as "True", and short random strings such as "x4Kiy7Xa" or "9Ca ftgl".
+NE2 Keys, column names, tag names and table headings, in any style: "oauth_token", "access_token", "international_bank_account_number", "routing_number", "latitude", "longitude", "nationality", "nation_man", "fullnamemale", "prefix_male", "secondary_address", "street_address", "userIp", "contact_email", "associate-phone-number", "birth__month", "fromDate.year", "serialNumber", "master_card", "iban", "birthyear".
+
+[RULES]
+G4 In a record, the key, column name or tag name is never an entity; only the value written after it is. In "{'contact_email': 't.okafor@example.org'}" label "t.okafor@example.org" and nothing else. This overrides everything above.
