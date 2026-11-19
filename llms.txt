@@ -83,6 +83,7 @@ ignored, and the model abstains poorly when a type's condition isn't clearly met
 - [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner): when to use each, with scores on the same test sets
 - [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives): eight options for custom entity extraction, compared
 - [Guideline-following NER](https://jungroo.com/redefiner/guideline-following-ner): ReDefiNER vs GoLLIE and frontier models when following annotation guidelines
+- [PII redaction with ReDefiNER](https://jungroo.com/redefiner/pii-redaction): masking personal data: PIIMB results, the two PII rulebooks, redaction by a written policy (PolicyMask), the Presidio plugin and limits
 
 ## Optional
 

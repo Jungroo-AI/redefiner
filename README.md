@@ -791,6 +791,9 @@ tagger = Tagger.from_pretrained("jungroo-ai/redefiner-pii")
 tagger.extract("Call Rosa Diaz on +44 20 7946 0321.")   # no rulebook needed
 ```
 
+Results, both PII rulebooks, redaction by a written policy and the limits, on one page: [PII redaction with
+ReDefiNER][pii-guide].
+
 ## Speed
 
 CPU, int8 weights, extract mode, on CrossNER AI test sentences (about 32 tokens each). A rulebook is encoded with the
@@ -974,6 +977,7 @@ Created by [Jungroo AI Labs][jungroo]. For help putting it to work on your own d
 [compare-gliner]: https://jungroo.com/redefiner/vs-gliner
 [gliner-alternatives]: https://jungroo.com/redefiner/gliner-alternatives
 [compare-gollie]: https://jungroo.com/redefiner/guideline-following-ner
+[pii-guide]: https://jungroo.com/redefiner/pii-redaction
 [changelog]: https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md
 [redefiner-pii]: https://huggingface.co/jungroo-ai/redefiner-pii
 [pii-benchmarks]: https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/pii/README.md

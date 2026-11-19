@@ -687,6 +687,9 @@ To mask by a written policy rather than fixed categories (for example "keep our 
 customers'"), see [PolicyMask](https://huggingface.co/datasets/jungroo-ai/PolicyMask), our open benchmark of 10 plain-English redaction policies on synthetic texts. Of the
 six systems tested, ReDefiNER scored highest on every policy that depends on whose data it is.
 
+Results, both PII rulebooks, redaction by a written policy and the limits, on one page: [PII redaction with
+ReDefiNER](https://jungroo.com/redefiner/pii-redaction).
+
 Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner),
 [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives) and [guideline-following NER: ReDefiNER vs GoLLIE](https://jungroo.com/redefiner/guideline-following-ner).
 
