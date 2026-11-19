@@ -16,7 +16,8 @@ import time
 from pathlib import Path
 
 TASKS = ("privy", "gretel", "ai4privacy-en", "nemotron-pii")
-DATASET, REVISION, FILE = "piimb/pii-masking-benchmark", "72ea3393522295a680dd46f2f37caf9856d01a7c", "data/test_sentences.jsonl"
+DATASET, FILE = "piimb/pii-masking-benchmark", "data/test_sentences.jsonl"
+REVISION = "72ea3393522295a680dd46f2f37caf9856d01a7c"
 HERE = Path(__file__).resolve().parent
 
 
@@ -61,7 +62,8 @@ def load_rows(task, data, limit):
     if data is None:
         from huggingface_hub import hf_hub_download
         data = hf_hub_download(DATASET, FILE, repo_type="dataset", revision=REVISION)
-    rows = [r for r in map(json.loads, open(data, encoding="utf-8")) if r["task_name"] == task]
+    with open(data, encoding="utf-8") as f:
+        rows = [r for r in map(json.loads, f) if r["task_name"] == task]
     return rows[:limit] if limit else rows
 
 
@@ -81,7 +83,8 @@ def main():
     a = ap.parse_args()
     rows = load_rows(a.task, a.data, a.limit)
     if a.score_only:
-        body = [d for d in map(json.loads, open(a.score_only, encoding="utf-8")) if "_meta" not in d]
+        with open(a.score_only, encoding="utf-8") as f:
+            body = [d for d in map(json.loads, f) if "_meta" not in d]
         if len(body) != len(rows) or any(b["uid"] != r["uid"] for b, r in zip(body, rows)):
             raise SystemExit(f"{a.score_only} does not line up with the {len(rows)} rows of {a.task}")
         preds = [b["pred"] for b in body]
