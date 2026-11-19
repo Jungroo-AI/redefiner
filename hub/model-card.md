@@ -696,6 +696,19 @@ masks a clinic note by the clinic's own policy.
 Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner),
 [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives) and [guideline-following NER: ReDefiNER vs GoLLIE](https://jungroo.com/redefiner/guideline-following-ner).
 
+## Integrations
+
+ReDefiNER also runs inside these tools. Each is a separate package by Jungroo AI Labs.
+
+| Tool | Package | Install | What it does |
+|---|---|---|---|
+| spaCy | [spacy-redefiner](https://github.com/Jungroo-AI/spacy-redefiner) | `pip install spacy-redefiner` | A pipeline component. Entities go to `doc.ents` or a span group, with a confidence per span. |
+| Presidio | [presidio-redefiner](https://github.com/Jungroo-AI/presidio-redefiner) | `pip install presidio-redefiner` | A recognizer for Presidio's analyzer, so its anonymizer can mask what your rulebook defines. Presidio's docs include a [sample](https://github.com/data-privacy-stack/presidio/blob/main/docs/samples/python/redefiner.md). |
+| LangChain | [langchain-redefiner](https://github.com/Jungroo-AI/langchain-redefiner) | `pip install langchain-redefiner` | Agent middleware that redacts, masks, hashes or blocks personal data, plus document transformers. Listed in [LangChain's middleware docs](https://docs.langchain.com/oss/python/integrations/middleware). |
+| LlamaIndex | [llama-index-redefiner](https://github.com/Jungroo-AI/llama-index-redefiner) | `pip install llama-index-redefiner` | A node postprocessor and an ingestion step that mask personal data, plus an entity extractor. |
+| NeMo Guardrails | [nemoguardrails-redefiner](https://github.com/Jungroo-AI/nemoguardrails-redefiner) | `pip install nemoguardrails-redefiner` | Input, output and retrieval rails that detect or mask personal data before it reaches the LLM. |
+| Label Studio | [label-studio-redefiner](https://github.com/Jungroo-AI/label-studio-redefiner) | Docker (`docker compose up`) | An ML backend that pre-annotates NER tasks, using the project's labels and their hints as the rulebook. |
+
 ## Limitations
 
 - **Rules against a strong prior are mostly ignored.** Relabelling a person's name as something other than a person,

@@ -873,6 +873,19 @@ A span that can't be labelled comes back with an `unsupported` reason in place o
 The server has no authentication and no limit on request size. Keep it on 127.0.0.1, or put it behind your own proxy
 if it has to be reachable from other machines.
 
+## Integrations
+
+ReDefiNER also runs inside these tools. Each is a separate package by Jungroo AI Labs.
+
+| Tool | Package | Install | What it does |
+|---|---|---|---|
+| spaCy | [spacy-redefiner][spacy-redefiner] | `pip install spacy-redefiner` | A pipeline component. Entities go to `doc.ents` or a span group, with a confidence per span. |
+| Presidio | [presidio-redefiner][presidio-redefiner] | `pip install presidio-redefiner` | A recognizer for Presidio's analyzer, so its anonymizer can mask what your rulebook defines. Presidio's docs include a [sample][presidio-sample]. |
+| LangChain | [langchain-redefiner][langchain-redefiner] | `pip install langchain-redefiner` | Agent middleware that redacts, masks, hashes or blocks personal data, plus document transformers. Listed in [LangChain's middleware docs][langchain-middleware-docs]. |
+| LlamaIndex | [llama-index-redefiner][llama-index-redefiner] | `pip install llama-index-redefiner` | A node postprocessor and an ingestion step that mask personal data, plus an entity extractor. |
+| NeMo Guardrails | [nemoguardrails-redefiner][nemoguardrails-redefiner] | `pip install nemoguardrails-redefiner` | Input, output and retrieval rails that detect or mask personal data before it reaches the LLM. |
+| Label Studio | [label-studio-redefiner][label-studio-redefiner] | Docker (`docker compose up`) | An ML backend that pre-annotates NER tasks, using the project's labels and their hints as the rulebook. |
+
 ## Limitations
 
 - **Rules against a strong prior are mostly ignored.** Relabelling a person's name as something other than a person,
@@ -999,3 +1012,11 @@ Created by [Jungroo AI Labs][jungroo]. For help putting it to work on your own d
 [scripts]: https://github.com/jungroo-ai/redefiner/blob/main/scripts/README.md
 [gollie]: https://github.com/hitz-zentroa/GoLLIE
 [benchmark-licences]: https://github.com/jungroo-ai/redefiner/blob/main/benchmarks/README.md#datasets-and-licences
+[spacy-redefiner]: https://github.com/Jungroo-AI/spacy-redefiner
+[presidio-redefiner]: https://github.com/Jungroo-AI/presidio-redefiner
+[langchain-redefiner]: https://github.com/Jungroo-AI/langchain-redefiner
+[llama-index-redefiner]: https://github.com/Jungroo-AI/llama-index-redefiner
+[label-studio-redefiner]: https://github.com/Jungroo-AI/label-studio-redefiner
+[nemoguardrails-redefiner]: https://github.com/Jungroo-AI/nemoguardrails-redefiner
+[presidio-sample]: https://github.com/data-privacy-stack/presidio/blob/main/docs/samples/python/redefiner.md
+[langchain-middleware-docs]: https://docs.langchain.com/oss/python/integrations/middleware

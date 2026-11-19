@@ -3,6 +3,11 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
+## Unreleased
+
+- Docs: an Integrations section in the README and model card lists the spaCy, Presidio, LangChain, LlamaIndex,
+  NeMo Guardrails and Label Studio packages, with links to LangChain's middleware docs and Presidio's sample.
+
 ## 1.0.11 (2026-11-24)
 
 Same weights, and the same outputs as 1.0.10 for every valid input.
