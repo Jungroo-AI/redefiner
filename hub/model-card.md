@@ -683,6 +683,10 @@ training on PIIMB source datasets. On RedactionBench, which counts dates, places
 over-masking, the narrower `identifiers.txt` rulebook scores 0.520 (11th of 45) and the default 0.393. Both
 rulebooks, the method and a rerun script: [benchmarks/pii](https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/pii).
 
+To mask by a written policy rather than fixed categories (for example "keep our support agents' names, mask
+customers'"), see [PolicyMask](https://huggingface.co/datasets/jungroo-ai/PolicyMask), our open benchmark of 10 plain-English redaction policies on synthetic texts. Of the
+six systems tested, ReDefiNER scored highest on every policy that depends on whose data it is.
+
 Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner),
 [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives) and [guideline-following NER: ReDefiNER vs GoLLIE](https://jungroo.com/redefiner/guideline-following-ner).
 
