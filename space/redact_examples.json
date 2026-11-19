@@ -1,0 +1,382 @@
+{
+ "Clinic note": {
+  "mode": "policy",
+  "text": "Nurse Priya Shah booked Marcus Bell (DOB 09/01/1962) for 21 July with Dr. Omar Aziz. Invoice INV-88213, card 4000 0566 5566 5556, phone 0161 496 0333.",
+  "policy": "[TYPE] PATIENT_NAME\n[DESCRIPTION] The name of a patient. Doctors, nurses and other staff are not patients.\n\n[TYPE] DATE_OF_BIRTH\n[DESCRIPTION] A person's date of birth. Other dates, such as appointment dates, are not dates of birth.\n\n[TYPE] CARD_NUMBER\n[DESCRIPTION] The digits of a payment card number, 13 to 19 digits with their spaces, and nothing else.\n\n[TYPE] PHONE\n[DESCRIPTION] The digits of a phone number.\n\n[TYPE] NOT_AN_ENTITY\nNE1 Invoice numbers and order numbers, such as \"INV-55120\" or \"Order 4471-B\".\n",
+  "stored": {
+   "all": [
+    {
+     "text": "Priya Shah",
+     "label": "PERSON",
+     "confidence": 0.748,
+     "start": 6,
+     "end": 16
+    },
+    {
+     "text": "Marcus Bell",
+     "label": "PERSON",
+     "confidence": 0.983,
+     "start": 24,
+     "end": 35
+    },
+    {
+     "text": "09/01/1962",
+     "label": "DATE_TIME",
+     "confidence": 0.791,
+     "start": 41,
+     "end": 51
+    },
+    {
+     "text": "21 July",
+     "label": "DATE_TIME",
+     "confidence": 0.959,
+     "start": 57,
+     "end": 64
+    },
+    {
+     "text": "Dr. Omar Aziz",
+     "label": "TITLE",
+     "confidence": 0.775,
+     "start": 70,
+     "end": 83
+    },
+    {
+     "text": "INV-88213",
+     "label": "ID_NUMBER",
+     "confidence": 0.609,
+     "start": 93,
+     "end": 102
+    },
+    {
+     "text": "4000 0566 5566 5556",
+     "label": "FINANCIAL",
+     "confidence": 0.943,
+     "start": 109,
+     "end": 128
+    },
+    {
+     "text": "0161 496 0333",
+     "label": "PHONE",
+     "confidence": 0.968,
+     "start": 136,
+     "end": 149
+    }
+   ],
+   "policy": [
+    {
+     "text": "Marcus Bell",
+     "label": "PATIENT_NAME",
+     "confidence": 0.99,
+     "start": 24,
+     "end": 35
+    },
+    {
+     "text": "09/01/1962",
+     "label": "DATE_OF_BIRTH",
+     "confidence": 0.945,
+     "start": 41,
+     "end": 51
+    },
+    {
+     "text": "4000 0566 5566 5556",
+     "label": "CARD_NUMBER",
+     "confidence": 0.786,
+     "start": 109,
+     "end": 128
+    },
+    {
+     "text": "phone",
+     "label": "PHONE",
+     "confidence": 0.171,
+     "start": 130,
+     "end": 135
+    },
+    {
+     "text": "0161 496 0333",
+     "label": "PHONE",
+     "confidence": 0.904,
+     "start": 136,
+     "end": 149
+    }
+   ]
+  }
+ },
+ "Support chat": {
+  "mode": "policy",
+  "text": "Customer: Hi, I'm Daniel Brandt, account AC-771204. I was charged twice on 3 March. Please reply to daniel.brandt@example.com.\nAgent Rosa Diaz: Sorry about that. I've refunded the second charge under ticket T-5521.",
+  "policy": "[TYPE] CUSTOMER_NAME\n[DESCRIPTION] The name of a customer, full or first name only. Our own staff, who write as \"Agent <name>\", are not customers.\n\n[TYPE] ACCOUNT_NUMBER\n[DESCRIPTION] A customer account number, such as \"AC-449120\".\n\n[TYPE] EMAIL\n[DESCRIPTION] An email address.\n\n[TYPE] NOT_AN_ENTITY\nNE1 Ticket numbers, such as \"T-1042\".\n",
+  "stored": {
+   "all": [
+    {
+     "text": "Daniel Brandt",
+     "label": "PERSON",
+     "confidence": 1.0,
+     "start": 18,
+     "end": 31
+    },
+    {
+     "text": "AC-771204",
+     "label": "ID_NUMBER",
+     "confidence": 0.805,
+     "start": 41,
+     "end": 50
+    },
+    {
+     "text": "3 March",
+     "label": "DATE_TIME",
+     "confidence": 0.974,
+     "start": 75,
+     "end": 82
+    },
+    {
+     "text": "daniel.brandt@example.com",
+     "label": "EMAIL",
+     "confidence": 0.999,
+     "start": 100,
+     "end": 125
+    },
+    {
+     "text": "Rosa Diaz",
+     "label": "PERSON",
+     "confidence": 0.633,
+     "start": 133,
+     "end": 142
+    },
+    {
+     "text": "T-5521",
+     "label": "ID_NUMBER",
+     "confidence": 0.723,
+     "start": 207,
+     "end": 213
+    }
+   ],
+   "policy": [
+    {
+     "text": "Daniel Brandt",
+     "label": "CUSTOMER_NAME",
+     "confidence": 0.999,
+     "start": 18,
+     "end": 31
+    },
+    {
+     "text": "AC-771204",
+     "label": "ACCOUNT_NUMBER",
+     "confidence": 0.982,
+     "start": 41,
+     "end": 50
+    },
+    {
+     "text": "daniel.brandt@example.com",
+     "label": "EMAIL",
+     "confidence": 0.999,
+     "start": 100,
+     "end": 125
+    }
+   ]
+  }
+ },
+ "Email": {
+  "mode": "all",
+  "text": "Hi, this is Meera Nair from Brightwater Dental. Please send the invoice to meera.nair@brightwater.example and call me on 020 7946 0155 before Thursday. My patient ID is PT-664201, date of birth 14 March 1989. I live at 9 Alder Close, Bristol BS3 4QT.",
+  "policy": "[TYPE] PERSON\n[DESCRIPTION] A person's name.\n\n[TYPE] CONTACT\n[DESCRIPTION] An email address or a phone number.\n\n[TYPE] HOME_ADDRESS\n[DESCRIPTION] A street address or a postcode where someone lives.\n\n[TYPE] DATE_OF_BIRTH\n[DESCRIPTION] A person's date of birth. Other dates are not dates of birth.\n\n[TYPE] NOT_AN_ENTITY\nNE1 Company and clinic names, such as \"Northwind Dental\".\n",
+  "stored": {
+   "all": [
+    {
+     "text": "Meera Nair",
+     "label": "PERSON",
+     "confidence": 1.0,
+     "start": 12,
+     "end": 22
+    },
+    {
+     "text": "Brightwater Dental",
+     "label": "ORGANIZATION",
+     "confidence": 0.998,
+     "start": 28,
+     "end": 46
+    },
+    {
+     "text": "meera.nair@brightwater.example",
+     "label": "EMAIL",
+     "confidence": 0.866,
+     "start": 75,
+     "end": 105
+    },
+    {
+     "text": "020 7946 0155",
+     "label": "PHONE",
+     "confidence": 0.987,
+     "start": 121,
+     "end": 134
+    },
+    {
+     "text": "Thursday",
+     "label": "DATE_TIME",
+     "confidence": 0.943,
+     "start": 142,
+     "end": 150
+    },
+    {
+     "text": "PT-664201",
+     "label": "ID_NUMBER",
+     "confidence": 0.913,
+     "start": 169,
+     "end": 178
+    },
+    {
+     "text": "14 March 1989",
+     "label": "DATE_TIME",
+     "confidence": 0.843,
+     "start": 194,
+     "end": 207
+    },
+    {
+     "text": "9 Alder Close",
+     "label": "ADDRESS",
+     "confidence": 0.988,
+     "start": 219,
+     "end": 232
+    },
+    {
+     "text": "Bristol BS3 4QT",
+     "label": "ADDRESS",
+     "confidence": 0.738,
+     "start": 234,
+     "end": 249
+    }
+   ],
+   "policy": [
+    {
+     "text": "Meera Nair",
+     "label": "PERSON",
+     "confidence": 0.995,
+     "start": 12,
+     "end": 22
+    },
+    {
+     "text": "meera.nair@brightwater.example",
+     "label": "CONTACT",
+     "confidence": 0.663,
+     "start": 75,
+     "end": 105
+    },
+    {
+     "text": "020 7946 0155",
+     "label": "CONTACT",
+     "confidence": 0.973,
+     "start": 121,
+     "end": 134
+    },
+    {
+     "text": "14 March 1989",
+     "label": "DATE_OF_BIRTH",
+     "confidence": 0.956,
+     "start": 194,
+     "end": 207
+    },
+    {
+     "text": "9 Alder Close",
+     "label": "HOME_ADDRESS",
+     "confidence": 0.945,
+     "start": 219,
+     "end": 232
+    },
+    {
+     "text": "Bristol BS3 4QT",
+     "label": "HOME_ADDRESS",
+     "confidence": 0.89,
+     "start": 234,
+     "end": 249
+    }
+   ]
+  }
+ },
+ "IT ticket": {
+  "mode": "all",
+  "text": "Laura Chen (username lchen7) can't sign in from 10.12.4.88 since her password Spring2024! expired. She is a payroll analyst in our Leeds office. Employee EMP-30981, card on file 5500 0055 5555 5559.",
+  "policy": "[TYPE] PERSON\n[DESCRIPTION] A person's name.\n\n[TYPE] SECRET\n[DESCRIPTION] A password, PIN or access key.\n\n[TYPE] CARD_NUMBER\n[DESCRIPTION] The digits of a payment card number, and nothing else.\n\n[TYPE] NOT_AN_ENTITY\nNE1 Usernames and IP addresses, such as \"jdoe3\" or \"10.0.0.12\": the IT team needs them.\n",
+  "stored": {
+   "all": [
+    {
+     "text": "Laura Chen",
+     "label": "PERSON",
+     "confidence": 0.98,
+     "start": 0,
+     "end": 10
+    },
+    {
+     "text": "lchen7",
+     "label": "USERNAME",
+     "confidence": 0.997,
+     "start": 21,
+     "end": 27
+    },
+    {
+     "text": "10.12.4.88",
+     "label": "IP_ADDRESS",
+     "confidence": 0.604,
+     "start": 48,
+     "end": 58
+    },
+    {
+     "text": "Spring2024!",
+     "label": "SECRET",
+     "confidence": 0.981,
+     "start": 78,
+     "end": 89
+    },
+    {
+     "text": "payroll analyst",
+     "label": "OCCUPATION",
+     "confidence": 0.992,
+     "start": 108,
+     "end": 123
+    },
+    {
+     "text": "Leeds",
+     "label": "LOCATION",
+     "confidence": 0.987,
+     "start": 131,
+     "end": 136
+    },
+    {
+     "text": "EMP-30981",
+     "label": "ID_NUMBER",
+     "confidence": 0.862,
+     "start": 154,
+     "end": 163
+    },
+    {
+     "text": "5500 0055 5555 5559",
+     "label": "FINANCIAL",
+     "confidence": 0.951,
+     "start": 178,
+     "end": 197
+    }
+   ],
+   "policy": [
+    {
+     "text": "Laura Chen",
+     "label": "PERSON",
+     "confidence": 0.997,
+     "start": 0,
+     "end": 10
+    },
+    {
+     "text": "Spring2024!",
+     "label": "SECRET",
+     "confidence": 0.864,
+     "start": 78,
+     "end": 89
+    },
+    {
+     "text": "5500 0055 5555 5559",
+     "label": "CARD_NUMBER",
+     "confidence": 0.761,
+     "start": 178,
+     "end": 197
+    }
+   ]
+  }
+ }
+}

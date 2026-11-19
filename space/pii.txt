@@ -1,0 +1,132 @@
+[RULES]
+G1 Extract every piece of personal or sensitive information of the supplied types. Return exact spans from the text.
+G2 The text can be prose, a form or a data record (JSON, XML, HTML, SQL, a table or a log). Label the values only, never the field labels, keys, tags or column names in front of them.
+G3 Words that only name a kind of data, such as "social security number", "medical record number", "customer ID", "license plate", "date of birth" or "password", are labels, also in the middle of a sentence. Never extract them; extract only the actual value.
+
+[TYPE] PERSON
+[DESCRIPTION] A person's first name, last name or full name, with middle names and initials.
+PE1 "signed by Maria L. Okafor on Friday" -> "Maria L. Okafor".
+PE2 "First Name: Imani" -> "Imani".
+PE3 "'last_name': 'Okafor'" -> "Okafor".
+
+[TYPE] TITLE
+[DESCRIPTION] A title or honorific written with a person's name, such as "Mr", "Mrs", "Ms", "Miss", "Mx", "Dr" or "Prof".
+TI1 "Dear Dr. Imani Okafor" -> "Dr." (and "Imani Okafor" is PERSON).
+
+[TYPE] USERNAME
+[DESCRIPTION] A username or login handle of a person, usually lower case with dots, underscores or digits, such as "t.okafor92" or "rosa_diaz".
+UN1 "Username: t.okafor92" -> "t.okafor92".
+
+[TYPE] EMAIL
+[DESCRIPTION] An email address, with its @ sign.
+EM1 "write to rosa.diaz@example.org" -> "rosa.diaz@example.org".
+EM2 "Email: t.okafor@example.org" -> "t.okafor@example.org".
+
+[TYPE] PHONE
+[DESCRIPTION] The digits of a phone or fax number, with its country code, separators and extension.
+PH1 "call +44 20 7946 0321" -> "+44 20 7946 0321".
+PH2 "Phone: 555-0142 ext. 7" -> "555-0142 ext. 7".
+
+[TYPE] ADDRESS
+[DESCRIPTION] A street address, starting at its house number or street name: house number and street, with the flat, town, state, postcode and country when they are written next to it, as one span.
+AD1 "lives at 48 Harbour Road, Flat 2, Leeds LS6 2QX" -> "48 Harbour Road, Flat 2, Leeds LS6 2QX".
+AD2 "'secondary_address': 'Suite 364'" -> "Suite 364".
+
+[TYPE] LOCATION
+[DESCRIPTION] A city, town, county, state, province, region or country, written out or as a code such as "TX" or "US"; also a postcode or ZIP code.
+LO1 "the office in Leeds will close" -> "Leeds".
+LO2 "State: Ohio" -> "Ohio".
+LO3 "'country_code': 'PT'" -> "PT".
+LO4 "Postcode: LS6 2QX" -> "LS6 2QX".
+
+[TYPE] COORDINATE
+[DESCRIPTION] The decimal number of a latitude or longitude, such as "53.8008", or a pair of them.
+CO1 "<latitude>53.8008</latitude>" -> "53.8008".
+CO2 "found at 53.8008, -1.5491" -> "53.8008, -1.5491".
+CO3 "{'latitude': '53.8008', 'longitude': '-1.5491'}" -> "53.8008" and "-1.5491", never the keys.
+
+[TYPE] ORGANIZATION
+[DESCRIPTION] The name of a company, employer, bank, school, hospital, agency or other organization.
+OR1 "an engineer at Hartwell & Finch Ltd" -> "Hartwell & Finch Ltd".
+
+[TYPE] OCCUPATION
+[DESCRIPTION] A person's job, job title or profession; also their level of education or employment status.
+OC1 "works as a dental hygienist" -> "dental hygienist".
+OC2 "'occupation': 'Aircraft pilot'" -> "Aircraft pilot".
+OC3 "holds a Master's degree and is currently self-employed" -> "Master's degree" and "self-employed".
+
+[TYPE] DATE_TIME
+[DESCRIPTION] A calendar date in any format, including a date of birth; a time of day; a timestamp with both; also a weekday, month or year given as a value.
+DA1 "born on 30th June 1985" -> "30th June 1985".
+DA2 "Date of Birth: 1984-03-09" -> "1984-03-09".
+DA3 "logged at 2023-04-11T09:15:00Z" -> "2023-04-11T09:15:00Z".
+DA4 "'week_day': 'Thursday'" -> "Thursday".
+DA5 "at 7:30 AM the alarm rang" -> "7:30 AM".
+
+[TYPE] AGE
+[DESCRIPTION] A person's age: the number only.
+AG1 "a 47-year-old applicant" -> "47".
+AG2 "(Age: 63, Sex: F)" -> "63".
+AG3 "she is 58 years old" -> "58".
+
+[TYPE] GENDER
+[DESCRIPTION] The value given for a person's gender or sex, such as "female", "M" or "Non-binary".
+GE1 "(Age: 63, Sex: F)" -> "F".
+GE2 "Gender: Non-binary" -> "Non-binary".
+
+[TYPE] DEMOGRAPHIC
+[DESCRIPTION] A person's nationality, ethnic group or race, religion, political view or party, sexual orientation or language, such as "American", "congolese", "Hispanic", "Catholic", "Progressive", "bisexual" or "Portuguese".
+DM1 "'nationality': 'portuguese'" -> "portuguese".
+DM2 "identifies as Lutheran" -> "Lutheran".
+DM3 "Political View: Moderate" -> "Moderate".
+
+[TYPE] GOVERNMENT_ID
+[DESCRIPTION] The digits of a social security, national insurance, national identity or tax identification number; or the number of a passport or driver's license, made of letters and digits.
+GI1 "Social Security Number: 512-44-9087" -> "512-44-9087".
+GI2 "the employee's SSN, 512 449 087, was used" -> "512 449 087".
+GI3 "Tax ID: 93-4471820" -> "93-4471820".
+GI4 "passport (C03004786)" -> "C03004786".
+GI5 "driver's licence D8112935" -> "D8112935".
+
+[TYPE] ID_NUMBER
+[DESCRIPTION] Any other code with digits, such as "MRN-440914", "EMP318204", "CID-208815" or "BIO-7080689846", that identifies a person, their records, their vehicle or their device: a medical record, health plan, biometric, ID card, employee, customer, patient, student, member, order, certificate or license number, a license plate, a VIN, an IMEI, a serial number or a MAC address.
+ID1 "Medical Record Number: MRN-552118" -> "MRN-552118".
+ID2 "Employee ID: EMP318204" -> "EMP318204".
+ID3 "customer id SM-33721 was flagged" -> "SM-33721".
+ID4 "License Plate: KDL-4471" -> "KDL-4471".
+ID5 "VIN 2HGFA16598H304417" -> "2HGFA16598H304417".
+ID6 "'device-mac': '3c:22:fb:91:0e:47'" -> "3c:22:fb:91:0e:47".
+
+[TYPE] IP_ADDRESS
+[DESCRIPTION] The numbers of an IPv4 or IPv6 address.
+IP1 "IP Address: 192.0.2.14" -> "192.0.2.14".
+IP2 "IPv6 Address: 2001:db8:85a3::8a2e:370:7334" -> "2001:db8:85a3::8a2e:370:7334".
+
+[TYPE] URL
+[DESCRIPTION] A web address or domain name, complete with its path and query string.
+UR1 "see https://portal.hartwell.example/reports?id=7&lang=en for details" -> "https://portal.hartwell.example/reports?id=7&lang=en".
+UR2 "<domain>hartwell.example</domain>" -> "hartwell.example".
+
+[TYPE] FINANCIAL
+[DESCRIPTION] The digits of a credit or debit card number, 13 to 19 digits with or without spaces or dashes, or its security code (CVV); or the digits or code of a bank account number, IBAN, routing number or SWIFT/BIC.
+FI1 "card 4556 7375 8689 9855" -> "4556 7375 8689 9855".
+FI2 "paid with 4556737586899855 yesterday" -> "4556737586899855".
+FI3 "CVV: 318" -> "318".
+FI4 "IBAN GB82 WEST 1234 5698 7654 32" -> "GB82 WEST 1234 5698 7654 32".
+FI5 "'routing_number': '021000322'" -> "021000322".
+
+[TYPE] SECRET
+[DESCRIPTION] The secret characters of a password, passcode or PIN that the text names as such; or an API key, access token or session cookie.
+SE1 "password: tR7!vexQ92" -> "tR7!vexQ92".
+SE2 "API Key: sk-9fQ2xLm7Tz40aBcD" -> "sk-9fQ2xLm7Tz40aBcD".
+SE3 "the cookie session_id=g9hf2k7j1l; Path=/; HttpOnly was set" -> "session_id=g9hf2k7j1l; Path=/; HttpOnly".
+
+[TYPE] NOT_AN_ENTITY
+NE1 Field labels and names of kinds of data, with or without a colon, in any letter case: "Name", "Date of Birth", "DOB", "Social Security Number", "SSN", "Tax ID", "tax identification number", "national id", "government ID", "Medical Record Number", "Health Plan Beneficiary Number", "Biometric Identifier", "Customer ID", "Employee ID", "certificate license number", "License Plate", "Vehicle Identifier", "Phone Number", "Email", "Contact Email", "Address", "Current Address", "Account Number", "Bank Routing Number", "Credit Card Number", "credit debit card", "IP address", "MAC address", "Password", "PIN", "API key", "Gender", "Gender Identity", "Sex", "Age", "Phone", "Card", "CVV", "MRN", "Transaction ID", "Invoice Number", "Employer", "Position", "blood type".
+NE2 Keys, column names and tag names in data records, in any style: "first_name", "contact_email", "street_address", "bank_account", "postal_code", "latitude", "longitude", "country", "nationality", "access_token", "oauth_token", "api_key", "operationId", "globalId", "quotaUser", "issue_id", "note_id", "first_name_female", "prefix_male".
+NE3 General words for people or groups, such as "employees", "patients", "customers", "the applicant" or "staff".
+NE4 Values of technical fields in data records: booleans, counters, settings, hashes and random filler strings, such as "True", "json", "25", "b41dd1f6415eb65be38a9a41ab04d10f93132a4f", "WmDIQCLNv", "hJMSj 7zlXAB9p" or "JfrTbVF JfrTbVF".
+NE5 Names of teams, committees, projects and initiatives, such as "Incident Response Team" or "Risk Forecasting Committee".
+
+[RULES]
+G4 A field label, key or tag name is never an entity; only the value written after it is. In "Date of Birth: 1984-03-09" label "1984-03-09" and nothing else; in "{'contact_email': 't.okafor@example.org'}" label "t.okafor@example.org" and nothing else. This overrides everything above.

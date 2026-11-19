@@ -4,7 +4,7 @@ Gradio's page template hard-codes Gradio's own preview tags (og:title "Gradio", 
 and the page has no <title> or description until its JavaScript runs. Link previews (Slack, X, LinkedIn) and crawlers
 that do not run JavaScript therefore saw a Gradio page. PageMeta rewrites the HTML of "/" only: it drops every og: and
 twitter: tag, adds ours after <meta charset>, and adds a short <noscript> summary with links for readers without
-JavaScript.
+JavaScript. Other pages (the /redact page) get their own tags the same way.
 """
 import html
 import json
@@ -19,9 +19,9 @@ def e(s):
     return html.escape(s, quote=True)
 
 
-def head_tags(url, title, description, image, image_alt, links):
+def head_tags(url, title, description, image, image_alt, links, name="ReDefiNER demo"):
     """The tags added to <head>; `links` maps a label to a URL and also feeds the JSON-LD sameAs list."""
-    data = {"@context": "https://schema.org", "@type": "WebApplication", "name": "ReDefiNER demo", "url": url,
+    data = {"@context": "https://schema.org", "@type": "WebApplication", "name": name, "url": url,
             "description": description, "applicationCategory": "DeveloperApplication", "operatingSystem": "Web",
             "isAccessibleForFree": True, "image": image,
             "creator": {"@type": "Organization", "name": "Jungroo AI Labs", "url": "https://jungroo.com/"},
@@ -63,14 +63,16 @@ def rewrite(page, head, body):
 
 
 class PageMeta:
-    """ASGI middleware: rewrites the HTML that GET "/" returns, and passes every other request through untouched."""
+    """ASGI middleware: rewrites the HTML that GET "/" (and each path in `pages`) returns, and passes every other
+    request through untouched. `pages` maps a path to its own (head, body)."""
 
-    def __init__(self, app, head, body=""):
-        self.app, self.head, self.body = app, head, body
+    def __init__(self, app, head, body="", pages=None):
+        self.app, self.pages = app, {"/": (head, body), **(pages or {})}
 
     async def __call__(self, scope, receive, send):
-        if scope["type"] != "http" or scope["method"] != "GET" or scope["path"] != "/":
+        if scope["type"] != "http" or scope["method"] != "GET" or scope["path"] not in self.pages:
             return await self.app(scope, receive, send)
+        head, body = self.pages[scope["path"]]
         start, chunks = None, []
 
         async def capture(message):
@@ -88,7 +90,7 @@ class PageMeta:
             data = b"".join(chunks)
             if (start["status"] == 200 and names.get(b"content-type", b"").startswith(b"text/html")
                     and b"content-encoding" not in names):
-                data = rewrite(data.decode("utf-8"), self.head, self.body).encode("utf-8")
+                data = rewrite(data.decode("utf-8"), head, body).encode("utf-8")
                 headers = [(k, str(len(data)).encode() if k.lower() == b"content-length" else v) for k, v in headers]
             await send({**start, "headers": headers})
             await send({"type": "http.response.body", "body": data})

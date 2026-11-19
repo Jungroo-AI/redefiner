@@ -447,3 +447,32 @@ mark.bad {
 mark.sample {
   padding: 0 6px;
 }
+
+/* the PII page (/redact) */
+.hero .proof {
+  margin: -4px 0 10px;
+  font-size: 14px;
+  color: #334155;
+}
+
+mark.below {
+  opacity: .45;
+  outline: 1px dashed #94a3b8;
+  outline-offset: 1px;
+}
+
+.policy .cm-content, .policy .cm-line {
+  font-size: 13px;
+}
+
+.faded-note {
+  font-size: 12.5px;
+  color: #64748b;
+  padding: 0 14px 12px;
+}
+
+/* Gradio shows a page bar ("Home") once an app has a second page, even with gr.Navbar(visible=False); each page
+   links to the other itself */
+.nav-holder {
+  display: none !important;
+}

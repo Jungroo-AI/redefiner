@@ -19,6 +19,7 @@ from pathlib import Path
 import gradio as gr
 from starlette.middleware import Middleware
 
+import redact_page
 from form import form_to_text, text_to_form, type_name
 from page_meta import PageMeta, head_tags, noscript
 from redefiner import Tagger
@@ -36,7 +37,8 @@ HF_REPO = MODEL if not Path(MODEL).exists() else "jungroo-ai/redefiner-0.8b"
 LINKS = {"Model": f"https://huggingface.co/{HF_REPO}", "Code": "https://github.com/jungroo-ai/redefiner",
          "Benchmarks": "https://github.com/jungroo-ai/redefiner/tree/main/benchmarks",
          "How to write rules": "https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md",
-         "Talk to us": "https://jungroo.com/redefiner/"}
+         "Talk to us": "https://jungroo.com/redefiner/",
+         "PII redaction demo": "https://huggingface.co/spaces/jungroo-ai/redefiner-redact"}
 
 # what search engines, AI assistants and link previews see (page_meta.py); the image is the README's two-teams.png on a
 # 1200x630 card
@@ -515,6 +517,7 @@ HERO = ('<div class="hero"><h1>ReDefiNER</h1>'
         + '</span></div></div>')
 
 with gr.Blocks(title=TITLE) as demo:
+    gr.Navbar(visible=False, main_page_name=False)   # /redact has its own link; style.css hides the bar
     gr.HTML(HERO)
     with gr.Tabs(selected=os.environ.get("DEMO_TAB", "edit")):
         # ------------------------------------------------ tab 1
@@ -590,9 +593,15 @@ with gr.Blocks(title=TITLE) as demo:
     gr.HTML('<div class="limits"><b>Limits:</b> rules that fight a strong prior (e.g. retyping a person\'s name) '
             'mostly don\'t work · English only · 256 tokens per pass · spans ≤ 16 tokens.</div>')
 
+# ------------------------------------------------ the PII page, at /redact (space/redact_page.py)
+with demo.route("Mask personal data", "/redact", show_in_navbar=False):
+    gr.Navbar(visible=False, main_page_name=False)
+    redact_page.build(TAGGER, LOCK)
+
 
 def warm():
     """Encode every example and template rulebook once, after the app is up (keeps the health check fast)."""
+    redact_page.warm(TAGGER, LOCK)
     for e in EXAMPLES:
         with LOCK:
             TAGGER.extract(e["text"], e["base"])
@@ -609,7 +618,12 @@ if __name__ == "__main__":
     threading.Thread(target=warm, daemon=True).start()
     # a bounded queue: past QUEUE_SIZE waiting runs, visitors are told it is busy instead of waiting minutes
     demo.queue(max_size=int(os.environ.get("QUEUE_SIZE", "40")))
+    redact_url = PUBLIC_URL.rstrip("/") + "/redact"
+    redact_meta = (head_tags(redact_url, redact_page.TITLE, redact_page.DESCRIPTION, CARD, CARD_ALT, META_LINKS,
+                             name="ReDefiNER PII demo"),
+                   noscript(redact_page.TITLE, redact_page.DESCRIPTION, META_LINKS))
     page_meta = Middleware(PageMeta, head=head_tags(PUBLIC_URL, TITLE, DESCRIPTION, CARD, CARD_ALT, META_LINKS),
-                           body=noscript(TITLE, DESCRIPTION, META_LINKS))
+                           body=noscript(TITLE, DESCRIPTION, META_LINKS),
+                           pages={"/redact": redact_meta, "/redact/": redact_meta})
     demo.launch(css=(HERE / "style.css").read_text(), theme=THEME, js=FORCE_LIGHT,
                 app_kwargs={"middleware": [page_meta]})
