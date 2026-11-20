@@ -10,6 +10,7 @@
                                     or {"start", "end", "text", "unsupported"}, ..], ..], "ms"}
     GET  /info     -> the model's config
 
+"rulebook" can be left out when the model has a default rulebook (a pointer such as jungroo-ai/redefiner-pii).
 Requests are served one at a time (the model holds one rulebook cache). Binds to 127.0.0.1 unless --host is given.
 There is no authentication and no limit on request size: put the server behind your own proxy before exposing it.
 """
@@ -36,10 +37,14 @@ def _texts(req: dict) -> list[str]:
     return texts
 
 
-def _rulebook(req: dict) -> str | dict:
+def _rulebook(req: dict, tagger: Tagger) -> str | dict | None:
+    """The request's rulebook; None (the model's default rulebook) when it has none and the model has a default."""
     rulebook = req.get("rulebook")
+    if rulebook is None and getattr(tagger, "default_rulebook", None) is not None:
+        return None
     if not isinstance(rulebook, (str, dict)):
-        raise BadRequest('"rulebook" must be rulebook text or a rulebook object')
+        raise BadRequest('"rulebook" must be rulebook text or a rulebook object (it can be left out only when the '
+                         'model has a default rulebook, such as jungroo-ai/redefiner-pii)')
     return rulebook
 
 
@@ -75,13 +80,13 @@ def _spans(req: dict, texts: list[str]) -> list:
 
 
 def extract(tagger: Tagger, req: dict) -> list:
-    return tagger.extract(_texts(req), _rulebook(req), threshold=_number(req, "threshold"),
+    return tagger.extract(_texts(req), _rulebook(req, tagger), threshold=_number(req, "threshold"),
                           none_bias=_number(req, "none_bias"))
 
 
 def label(tagger: Tagger, req: dict) -> list:
     texts = _texts(req)
-    return tagger.label(texts, _spans(req, texts), _rulebook(req), allow_none=_flag(req, "allow_none"),
+    return tagger.label(texts, _spans(req, texts), _rulebook(req, tagger), allow_none=_flag(req, "allow_none"),
                         snap=_flag(req, "snap"), none_bias=_number(req, "none_bias"))
 
 

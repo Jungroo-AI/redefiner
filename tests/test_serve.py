@@ -15,6 +15,7 @@ from redefiner.serve import Server
 class FakeTagger:
     config = {"format": "int8"}
     device = "cpu"
+    default_rulebook = None
 
     def extract(self, texts, rulebook, threshold=None, none_bias=None):
         return [[{"start": 0, "end": len(t), "text": t, "label": "X", "confidence": 1.0}] for t in texts]
@@ -55,6 +56,25 @@ def test_texts_must_be_a_list(url):
 def test_missing_rulebook(url):
     code, res = call(url, "/extract", {"texts": ["a"]})
     assert code == 400 and "rulebook" in res["error"]
+
+
+def test_missing_rulebook_uses_the_model_default():
+    tagger = FakeTagger()
+    tagger.default_rulebook = "[TYPE] X"
+    seen = []
+
+    def extract(texts, rulebook, threshold=None, none_bias=None):
+        seen.append(rulebook)
+        return [[] for _ in texts]
+
+    tagger.extract = extract
+    server = Server(("127.0.0.1", 0), tagger)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        code, res = call(f"http://127.0.0.1:{server.server_address[1]}", "/extract", {"texts": ["a"]})
+    finally:
+        server.shutdown()
+    assert code == 200 and res["results"] == [[]] and seen == [None]
 
 
 def test_label_needs_one_span_list_per_text(url):

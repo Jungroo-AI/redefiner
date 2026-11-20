@@ -3,6 +3,14 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
+## 1.0.10 (2026-11-20)
+
+Same weights, and the same outputs as 1.0.9 for every valid input.
+
+- `redefiner serve`: POST /extract and /label can leave out `"rulebook"` when the served model has a default rulebook
+  (a pointer such as `jungroo-ai/redefiner-pii`); the model's default rulebook is used. Without a default rulebook, a
+  missing rulebook is still a 400 error.
+
 ## 1.0.9 (2026-11-19)
 
 Same weights. With default settings, the same outputs as 1.0.8 for every valid input.
