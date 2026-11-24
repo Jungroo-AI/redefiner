@@ -10,7 +10,7 @@ A 0.8B model that extracts and labels exact spans using your plain-English ruleb
 
 [![CI][ci-badge]][ci]
 
-[Quickstart](#quickstart) · [Label mode](#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [HTTP server](#http-server) · [Limitations](#limitations) · [Weights][weights] · [Demo][demo] · [PII demo][pii-demo]
+[Quickstart](#quickstart) · [Label mode](#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [HTTP server](#http-server) · [Limitations](#limitations) · [Weights][weights]
 
 </div>
 
@@ -184,7 +184,7 @@ mode, `confidence` is the probability of the chosen type among the rulebook's ty
 
 Every card on this page is real output: the released int8 model on a laptop CPU, with nothing retrained between runs.
 Only the rulebook changes. Green lines were added to the rulebook; spans outlined in red disappear, spans outlined
-in green are new or changed. [Try your own text and rules in the demo][demo].
+in green are new or changed.
 
 <p align="center"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/rules/price-limit.png" width="780" alt="Adding one rule makes the price span 'under $120' instead of '$120'"></p>
 
@@ -773,7 +773,7 @@ long IPv6 addresses and API keys, and 64 gave the same results as 48; 64 is the 
 ## Redact files
 
 <p align="center"><a href="https://huggingface.co/jungroo-ai/redefiner-pii/resolve/main/docs/assets/video/redefiner-pii.mp4"><img src="https://raw.githubusercontent.com/jungroo-ai/redefiner/main/docs/assets/video/redefiner-pii-thumb.png" width="780" alt="Play the 30-second PII redaction video"></a></p>
-<p align="center"><sub>30 seconds, with a voiceover: a clinic note masked with the PII rulebook, then by the clinic's own policy. Every mask in it is real output from this model. <a href="https://huggingface.co/spaces/jungroo-ai/redefiner-redact">Try it in your browser</a>.</sub></p>
+<p align="center"><sub>30 seconds, with a voiceover: a clinic note masked with the PII rulebook, then by the clinic's own policy. Every mask in it is real output from this model.</sub></p>
 
 ```bash
 redefiner redact notes.txt                       # the PII rulebook of jungroo-ai/redefiner-pii
@@ -974,8 +974,6 @@ Created by [Jungroo AI Labs][jungroo]. For help putting it to work on your own d
 [jungroo]: https://jungroo.com
 [ci-badge]: https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml/badge.svg
 [weights]: https://huggingface.co/jungroo-ai/redefiner-0.8b
-[demo]: https://huggingface.co/spaces/jungroo-ai/redefiner-demo
-[pii-demo]: https://huggingface.co/spaces/jungroo-ai/redefiner-redact
 [ci]: https://github.com/jungroo-ai/redefiner/actions/workflows/ci.yml
 [jungroo-redefiner]: https://jungroo.com/redefiner/
 [compare-gliner]: https://jungroo.com/redefiner/vs-gliner

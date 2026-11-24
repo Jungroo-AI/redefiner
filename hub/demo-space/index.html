@@ -3,38 +3,67 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ReDefiNER demo</title>
+  <title>ReDefiNER</title>
   <style>
-    html, body { margin: 0; height: 100%; background: #f8fafc; font-family: Inter, system-ui, sans-serif; }
-    iframe { display: block; width: 100%; height: 100%; border: 0; }
-    #loading {
-      position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 10px; color: #475569; font-size: 15px; background: #f8fafc; transition: opacity .3s;
-    }
-    #loading.done { opacity: 0; pointer-events: none; }
-    #loading strong { color: #0f172a; font-size: 22px; letter-spacing: -.02em; }
-    #loading a, #open a { color: #2563eb; text-decoration: none; }
-    #open {
-      position: fixed; right: 16px; top: 12px; font-size: 12px; padding: 4px 10px; border-radius: 999px;
-      background: rgba(255, 255, 255, .9); border: 1px solid #e2e8f0;
-    }
+    :root { --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --muted:#475569; --line:#e2e8f0; --code:#f1f5f9; --link:#2563eb; --note:#eff6ff; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#0b1120; --card:#111827; --ink:#e5e7eb; --muted:#9ca3af; --line:#1f2937; --code:#0f172a; --link:#60a5fa; --note:#172036; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 Inter, system-ui, -apple-system, sans-serif; }
+    main { max-width: 760px; margin: 0 auto; padding: 40px 16px 56px; }
+    h1 { font-size: 34px; letter-spacing: -.02em; margin: 0 0 6px; }
+    h2 { font-size: 18px; margin: 32px 0 10px; }
+    .lead { color: var(--muted); font-size: 18px; margin: 0 0 20px; }
+    .note { background: var(--note); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+    pre { background: var(--code); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+          font: 13.5px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .92em; }
+    a { color: var(--link); text-decoration: none; } a:hover { text-decoration: underline; }
+    ul.links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+    .small { color: var(--muted); font-size: 14px; }
   </style>
 </head>
 <body>
-  <iframe id="app" src="https://redefiner-demo.centralindia.cloudapp.azure.com/?__theme=light" title="ReDefiNER demo"
-          allow="clipboard-write"></iframe>
-  <div id="loading">
-    <strong>ReDefiNER</strong>
-    <span>Loading the demo…</span>
-    <span>If it doesn't appear, <a href="https://redefiner-demo.centralindia.cloudapp.azure.com/?__theme=light" target="_blank"
-          rel="noopener">open it in a new tab</a>.</span>
-  </div>
-  <div id="open"><a href="https://redefiner-demo.centralindia.cloudapp.azure.com/?__theme=light" target="_blank"
-       rel="noopener">Open in a new tab ↗</a></div>
-  <script>
-    document.getElementById("app").addEventListener("load", () => {
-      document.getElementById("loading").classList.add("done");
-    });
-  </script>
+<main>
+  <h1>ReDefiNER</h1>
+  <p class="lead">Pull out the entities you define, using a plain-English rulebook, on your own CPU.</p>
+  <p class="note">The hosted demo has been switched off. ReDefiNER is a 0.8B model that runs on a laptop CPU, so you can
+    try it on your own machine in a few minutes.</p>
+
+  <h2>Try it in Python</h2>
+  <pre>pip install redefiner</pre>
+<pre>from redefiner import Tagger
+
+tagger = Tagger.from_pretrained("jungroo-ai/redefiner-0.8b")   # GPU if available, else CPU
+
+rulebook = """[RULES]
+Extract every entity of the supplied types. Return exact spans from the text.
+
+[TYPE] PERSON
+[DESCRIPTION] A person's name.
+PE1 Label the full name; leave out titles such as "Dr" or "Prof".
+
+[TYPE] ORGANIZATION
+[DESCRIPTION] A company, university or other institution.
+"""
+
+tagger.extract("Prof Ada Lovelace corresponded with the Royal Society.", rulebook)
+# [{'start': 5, 'end': 17, 'text': 'Ada Lovelace', 'label': 'PERSON', 'confidence': 0.977},
+#  {'start': 40, 'end': 53, 'text': 'Royal Society', 'label': 'ORGANIZATION', 'confidence': 0.489}]</pre>
+  <p>Edit a rule and run it again to see the output change, with no retraining.</p>
+
+  <h2>Run the demo app yourself</h2>
+  <p>The demo app, with its rule editor, templates and benchmark examples, is in the GitHub repo. To run it on your own
+    machine, follow <a href="https://github.com/jungroo-ai/redefiner/blob/main/space/README.md">space/README.md</a>.</p>
+
+  <h2>Links</h2>
+  <ul class="links">
+    <li><a href="https://huggingface.co/jungroo-ai/redefiner-0.8b">Model weights</a></li>
+    <li><a href="https://github.com/jungroo-ai/redefiner">GitHub</a></li>
+    <li><a href="https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md">Writing rules</a></li>
+    <li><a href="https://huggingface.co/spaces/jungroo-ai/redefiner-redact">Masking personal data</a></li>
+    <li><a href="https://jungroo.com/redefiner/">jungroo.com/redefiner</a></li>
+  </ul>
+  <p class="small">Apache 2.0. Made by Jungroo AI Labs.</p>
+</main>
 </body>
 </html>

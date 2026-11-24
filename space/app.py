@@ -38,11 +38,11 @@ LINKS = {"Model": f"https://huggingface.co/{HF_REPO}", "Code": "https://github.c
          "Benchmarks": "https://github.com/jungroo-ai/redefiner/tree/main/benchmarks",
          "How to write rules": "https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md",
          "Talk to us": "https://jungroo.com/redefiner/",
-         "PII redaction demo": "https://huggingface.co/spaces/jungroo-ai/redefiner-redact"}
+         "Mask personal data": "/redact"}
 
 # what search engines, AI assistants and link previews see (page_meta.py); the image is the README's two-teams.png on a
 # 1200x630 card
-PUBLIC_URL = os.environ.get("PUBLIC_URL", "https://redefiner-demo.centralindia.cloudapp.azure.com/")
+PUBLIC_URL = os.environ.get("PUBLIC_URL", "http://localhost:7860/")
 TITLE = "ReDefiNER demo: entity extraction with a plain-English rulebook"
 DESCRIPTION = ("Try ReDefiNER, a free 0.8B model that extracts the entities you define in a plain-English rulebook. "
                "Edit a rule and see the extraction change. Runs on a CPU.")

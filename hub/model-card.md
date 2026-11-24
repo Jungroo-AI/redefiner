@@ -27,7 +27,7 @@ A 0.8B model that extracts and labels exact spans using your plain-English ruleb
 
 <sub>On CrossNER AI it scores 68.1 F1 on a CPU server, about 5 F1 behind Claude Haiku 5.5 (73.1) and 4.3 behind Gemini 3.1 Pro (72.4), given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
 
-[Quickstart](#quickstart) · [Label mode](https://github.com/jungroo-ai/redefiner#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [Code](https://github.com/jungroo-ai/redefiner) · [Demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo)
+[Quickstart](#quickstart) · [Label mode](https://github.com/jungroo-ai/redefiner#label-mode) · [See a rule at work](#see-a-rule-at-work) · [Benchmarks](#benchmarks) · [Code](https://github.com/jungroo-ai/redefiner)
 
 </div>
 
@@ -204,7 +204,7 @@ mode, `confidence` is the probability of the chosen type among the rulebook's ty
 
 Every card on this page is real output: the released int8 model on a laptop CPU, with nothing retrained between runs.
 Only the rulebook changes. Green lines were added to the rulebook; spans outlined in red disappear, spans outlined
-in green are new or changed. [Try your own text and rules in the demo](https://huggingface.co/spaces/jungroo-ai/redefiner-demo).
+in green are new or changed.
 
 <p align="center"><img src="https://huggingface.co/jungroo-ai/redefiner-0.8b/resolve/main/docs/assets/rules/price-limit.png" width="780" alt="Adding one rule makes the price span 'under $120' instead of '$120'"></p>
 
@@ -691,8 +691,7 @@ Results, both PII rulebooks, redaction by a written policy and the limits, on on
 ReDefiNER](https://jungroo.com/redefiner/pii-redaction).
 
 See it work: a [30-second video](https://huggingface.co/jungroo-ai/redefiner-pii/resolve/main/docs/assets/video/redefiner-pii.mp4)
-masks a clinic note by the clinic's own policy, and the [PII demo](https://huggingface.co/spaces/jungroo-ai/redefiner-redact)
-lets you try it in your browser.
+masks a clinic note by the clinic's own policy.
 
 Choosing an open model? See the comparison pages [ReDefiNER vs GLiNER](https://jungroo.com/redefiner/vs-gliner),
 [GLiNER alternatives](https://jungroo.com/redefiner/gliner-alternatives) and [guideline-following NER: ReDefiNER vs GoLLIE](https://jungroo.com/redefiner/guideline-following-ner).

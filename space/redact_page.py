@@ -32,7 +32,7 @@ LINKS = {"Model page": "https://huggingface.co/jungroo-ai/redefiner-pii",
          "Code": "https://github.com/jungroo-ai/redefiner",
          "How to write a policy": "https://github.com/jungroo-ai/redefiner/blob/main/docs/writing-rules.md",
          "Scores": "https://github.com/jungroo-ai/redefiner/tree/main/benchmarks/pii",
-         "Entity extraction demo": "https://huggingface.co/spaces/jungroo-ai/redefiner-demo"}
+         "Entity extraction": "/"}
 TITLE = "ReDefiNER PII: mask personal data, or only what your policy says"
 DESCRIPTION = ("Try ReDefiNER PII, a free open-source model that masks personal data in text, or only what your "
                "plain-English policy says. It runs on a laptop CPU, with no API key.")

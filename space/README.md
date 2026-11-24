@@ -25,7 +25,6 @@ docker build --platform linux/amd64 -f space/Dockerfile -t redefiner-demo .
 docker run --rm -p 7860:7860 -e OMP_NUM_THREADS=2 redefiner-demo
 ```
 
-The public demo runs this image on an Azure VM, and its Hugging Face Space page loads it from there.
 
 Settings (environment variables): `MODEL` (weights folder or Hugging Face repo), `QUEUE_SIZE` (runs allowed to wait,
 default 40), `OMP_NUM_THREADS` (set it to the container's vCPU count).

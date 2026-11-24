@@ -3,6 +3,12 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
+## Unreleased
+
+- The hosted demo is switched off. Its Hugging Face Spaces now show how to run ReDefiNER on your own machine,
+  and the README, model card, llms.txt and package links no longer point to a demo. The demo app in `space/` still
+  runs locally.
+
 ## 1.0.10 (2026-11-20)
 
 Same weights, and the same outputs as 1.0.9 for every valid input.

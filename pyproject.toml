@@ -43,7 +43,6 @@ dev = ["pytest", "ruff"]
 [project.urls]
 Homepage = "https://github.com/jungroo-ai/redefiner"
 Model = "https://huggingface.co/jungroo-ai/redefiner-0.8b"
-Demo = "https://huggingface.co/spaces/jungroo-ai/redefiner-demo"
 Issues = "https://github.com/jungroo-ai/redefiner/issues"
 Changelog = "https://github.com/jungroo-ai/redefiner/blob/main/CHANGELOG.md"
 Company = "https://jungroo.com/redefiner/"
