@@ -5,6 +5,9 @@ Changes to the `redefiner` package and its documentation. The model weights are 
 
 ## Unreleased
 
+- Works with transformers 5.19 to 5.24 (1.0.10 needed 5.19 to 5.22). transformers 5.24 passes extra arguments to the
+  attention cache and renames the decoder layers' cache argument from `past_key_values` to `cache`. Outputs are
+  identical to 1.0.10 on each version.
 - The hosted demo is switched off. Its Hugging Face Spaces now show how to run ReDefiNER on your own machine,
   and the README, model card, llms.txt and package links no longer point to a demo. The demo app in `space/` still
   runs locally.

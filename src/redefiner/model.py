@@ -14,6 +14,7 @@ holds int8 rows with one scale per row; everything else is fp32. Building the fl
 export.py.
 """
 
+import inspect
 import math
 from collections.abc import Callable
 from types import SimpleNamespace
@@ -38,8 +39,8 @@ class StepCache:
     def __init__(self, layer_idx, kv=None, conv=None, rec=None):
         self.layer_idx, self.kv, self.conv, self.rec = layer_idx, kv, conv, rec
 
-    # full attention layers
-    def update(self, key_states, value_states, layer_idx, cache_kwargs=None):
+    # full attention layers; transformers 5.24 on also pass the layer's keyword arguments (kwargs=...), unused here
+    def update(self, key_states, value_states, layer_idx, cache_kwargs=None, **kwargs):
         if self.kv is not None:
             key_states = torch.cat([self.kv[0], key_states], dim=-2)
             value_states = torch.cat([self.kv[1], value_states], dim=-2)
@@ -83,6 +84,12 @@ class StepCache:
         return self.kv if self.kv is not None else (self.conv, self.rec)
 
 
+def cache_keyword(layer: nn.Module) -> str:
+    """The keyword a Qwen3.5 decoder layer takes its cache by: `cache` from transformers 5.24 on, `past_key_values`
+    before. 5.24 still accepts `past_key_values`, with a FutureWarning, until 5.40."""
+    return "cache" if "cache" in inspect.signature(layer.forward).parameters else "past_key_values"
+
+
 class SpanModel(nn.Module):
     def __init__(self, lm: nn.Module, d_span: int = 512, max_width: int = 16):
         super().__init__()
@@ -99,6 +106,7 @@ class SpanModel(nn.Module):
         self.exists = nn.Linear(d_span, 1)
         self.label_proj = nn.Linear(hidden, d_span)
         self.none = nn.Parameter(torch.zeros(d_span))
+        self.cache_keyword = cache_keyword(lm.layers[0])
 
     # ---------------------------------------------------------------- backbone passes
     def embed(self, ids, marker_mask=None):
@@ -123,7 +131,7 @@ class SpanModel(nn.Module):
             else:
                 cache = StepCache(i, conv=st[0], rec=st[1])
             hidden = layer(hidden, position_embeddings=position_embeddings, attention_mask=mask if full_attn else None,
-                           position_ids=text_pos, past_key_values=cache)
+                           position_ids=text_pos, **{self.cache_keyword: cache})
             if keep_state:
                 states.append(tuple(cache.state()))
         return self.lm.norm(hidden), states
