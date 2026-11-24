@@ -3,7 +3,9 @@
 Changes to the `redefiner` package and its documentation. The model weights are the same in every release
 (1.0, October 2026).
 
-## Unreleased
+## 1.0.11 (2026-11-24)
+
+Same weights, and the same outputs as 1.0.10 for every valid input.
 
 - Works with transformers 5.19 to 5.24 (1.0.10 needed 5.19 to 5.22). transformers 5.24 passes extra arguments to the
   attention cache and renames the decoder layers' cache argument from `past_key_values` to `cache`. Outputs are
