@@ -4,7 +4,7 @@
 
 **Pull out the entities you define, using a plain-English rulebook, on your own CPU.**
 
-A 0.8B model that extracts and labels exact spans using your plain-English rulebook. It is non-generative: it marks spans in your text and never writes new text. The name is ReDefine + NER: you redefine what counts as an entity by editing a rulebook, not by retraining. Created by [Jungroo AI Labs][jungroo].
+An open-source 0.8B model that pulls entities and details out of text by following written guidelines (a plain-English rulebook), and runs on your own servers or a laptop CPU with no GPU. It is non-generative: it marks spans in your text and never writes new text. The name is ReDefine + NER: you redefine what counts as an entity by editing a rulebook, not by retraining. Created by [Jungroo AI Labs][jungroo].
 
 <sub>On CrossNER AI it scores 68.1 F1 on a CPU server, about 5 F1 behind Claude Haiku 5.5 (73.1) and 4.3 behind Gemini 3.1 Pro (72.4), given the same rulebook. [How it compares, including where it loses](#against-frontier-models)</sub>
 
